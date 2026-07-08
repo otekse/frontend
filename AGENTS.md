@@ -11,6 +11,21 @@ redirect, order confirmation page. Talks to `backend` only over HTTP
 (`GET /products`, `POST /checkout`, etc.) via a typed client generated with
 **Orval** from the backend's OpenAPI spec, using **React Query**.
 
+## Design source
+
+The visual design for this site lives in a Claude Design project — treat it
+as the source of truth for look and feel:
+
+- **Project:** [Õtekse koduleht](https://claude.ai/design/p/2639bd2d-cb50-45b9-809e-3606cae0002d?file=%C3%95tekse+koduleht.dc.html) (file: `Õtekse koduleht.dc.html`)
+- **Programmatic access for agents:** the `claude_design` MCP server, configured
+  in this repo's `.mcp.json` (endpoint: `https://api.anthropic.com/v1/design/mcp`).
+  In Claude Code, authorize once per machine with `/design-login`; any other
+  MCP-capable agent authenticates against the same endpoint.
+
+When building or changing UI, match that design rather than inventing styling.
+If the design doesn't cover something you need, flag it to the owner instead
+of guessing.
+
 ## This is the only AI-editable repo
 
 This is the sole repo the client-facing AI orchestrator (`PROJECT_BRIEF.md`
