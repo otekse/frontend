@@ -1,0 +1,153 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "HealthController_check",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Service is up."
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "operationId": "ProductsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "ProductsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Product id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "tags": [
+          "products"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Õtekse API",
+    "description": "Products, checkout, and order webhooks for the Õtekse store.",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "clx0a1b2c3d4e5f6g7h8i9j0"
+          },
+          "name": {
+            "type": "string",
+            "example": "Õtekse T-shirt"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "example": "Soft cotton, unisex fit."
+          },
+          "priceCents": {
+            "type": "number",
+            "description": "Price in integer minor units (cents). 1999 = €19.99.",
+            "example": 1999
+          },
+          "currency": {
+            "type": "string",
+            "example": "eur"
+          },
+          "sku": {
+            "type": "string",
+            "nullable": true,
+            "example": "TSHIRT-BLK-M"
+          },
+          "size": {
+            "type": "string",
+            "nullable": true,
+            "example": "M"
+          },
+          "color": {
+            "type": "string",
+            "nullable": true,
+            "example": "black"
+          },
+          "stock": {
+            "type": "number",
+            "description": "Units in stock.",
+            "example": 12
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "example": "https://api.õtekse.ee/images/tshirt.jpg"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "priceCents",
+          "currency",
+          "sku",
+          "size",
+          "color",
+          "stock",
+          "imageUrl"
+        ]
+      }
+    }
+  }
+}

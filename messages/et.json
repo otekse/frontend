@@ -1,0 +1,58 @@
+{
+  "Nav": {
+    "home": "Avaleht",
+    "shop": "Pood",
+    "cart": "Ostukorv"
+  },
+  "LocaleSwitcher": {
+    "label": "Keel",
+    "et": "Eesti",
+    "en": "English"
+  },
+  "Home": {
+    "title": "Õtekse",
+    "tagline": "Väike Eesti kaubamärk.",
+    "shopCta": "Vaata poodi",
+    "placeholderNotice": "Avalehe kujundus tuleb Claude Design projektist — see on esialgne paigutus."
+  },
+  "Shop": {
+    "title": "Pood",
+    "empty": "Tooteid pole hetkel saadaval.",
+    "loading": "Laen tooteid…",
+    "error": "Toodete laadimine ebaõnnestus.",
+    "outOfStock": "Läbi müüdud",
+    "addToCart": "Lisa korvi"
+  },
+  "Product": {
+    "backToShop": "Tagasi poodi",
+    "notFound": "Toodet ei leitud.",
+    "inStock": "Laos: {count}",
+    "outOfStock": "Läbi müüdud",
+    "addToCart": "Lisa korvi"
+  },
+  "Cart": {
+    "title": "Ostukorv",
+    "empty": "Sinu ostukorv on tühi.",
+    "quantity": "Kogus",
+    "remove": "Eemalda",
+    "total": "Kokku",
+    "checkout": "Vormista ost",
+    "continueShopping": "Jätka ostlemist"
+  },
+  "Checkout": {
+    "title": "Vormista ost",
+    "redirecting": "Suuname sind turvalisse makselehele…",
+    "failed": "Maksesessiooni loomine ebaõnnestus. Palun proovi uuesti.",
+    "pending": "Maksete lõpp-punkt (Stripe) pole veel ühendatud — see samm on veel arendamisel.",
+    "backToCart": "Tagasi ostukorvi"
+  },
+  "OrderConfirmation": {
+    "title": "Aitäh tellimuse eest!",
+    "body": "Saatsime kinnituse sinu e-postile. Sinu tellimust töödeldakse.",
+    "note": "Makse õnnestumist kinnitab alati meie server, mitte see leht.",
+    "backHome": "Tagasi avalehele"
+  },
+  "Common": {
+    "currencyEur": "€"
+  }
+}

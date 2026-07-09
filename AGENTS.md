@@ -81,8 +81,26 @@ and fails on any diff.
 
 ## Setup & commands
 
-_TODO: fill in once the Next.js app is scaffolded (install, dev, build, lint, test)._
+Stack: **Next.js 16 (App Router) + React 19 + Tailwind 4 + TypeScript**, npm, Node 22 (see workspace `AGENTS.md` conventions). Data via **React Query + Orval**, i18n via **next-intl**, preview mocks via **MSW**.
+
+```sh
+cp .env.example .env.local        # set NEXT_PUBLIC_API_MOCKING=enabled to run on mocks
+npm install
+npm run dev                       # http://localhost:3000
+```
+
+Commands: `npm run build`, `npm run lint`, `npm start`.
+
+API client workflow (see "API client" above):
+- `npm run spec:pull` — refresh `openapi.json` from the backend (`API_SPEC_URL=…` for the live API; defaults to copying `../backend/openapi.json`).
+- `npm run api:generate` — regenerate the typed client, hooks, and MSW mocks into `src/api/generated`. Commit `openapi.json` and the generated output together.
+- `npm run api:check` — CI drift gate: regenerates and fails if `src/api/generated` changes.
 
 ## Conventions
 
-_TODO: component structure, styling approach, naming conventions._
+- **Routes live under `src/app/[locale]/`.** Use the locale-aware `Link`/`useRouter` from `@/i18n/navigation`, never bare `next/link` / `next/navigation`, so the active locale is preserved. All user-facing strings come from `messages/{et,en}.json` via `next-intl` — never hardcoded.
+- **Data fetching is client-side** through the generated React Query hooks (`useProductsController…`). This is deliberate: it lets MSW intercept in `client-preview`, so the preview renders mock data and never hits the real backend (`PROJECT_BRIEF.md` §10). Don't fetch store data in server components.
+- **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. Never trust these client-side prices for payment — the backend re-validates at checkout.
+- **Cart is client-only** (`@/lib/cart`, localStorage). No server cart.
+- `src/api/generated/**` is generated and git-ignored by ESLint — never hand-edit it.
+- **Design:** match the Claude Design source (see "Design source" above) rather than inventing styling. The homepage is currently a placeholder pending `/design-login` access.

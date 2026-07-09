@@ -1,0 +1,58 @@
+{
+  "Nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "cart": "Cart"
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "et": "Eesti",
+    "en": "English"
+  },
+  "Home": {
+    "title": "Õtekse",
+    "tagline": "A small Estonian brand.",
+    "shopCta": "Visit the shop",
+    "placeholderNotice": "The homepage design comes from the Claude Design project — this is a placeholder layout."
+  },
+  "Shop": {
+    "title": "Shop",
+    "empty": "No products available right now.",
+    "loading": "Loading products…",
+    "error": "Failed to load products.",
+    "outOfStock": "Sold out",
+    "addToCart": "Add to cart"
+  },
+  "Product": {
+    "backToShop": "Back to shop",
+    "notFound": "Product not found.",
+    "inStock": "In stock: {count}",
+    "outOfStock": "Sold out",
+    "addToCart": "Add to cart"
+  },
+  "Cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "total": "Total",
+    "checkout": "Check out",
+    "continueShopping": "Continue shopping"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "redirecting": "Redirecting you to secure checkout…",
+    "failed": "Could not start the checkout session. Please try again.",
+    "pending": "The payment endpoint (Stripe) is not connected yet — this step is still being built.",
+    "backToCart": "Back to cart"
+  },
+  "OrderConfirmation": {
+    "title": "Thank you for your order!",
+    "body": "We've sent a confirmation to your email. Your order is being processed.",
+    "note": "Payment success is always confirmed by our server, never by this page.",
+    "backHome": "Back home"
+  },
+  "Common": {
+    "currencyEur": "€"
+  }
+}

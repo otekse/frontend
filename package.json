@@ -1,0 +1,43 @@
+{
+  "name": "otekse-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "spec:pull": "node scripts/pull-spec.mjs",
+    "api:generate": "orval --config orval.config.ts",
+    "api:check": "orval --config orval.config.ts && git diff --exit-code src/api/generated"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "@tanstack/react-query": "^5.62.0",
+    "axios": "^1.7.9",
+    "next": "16.2.10",
+    "next-intl": "^4.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "msw": "^2.7.0",
+    "orval": "^7.3.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
