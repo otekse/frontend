@@ -1,7 +1,7 @@
 // Shared SCSS mixins for the Õtekse design system.
 //
-// Values come EXCLUSIVELY from the CSS custom properties emitted by the
-// @theme block in src/app/globals.css — mixins provide structure (DRY
+// Values come EXCLUSIVELY from the CSS custom properties defined in the
+// :root block in src/app/globals.css — mixins provide structure (DRY
 // patterns), never new design values. Usage (relative path from your module):
 //   @use "../styles/mixins" as *;
 //   .cta { @include pill(var(--color-ink), var(--color-gold)); }

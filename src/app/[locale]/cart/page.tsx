@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import ui from "@/styles/ui.module.scss";
+import styles from "./page.module.scss";
 
 export default function CartPage() {
   const t = useTranslations("Cart");
@@ -16,8 +17,8 @@ export default function CartPage() {
       <div className={ui.page}>
         <div className={ui.pageInnerNarrow}>
           <h1 className={ui.heading}>{t("title")}</h1>
-          <p className="text-moss">{t("empty")}</p>
-          <Link href="/shop" className={`${ui.inkLink} mt-4 inline-block`}>
+          <p className={ui.muted}>{t("empty")}</p>
+          <Link href="/shop" className={`${ui.inkLink} ${styles.continue}`}>
             {t("continueShopping")}
           </Link>
         </div>
@@ -30,26 +31,26 @@ export default function CartPage() {
       <div className={ui.pageInnerNarrow}>
         <h1 className={ui.heading}>{t("title")}</h1>
 
-        <ul className="divide-y divide-ink/15">
+        <ul className={ui.lineItems}>
           {items.map((item) => (
-            <li key={item.id} className="flex items-center gap-4 py-4">
-              <div className="flex-1">
-                <p className="font-display text-ink">{item.name}</p>
-                <p className="text-small text-sage">
+            <li key={item.id} className={styles.row}>
+              <div className={styles.info}>
+                <p className={styles.name}>{item.name}</p>
+                <p className={ui.metaSmall}>
                   {formatPrice(item.priceCents, locale)}
                 </p>
               </div>
-              <label className="flex items-center gap-2">
+              <label className={styles.qty}>
                 <span className="sr-only">{t("quantity")}</span>
                 <input
                   type="number"
                   min={1}
                   value={item.quantity}
                   onChange={(e) => setQuantity(item.id, Number(e.target.value))}
-                  className={`${ui.input} w-16`}
+                  className={`${ui.input} ${styles.qtyInput}`}
                 />
               </label>
-              <p className="w-24 text-right font-bold text-ink">
+              <p className={styles.lineTotal}>
                 {formatPrice(item.priceCents * item.quantity, locale)}
               </p>
               <button
@@ -63,14 +64,14 @@ export default function CartPage() {
           ))}
         </ul>
 
-        <div className="mt-6 flex items-center justify-between border-t-2 border-ink pt-4">
-          <span className="font-display text-lg text-ink">{t("total")}</span>
-          <span className="font-display text-lg text-rust">
+        <div className={ui.totalRow}>
+          <span className={styles.totalText}>{t("total")}</span>
+          <span className={`${ui.totalValue} ${styles.totalText}`}>
             {formatPrice(totalCents, locale)}
           </span>
         </div>
 
-        <div className="mt-8">
+        <div className={ui.actions}>
           <Link href="/checkout" className={ui.pillDark}>
             {t("checkout")} →
           </Link>

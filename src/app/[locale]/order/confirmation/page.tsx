@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ui from "@/styles/ui.module.scss";
+import styles from "./page.module.scss";
 
 // Post-payment return page. Purely informational: the trustworthy signal that
 // payment succeeded is the Stripe webhook on the backend, never this page
@@ -16,11 +17,11 @@ export default async function OrderConfirmationPage({
 
   return (
     <div className={ui.page}>
-      <div className={`${ui.pageInnerNarrow} text-center`}>
+      <div className={`${ui.pageInnerNarrow} ${styles.inner}`}>
         <h1 className={ui.heading}>{t("title")}</h1>
-        <p className="text-moss">{t("body")}</p>
-        <p className="mt-2 text-small text-sage">{t("note")}</p>
-        <div className="mt-8">
+        <p className={ui.muted}>{t("body")}</p>
+        <p className={styles.note}>{t("note")}</p>
+        <div className={ui.actions}>
           <Link href="/" className={ui.inkLink}>
             {t("backHome")}
           </Link>

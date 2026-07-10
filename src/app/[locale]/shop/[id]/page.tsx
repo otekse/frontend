@@ -5,8 +5,10 @@ import { useParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { useProductsControllerFindOne } from "@/api/generated/products/products";
 import { AddToCartButton } from "@/components/AddToCartButton";
+import { SmartImage } from "@/components/SmartImage";
 import { formatPrice } from "@/lib/format";
 import ui from "@/styles/ui.module.scss";
+import styles from "./page.module.scss";
 
 export default function ProductDetailPage() {
   const t = useTranslations("Product");
@@ -21,35 +23,28 @@ export default function ProductDetailPage() {
           ← {t("backToShop")}
         </Link>
 
-        {isLoading && <p className="mt-6 text-moss">…</p>}
-        {isError && <p className="mt-6 text-rust">{t("notFound")}</p>}
+        {isLoading && <p className={styles.status}>…</p>}
+        {isError && <p className={styles.statusError}>{t("notFound")}</p>}
 
         {product && (
-          <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className={`${ui.card} bg-sand aspect-square`}>
-              {product.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                />
-              )}
+          <div className={styles.layout}>
+            <div className={`${ui.card} ${styles.imageFrame}`}>
+              <SmartImage src={product.imageUrl} alt={product.name} />
             </div>
             <div>
-              <h1 className="font-display text-h2 text-ink">{product.name}</h1>
-              <p className="mt-3 text-xl font-bold text-rust">
+              <h1 className={styles.title}>{product.name}</h1>
+              <p className={styles.price}>
                 {formatPrice(product.priceCents, locale, product.currency.toUpperCase())}
               </p>
               {product.description && (
-                <p className="mt-4 leading-body text-moss">{product.description}</p>
+                <p className={styles.desc}>{product.description}</p>
               )}
-              <p className="mt-4 text-small text-sage">
+              <p className={styles.stock}>
                 {product.stock > 0
                   ? t("inStock", { count: product.stock })
                   : t("outOfStock")}
               </p>
-              <div className="mt-6">
+              <div className={styles.addWrap}>
                 <AddToCartButton product={product} />
               </div>
             </div>

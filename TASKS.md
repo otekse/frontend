@@ -8,7 +8,7 @@ Work top to bottom, one item at a time. Check items off as they're completed
 - [x] Set up i18n: Estonian default + English, locale auto-detection, manual switcher (next-intl)
 - [x] Set up Orval + React Query: committed OpenAPI snapshot, generated client, hooks, and MSW mocks
 - [x] Mock-data mode: `client-preview` builds run against the committed MSW mocks via `NEXT_PUBLIC_API_MOCKING` (`PROJECT_BRIEF.md` §10 "Preview data")
-- [x] Design system from the Claude Design source: `@theme` tokens + SCSS mixins + ui module (see AGENTS.md "Styling")
+- [x] Design system from the Claude Design source: `:root` CSS-variable tokens + SCSS mixins + ui module, no CSS framework (see AGENTS.md "Styling")
 - [x] Build the homepage from the Claude Design source: parallax hero, Meist, Liikmed selector, Kontserdid, E-pood teaser, footer
 - [x] Real photos wired in (forest, wheat, band, girls cutout) via the `images:build` pipeline (originals in `assets-src/`, owner-provided)
 - [x] Member photos for the Liikmed section (design's crops extracted from the export)

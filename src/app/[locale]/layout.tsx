@@ -44,13 +44,13 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${archivoBlack.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${archivoBlack.variable} ${spaceMono.variable}`}
     >
-      <body className="flex min-h-full flex-col">
+      <body>
         <NextIntlClientProvider>
           <Providers>
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main>{children}</main>
             <SiteFooter />
           </Providers>
         </NextIntlClientProvider>

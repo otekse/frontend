@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import ui from "@/styles/ui.module.scss";
+import styles from "./page.module.scss";
 
 // Checkout is intentionally a stub: `POST /checkout` + Stripe Checkout is a
 // later step and depends on a Stripe account (owner checklist). When the
@@ -22,9 +23,9 @@ export default function CheckoutPage() {
       <div className={ui.pageInnerNarrow}>
         <h1 className={ui.heading}>{t("title")}</h1>
 
-        <ul className="divide-y divide-ink/15">
+        <ul className={ui.lineItems}>
           {items.map((item) => (
-            <li key={item.id} className="flex justify-between py-3 text-ink">
+            <li key={item.id} className={styles.row}>
               <span>
                 {item.name} × {item.quantity}
               </span>
@@ -33,16 +34,16 @@ export default function CheckoutPage() {
           ))}
         </ul>
 
-        <div className="mt-4 flex justify-between border-t-2 border-ink pt-4 font-display text-ink">
+        <div className={ui.totalRow}>
           <span>{tCart("total")}</span>
-          <span className="text-rust">{formatPrice(totalCents, locale)}</span>
+          <span className={ui.totalValue}>{formatPrice(totalCents, locale)}</span>
         </div>
 
-        <div className={`${ui.notePanel} mt-10`}>
+        <div className={`${ui.notePanel} ${styles.note}`}>
           <div className={ui.noteTitle}>{t("pending")}</div>
         </div>
 
-        <div className="mt-8">
+        <div className={ui.actions}>
           <Link href="/cart" className={ui.inkLink}>
             ← {t("backToCart")}
           </Link>
