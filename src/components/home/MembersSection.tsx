@@ -53,7 +53,7 @@ export function MembersSection() {
             style={{ ["--fill-cx" as string]: FILL_CX[selected] }}
           />
 
-          <div className={`${styles.content} ${paletteClass[sel.palette]}`}>
+          <div className={styles.content}>
             <div className={styles.grid}>
               {members.map((m, i) => {
                 const active = i === selected;

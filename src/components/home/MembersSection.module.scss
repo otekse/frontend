@@ -19,26 +19,20 @@
   margin-bottom: 48px;
 }
 
-// Per-member palette: sets the custom props everything below reads.
+// Per-member palette. Only the radiating FILL colour differs between members;
+// all three are deep jewel tones so a single light text scheme (see the
+// .detail* rules) reads identically on every one of them. The introduction's
+// text, label, and quote colours are therefore consistent across members.
 .paletteGold {
-  --m-fill: var(--color-gold);
-  --m-ink: var(--color-ink);
-  --m-label: var(--color-bronze-label);
-  --m-quote: var(--color-olive-ink);
+  --m-fill: var(--color-bronze);
 }
 
 .paletteRust {
   --m-fill: var(--color-rust);
-  --m-ink: var(--color-cream-bright);
-  --m-label: var(--color-gold-soft);
-  --m-quote: var(--color-cream-a85);
 }
 
 .palettePine {
   --m-fill: var(--color-pine);
-  --m-ink: var(--color-cream-bright);
-  --m-label: var(--color-gold);
-  --m-quote: var(--color-cream-a85);
 }
 
 .panel {
@@ -179,10 +173,11 @@
   min-height: 240px;
 }
 
+// Consistent introduction colours for every member (they read on all three
+// deep fill colours): light heading + facts, gold labels, soft-cream quote.
 .detailName {
-  @include display-heading(34px, var(--m-ink));
+  @include display-heading(34px, var(--color-cream-bright));
   margin-bottom: 24px;
-  transition: color 0.5s;
 }
 
 .detailFacts {
@@ -191,22 +186,19 @@
   gap: 8px;
   font-size: 14px;
   line-height: var(--leading-small);
-  color: var(--m-ink);
-  transition: color 0.5s;
+  color: var(--color-cream-bright);
 }
 
 .detailLabel {
-  color: var(--m-label);
+  color: var(--color-gold-soft);
   font-weight: 700;
-  transition: color 0.5s;
 }
 
 .detailQuote {
   font-size: 14px;
   line-height: var(--leading-body);
   font-style: italic;
-  color: var(--m-quote);
+  color: var(--color-cream-a85);
   margin: 28px auto 0;
   max-width: 560px;
-  transition: color 0.5s;
 }
