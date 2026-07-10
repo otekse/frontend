@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
+import { SmartImage } from "@/components/SmartImage";
 import styles from "./AboutSection.module.scss";
 
 export function AboutSection() {
@@ -16,8 +17,12 @@ export function AboutSection() {
           <p>{t("p3")}</p>
         </div>
         <div className={styles.photoWrap}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={IMAGES.band} alt={t("photoAlt")} className={styles.photo} />
+          <SmartImage
+            src={IMAGES.band}
+            alt={t("photoAlt")}
+            className={styles.photo}
+            objectPosition="center 20%"
+          />
           <div className={styles.tag}>{t("photoTag")}</div>
         </div>
       </div>

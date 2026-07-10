@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { members, type MemberPalette } from "@/content/members";
+import { SmartImage } from "@/components/SmartImage";
 import styles from "./MembersSection.module.scss";
 
 const paletteClass: Record<MemberPalette, string> = {
@@ -57,11 +58,9 @@ export function MembersSection() {
                     <div
                       className={`${styles.avatar} ${active ? styles.avatarActive : styles.avatarInactive}`}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <SmartImage
                         src={m.photo}
                         alt={t("photoPlaceholder", { name: m.name })}
-                        className={styles.avatarPhoto}
                       />
                     </div>
                     <button

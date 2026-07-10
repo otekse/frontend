@@ -10,15 +10,7 @@
 .imageArea {
   position: relative;
   height: 240px;
-  background: var(--color-sand);
   border-bottom: var(--border-card) solid var(--color-ink);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
 }
 
 .tag {

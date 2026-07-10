@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import type { ProductResponseDto } from "@/api/generated/model";
+import { SmartImage } from "./SmartImage";
 import styles from "./ProductCard.module.scss";
 
 export function ProductCard({ product }: { product: ProductResponseDto }) {
@@ -16,10 +17,7 @@ export function ProductCard({ product }: { product: ProductResponseDto }) {
   return (
     <div className={styles.card}>
       <div className={styles.imageArea}>
-        {product.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.imageUrl} alt={product.name} />
-        ) : null}
+        <SmartImage src={product.imageUrl} alt={product.name} />
         {soldOut && <div className={styles.tag}>{t("outOfStock")}</div>}
       </div>
       <div className={styles.body}>
