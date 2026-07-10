@@ -20,10 +20,15 @@ export function MembersSection() {
   const locale = useLocale() as "et" | "en";
   const [selected, setSelected] = useState(0);
   const [previous, setPrevious] = useState(0);
+  // Bumped on every pick so the radiating overlay remounts and replays its
+  // animation — even when re-selecting the member that was shown last.
+  const [pickCount, setPickCount] = useState(0);
 
   const pick = (i: number) => {
+    if (i === selected) return;
     setPrevious(selected);
     setSelected(i);
+    setPickCount((n) => n + 1);
   };
 
   const sel = members[selected];
@@ -35,19 +40,18 @@ export function MembersSection() {
         <h2 className={styles.title}>{t("title")}</h2>
 
         <div className={styles.panel}>
-          {members.map((m, i) => (
-            <div
-              key={m.name}
-              className={`${styles.fill} ${paletteClass[m.palette]}`}
-              style={{
-                clipPath:
-                  i === selected || i === previous
-                    ? `circle(150% at ${FILL_CX[i]} 150px)`
-                    : `circle(0% at ${FILL_CX[i]} 150px)`,
-                zIndex: i === selected ? 1 : 0,
-              }}
-            />
-          ))}
+          {/* Backdrop: the previously-selected colour, so the incoming colour
+              radiates over it rather than over the bare paper surface. */}
+          <div
+            className={`${styles.fillBase} ${paletteClass[members[previous].palette]}`}
+          />
+          {/* Overlay: the selected colour, radiating out from its column.
+              Keyed on pickCount so it replays on every selection. */}
+          <div
+            key={pickCount}
+            className={`${styles.fillRadiate} ${paletteClass[sel.palette]}`}
+            style={{ ["--fill-cx" as string]: FILL_CX[selected] }}
+          />
 
           <div className={`${styles.content} ${paletteClass[sel.palette]}`}>
             <div className={styles.grid}>

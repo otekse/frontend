@@ -49,15 +49,35 @@
   background: var(--color-paper);
 }
 
-// Radial color fill layers — clip-path animated per selection (inline).
-.fill {
+// Radial colour fill: a static backdrop (previous member) plus a radiating
+// overlay (selected member) that replays its keyframes on every pick.
+.fillBase {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: var(--m-fill);
-  transition: clip-path 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fillRadiate {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--m-fill);
+  clip-path: circle(150% at var(--fill-cx) 150px);
+  animation: member-radiate 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 
   @include reduced-motion {
-    transition: none;
+    animation: none;
+  }
+}
+
+@keyframes member-radiate {
+  from {
+    clip-path: circle(0% at var(--fill-cx) 150px);
+  }
+
+  to {
+    clip-path: circle(150% at var(--fill-cx) 150px);
   }
 }
 
@@ -109,9 +129,11 @@
   }
 }
 
+// Consistent ring on the active avatar (a light rim reads on every fill
+// colour), rather than one that changes per member palette.
 .avatarActive {
   transform: scale(1.06);
-  box-shadow: 0 0 0 4px var(--m-ink);
+  box-shadow: 0 0 0 4px var(--color-cream-bright);
 }
 
 .avatarInactive {
