@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens — THE single source of truth for every design value.
+ * Extracted from the Claude Design project "Õtekse koduleht" (see AGENTS.md
+ * "Design source"). Each @theme entry emits BOTH a Tailwind utility
+ * (bg-ink, text-gold, font-display, rounded-pill, shadow-pill, …) AND a CSS
+ * custom property (var(--color-ink), …) consumed by the SCSS mixins in
+ * src/styles/_mixins.scss. Never hardcode these values anywhere else.
+ */
+@theme {
+  /* -- Palette -- */
+  --color-forest: #0d1f15; /* page/hero background */
+  --color-forest-deep: #0a1811; /* footer background */
+  --color-ink: #16211a; /* near-black green: text on light, borders */
+  --color-moss: #2c3a30; /* body text on light, dark-surface hover */
+  --color-sage: #4a5a4e; /* muted card description text */
+  --color-pine: #3e5c45; /* member palette green */
+  --color-cream: #f3eee1; /* light section background */
+  --color-cream-bright: #f6f2e7; /* pills, headings on dark */
+  --color-paper: #fbf8ef; /* card background */
+  --color-sand: #ece5d2; /* image placeholder background */
+  --color-gold: #d9a13b; /* primary accent */
+  --color-gold-soft: #f0c987; /* label on rust */
+  --color-rust: #ad3f24; /* secondary accent, prices, overlines */
+  --color-rust-light: #e07a5f; /* "ticketed" badge */
+  --color-live: #7fb069; /* live/playing indicator dot */
+  --color-bronze: #7a4a12; /* overline on gold */
+  --color-bronze-deep: #5a3c10; /* sub text on gold */
+  --color-bronze-label: #8a4413; /* label on gold */
+  --color-olive-ink: #4a3a14; /* quote on gold */
+
+  /* Cream alpha steps (on dark surfaces) */
+  --color-cream-a16: rgba(246, 242, 231, 0.16); /* hairline borders */
+  --color-cream-a45: rgba(246, 242, 231, 0.45); /* faint text */
+  --color-cream-a60: rgba(246, 242, 231, 0.6); /* muted badge */
+  --color-cream-a65: rgba(246, 242, 231, 0.65); /* secondary text */
+  --color-cream-a70: rgba(246, 242, 231, 0.7); /* hero sub text */
+  --color-cream-a85: rgba(246, 242, 231, 0.85); /* quotes on color */
+
+  /* -- Typography -- */
+  --font-display: var(--font-archivo-black), sans-serif;
+  --font-body: var(--font-space-mono), monospace;
+
+  --text-hero: clamp(72px, 13vw, 185px);
+  --text-page-title: clamp(52px, 8vw, 110px);
+  --text-h2-lg: clamp(34px, 4.5vw, 56px);
+  --text-h2: clamp(30px, 3.6vw, 44px);
+  --text-h3: 19px;
+  --text-body: 15px;
+  --text-small: 13px;
+  --text-overline: 12px;
+  --text-badge: 11px;
+
+  --leading-body: 1.75;
+  --leading-small: 1.6;
+  --tracking-overline: 4px;
+  --tracking-badge: 2px;
+
+  /* -- Shape -- */
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-card-lg: 24px;
+  --radius-panel: 32px;
+  --radius-arch: 400px 400px 20px 20px;
+  --border-card: 2px;
+
+  /* -- Shadows -- */
+  --shadow-pill: 0 3px 10px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 10px 30px rgba(22, 33, 26, 0.15);
+  --shadow-cta: 0 4px 14px rgba(22, 33, 26, 0.35);
+  --shadow-wave: 0 -14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-cutout: 0 14px 30px rgba(60, 35, 0, 0.35);
+  --shadow-hero-title: 0 6px 40px rgba(0, 0, 0, 0.45);
+
+  /* -- Layout -- */
+  --spacing-section-y: 100px;
+  --spacing-section-x: 28px;
+  --container-content: 1100px;
+  --container-narrow: 1000px;
+  --container-tight: 900px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-forest);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
 }

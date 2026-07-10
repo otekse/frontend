@@ -1,8 +1,9 @@
 {
   "Nav": {
-    "home": "Avaleht",
-    "shop": "Pood",
-    "cart": "Ostukorv"
+    "concerts": "Kontserdid",
+    "shop": "E-pood",
+    "cart": "Ostukorv",
+    "backHome": "Kodulehele"
   },
   "LocaleSwitcher": {
     "label": "Keel",
@@ -10,18 +11,56 @@
     "en": "English"
   },
   "Home": {
-    "title": "Õtekse",
-    "tagline": "Väike Eesti kaubamärk.",
-    "shopCta": "Vaata poodi",
-    "placeholderNotice": "Avalehe kujundus tuleb Claude Design projektist — see on esialgne paigutus."
+    "heroAlt": "Kolm õde rahvariietes jooksmas, rätikud käes"
+  },
+  "About": {
+    "overline": "MEIST",
+    "title": "Kolm õde, üks hääl",
+    "p1": "Õtekse on folkmuusikast inspireeritud ansambel, mis koosneb kolmest õest ning ühendab endas noorusliku energia, musikaalsuse ja sügava sideme pärimuskultuuriga. Nende loomingut iseloomustavad värsked seaded rahvamuusikast, milles põimuvad traditsioonilised kõlad ja kaasaegne lähenemine, kõnetades igas vanuses publikut.",
+    "p2": "Ansambli teekonda on saatnud mitmed märkimisväärsed saavutused — 2021. aastal võideti Mooste Elohelü konkursi peapreemia ning järgnevatel aastatel pälviti samal konkursil ka eriauhindu. Nende arranžeering „Puraviku polkast“ kõlas 13. noorte tantsupeol. Õtekse on esinenud festivalidel Hiiu Folk, Viljandi pärimusmuusika festival ja rahvusvahelisel festivalil Zemlika. 2026. aasta kevadel oli ansamblil au esineda presidendi rahvaluulepreemiate üleandmisel Eesti Kirjandusmuuseumis. Õtekse osales 2026. a ka telesaates „Laul vs Tants“ ja kutsuti „Õhtu“ saatesse.",
+    "p3": "Oma erilise kõla ja siira lavalise kohaloluga kannab Õtekse edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
+    "photoTag": "KOLM ÕDE",
+    "photoAlt": "Õtekse — kolm õde"
+  },
+  "Members": {
+    "overline": "ANSAMBEL",
+    "title": "Tutvu ansambli liikmetega",
+    "locLabel": "Elukoht",
+    "jobLabel": "Töökoht",
+    "hobbyLabel": "Hobi",
+    "photoPlaceholder": "{name} foto"
+  },
+  "Concerts": {
+    "overline": "KONTSERDID",
+    "title": "Tulevased esinemised",
+    "linkLabel": "VAATA LÄHEMALT",
+    "badgeFree": "TASUTA",
+    "badgeTicketed": "PILETIGA",
+    "badgeSoon": "INFO PEAGI"
+  },
+  "ShopTeaser": {
+    "overline": "E-POOD",
+    "title": "MERCH ON KOHAL!",
+    "sub": "Särgid, rätikud ja albumid ootavad e-poes — vali oma lemmik!",
+    "cta": "Vaata e-poodi"
+  },
+  "Footer": {
+    "about": "Meist",
+    "concerts": "Kontserdid",
+    "rights": "© {year} Õtekse"
   },
   "Shop": {
-    "title": "Pood",
+    "title": "E-POOD",
+    "sub": "Õtekse merch — kanna rahvamuusikat südame lähedal!",
+    "productsOverline": "TOOTED",
+    "productsTitle": "Vali oma lemmik",
     "empty": "Tooteid pole hetkel saadaval.",
     "loading": "Laen tooteid…",
     "error": "Toodete laadimine ebaõnnestus.",
-    "outOfStock": "Läbi müüdud",
-    "addToCart": "Lisa korvi"
+    "outOfStock": "LÄBI MÜÜDUD",
+    "addToCart": "Lisa korvi",
+    "noteTitle": "Tellimused avatakse peagi!",
+    "noteSub": "Soovid ette tellida? Kirjuta meile:"
   },
   "Product": {
     "backToShop": "Tagasi poodi",
@@ -51,8 +90,5 @@
     "body": "Saatsime kinnituse sinu e-postile. Sinu tellimust töödeldakse.",
     "note": "Makse õnnestumist kinnitab alati meie server, mitte see leht.",
     "backHome": "Tagasi avalehele"
-  },
-  "Common": {
-    "currencyEur": "€"
   }
 }

@@ -1,0 +1,92 @@
+@use "../../styles/mixins" as *;
+
+.section {
+  background: var(--color-gold);
+  padding: 90px var(--spacing-section-x);
+  text-align: center;
+}
+
+.overline {
+  @include overline(var(--color-bronze));
+}
+
+.title {
+  @include display-heading(clamp(34px, 5vw, 64px), var(--color-ink));
+}
+
+.sub {
+  font-size: 14px;
+  margin-top: 18px;
+  color: var(--color-bronze-deep);
+}
+
+.grid {
+  max-width: var(--container-tight);
+  margin: 50px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+
+  @include until($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include bordered-card(var(--radius-card));
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transform: rotate(var(--tilt));
+  transition: transform 0.25s;
+
+  &:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: rotate(var(--tilt));
+    }
+  }
+}
+
+.cardImage {
+  position: relative;
+  height: 170px;
+  background: var(--color-sand);
+  border-bottom: var(--border-card) solid var(--color-ink);
+}
+
+.cardRow {
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+.cardPrice {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-rust);
+}
+
+.cta {
+  @include pill(var(--color-ink), var(--color-gold));
+  margin-top: 44px;
+  font-size: 14px;
+  padding: 16px 34px;
+  box-shadow: var(--shadow-cta);
+
+  &:hover {
+    background: var(--color-moss);
+  }
+}

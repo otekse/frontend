@@ -2,27 +2,25 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
+import styles from "./LocaleSwitcher.module.scss";
 
-// Manual locale switcher — complements the automatic Accept-Language detection.
+// Toggles between the two locales, styled as the design's "EST ⌄" pill.
 export function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
 
+  const other = locale === "et" ? "en" : "et";
+
   return (
-    <select
-      aria-label={t("label")}
-      value={locale}
-      onChange={(e) => router.replace(pathname, { locale: e.target.value })}
-      className="rounded border border-black/15 bg-transparent px-2 py-1 text-sm dark:border-white/20"
+    <button
+      type="button"
+      className={styles.switcher}
+      aria-label={`${t("label")}: ${t(other)}`}
+      onClick={() => router.replace(pathname, { locale: other })}
     >
-      {routing.locales.map((l) => (
-        <option key={l} value={l}>
-          {t(l)}
-        </option>
-      ))}
-    </select>
+      {locale === "et" ? "EST" : "ENG"} ⌄
+    </button>
   );
 }

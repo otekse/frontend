@@ -8,9 +8,13 @@ Work top to bottom, one item at a time. Check items off as they're completed
 - [x] Set up i18n: Estonian default + English, locale auto-detection, manual switcher (next-intl)
 - [x] Set up Orval + React Query: committed OpenAPI snapshot, generated client, hooks, and MSW mocks
 - [x] Mock-data mode: `client-preview` builds run against the committed MSW mocks via `NEXT_PUBLIC_API_MOCKING` (`PROJECT_BRIEF.md` §10 "Preview data")
-- [ ] Build the homepage from the Claude Design source — **needs `/design-login`**; placeholder in place (see AGENTS.md "Design source")
-- [ ] Marketing pages (about, contact — content to be confirmed with the owner)
-- [x] Product listing and product detail pages
+- [x] Design system from the Claude Design source: `@theme` tokens + SCSS mixins + ui module (see AGENTS.md "Styling")
+- [x] Build the homepage from the Claude Design source: parallax hero, Meist, Liikmed selector, Kontserdid, E-pood teaser, footer
+- [x] Real photos wired in (forest, wheat, band, girls cutout) via the `images:build` pipeline (originals in `assets-src/`, owner-provided)
+- [x] Member photos for the Liikmed section (design's crops extracted from the export)
+- [ ] "Hunt Aja Taga" music-player pill in the nav (deliberately skipped — needs the audio file from the owner)
+- [~] Marketing pages: Meist/Kontserdid now live on the homepage per the design; separate about/contact pages only if the owner wants them
+- [x] Product listing and product detail pages (restyled per the E-pood design)
 - [ ] Display prices VAT-inclusive once Stripe Tax / VAT handling is wired (`PROJECT_BRIEF.md` §4)
 - [x] Client-side cart (localStorage)
 - [~] Checkout + order confirmation page: confirmation page done; checkout is a stub until `POST /checkout` + Stripe exist (`PROJECT_BRIEF.md` §5)

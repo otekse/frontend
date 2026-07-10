@@ -34,6 +34,10 @@ yarn-error.log*
 .env*
 !.env.example
 
+# image originals (source for scripts/optimize-images.mjs; originals also live
+# in the owner's Google Drive + the Claude Design project)
+/assets-src
+
 # vercel
 .vercel
 

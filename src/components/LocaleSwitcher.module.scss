@@ -1,0 +1,10 @@
+@use "../styles/mixins" as *;
+
+.switcher {
+  @include pill(var(--color-cream-bright), var(--color-ink));
+  padding: 10px 16px;
+
+  &:hover {
+    background: white;
+  }
+}

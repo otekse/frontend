@@ -1,49 +1,57 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useProductsControllerFindAll } from "@/api/generated/products/products";
-import { formatPrice } from "@/lib/format";
+import { ProductCard } from "@/components/ProductCard";
+import { WheatWave } from "@/components/WheatWave";
+import ui from "@/styles/ui.module.scss";
+import styles from "./page.module.scss";
 
 export default function ShopPage() {
   const t = useTranslations("Shop");
-  const locale = useLocale();
   const { data: products, isLoading, isError } = useProductsControllerFindAll();
 
   return (
-    <div className="mx-auto max-w-5xl p-8">
-      <h1 className="text-3xl font-bold">{t("title")}</h1>
+    <>
+      <header className={styles.hero}>
+        <div className={styles.heroInner}>
+          <div className={styles.brand}>ÕTEKSE</div>
+          <h1 className={styles.title}>{t("title")}</h1>
+          <p className={styles.sub}>{t("sub")}</p>
+        </div>
+        <div className={styles.waveWrap}>
+          <WheatWave variant="wave" height={160} />
+        </div>
+      </header>
 
-      {isLoading && <p className="mt-6 opacity-70">{t("loading")}</p>}
-      {isError && <p className="mt-6 text-red-600">{t("error")}</p>}
-      {products && products.length === 0 && (
-        <p className="mt-6 opacity-70">{t("empty")}</p>
-      )}
+      <section className={styles.products}>
+        <div className={styles.productsInner}>
+          <div className={styles.overline}>— {t("productsOverline")}</div>
+          <h2 className={styles.heading}>{t("productsTitle")}</h2>
 
-      {products && products.length > 0 && (
-        <ul className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p) => {
-            const soldOut = p.stock <= 0;
-            return (
-              <li
-                key={p.id}
-                className="rounded-lg border border-black/10 p-4 dark:border-white/15"
-              >
-                <Link href={`/shop/${p.id}`} className="block">
-                  <div className="aspect-square rounded bg-black/5 dark:bg-white/10" />
-                  <h2 className="mt-3 font-medium">{p.name}</h2>
-                  <p className="mt-1 opacity-80">
-                    {formatPrice(p.priceCents, locale, p.currency.toUpperCase())}
-                  </p>
-                  {soldOut && (
-                    <p className="mt-1 text-sm text-red-600">{t("outOfStock")}</p>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>
+          {isLoading && <p className={styles.status}>{t("loading")}</p>}
+          {isError && <p className={styles.statusError}>{t("error")}</p>}
+          {products && products.length === 0 && (
+            <p className={styles.status}>{t("empty")}</p>
+          )}
+
+          {products && products.length > 0 && (
+            <div className={styles.grid}>
+              {products.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          )}
+
+          <div className={`${ui.notePanel} ${styles.note}`}>
+            <div className={ui.noteTitle}>{t("noteTitle")}</div>
+            <div className={ui.noteSub}>
+              {t("noteSub")}{" "}
+              <a href="mailto:otekse@gmail.com">otekse@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

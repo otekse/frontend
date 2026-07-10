@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint",
     "spec:pull": "node scripts/pull-spec.mjs",
+    "images:build": "node scripts/optimize-images.mjs",
     "api:generate": "orval --config orval.config.ts",
     "api:check": "orval --config orval.config.ts && git diff --exit-code src/api/generated"
   },
@@ -32,6 +33,8 @@
     "eslint-config-next": "16.2.10",
     "msw": "^2.7.0",
     "orval": "^7.3.0",
+    "sass": "^1.101.0",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

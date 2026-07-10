@@ -1,0 +1,37 @@
+@use "../styles/mixins" as *;
+
+.footer {
+  background: var(--color-forest-deep);
+  padding: 70px var(--spacing-section-x) 50px;
+  text-align: center;
+}
+
+.brand {
+  @include display-heading(34px, var(--color-cream-bright));
+  letter-spacing: 0.02em;
+}
+
+.links {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+  margin: 26px 0 34px;
+
+  a {
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--color-gold);
+    text-decoration: none;
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-cream);
+      text-decoration: underline;
+    }
+  }
+}
+
+.rights {
+  font-size: var(--text-overline);
+  color: var(--color-cream-a45);
+}
