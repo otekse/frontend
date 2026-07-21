@@ -1,0 +1,29 @@
+@use "../styles/mixins" as *;
+
+.strip {
+  position: relative;
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-gold);
+  background-repeat: repeat-x;
+}
+
+// Shop-hero variant: wavy clipped edge with a shadow lifting it off the dark bg.
+.wave {
+  filter: drop-shadow(var(--shadow-wave));
+
+  .fill {
+    background-size: auto 150%;
+    background-position: 20% 45%;
+  }
+}
+
+// Homepage variant: soft double-curve bottom edge.
+.curve .fill {
+  background-size: cover;
+  background-position: center 45%;
+  border-radius: 0 0 55% 45% / 0 0 75% 55%;
+}

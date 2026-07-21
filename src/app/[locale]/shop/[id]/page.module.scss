@@ -1,0 +1,53 @@
+@use "../../../../styles/mixins" as *;
+
+.status {
+  margin-top: 24px;
+  color: var(--color-moss);
+}
+
+.statusError {
+  margin-top: 24px;
+  color: var(--color-rust);
+}
+
+.layout {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+
+  @include from($bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.imageFrame {
+  aspect-ratio: 1 / 1;
+}
+
+.title {
+  @include display-heading(var(--text-h2), var(--color-ink));
+}
+
+.price {
+  margin-top: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-rust);
+}
+
+.desc {
+  margin-top: 16px;
+  line-height: var(--leading-body);
+  color: var(--color-moss);
+}
+
+.stock {
+  margin-top: 16px;
+  font-size: var(--text-small);
+  color: var(--color-sage);
+}
+
+.addWrap {
+  margin-top: 24px;
+}

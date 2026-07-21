@@ -1,0 +1,13 @@
+// Checkout summary rows. Shared list/total patterns come from
+// src/styles/ui.module.scss.
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  color: var(--color-ink);
+}
+
+.note {
+  margin-top: 40px;
+}

@@ -1,0 +1,188 @@
+@use "../../styles/mixins" as *;
+
+.section {
+  background: var(--color-cream);
+  padding: 20px var(--spacing-section-x) 120px;
+}
+
+.inner {
+  max-width: var(--container-content);
+  margin: 0 auto;
+}
+
+.overline {
+  @include overline(var(--color-rust));
+}
+
+.title {
+  @include display-heading(var(--text-h2), var(--color-ink));
+  margin-bottom: 48px;
+}
+
+// Per-member palette: sets the custom props everything below reads.
+.paletteGold {
+  --m-fill: var(--color-gold);
+  --m-ink: var(--color-ink);
+  --m-label: var(--color-bronze-label);
+  --m-quote: var(--color-olive-ink);
+}
+
+.paletteRust {
+  --m-fill: var(--color-rust);
+  --m-ink: var(--color-cream-bright);
+  --m-label: var(--color-gold-soft);
+  --m-quote: var(--color-cream-a85);
+}
+
+.palettePine {
+  --m-fill: var(--color-pine);
+  --m-ink: var(--color-cream-bright);
+  --m-label: var(--color-gold);
+  --m-quote: var(--color-cream-a85);
+}
+
+.panel {
+  position: relative;
+  border: var(--border-card) solid var(--color-ink);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+// Radial color fill layers — clip-path animated per selection (inline).
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--m-fill);
+  transition: clip-path 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 52px 40px 60px;
+
+  @include until($bp-sm) {
+    padding: 36px 20px 44px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  justify-items: center;
+
+  @include until($bp-sm) {
+    gap: 12px;
+  }
+}
+
+.memberCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.avatar {
+  position: relative;
+  width: clamp(96px, 16vw, 190px);
+  height: clamp(96px, 16vw, 190px);
+  border-radius: 50%;
+  background: var(--color-sand);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.5s,
+    opacity 0.5s,
+    filter 0.5s;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.avatarActive {
+  transform: scale(1.06);
+  box-shadow: 0 0 0 4px var(--m-ink);
+}
+
+.avatarInactive {
+  opacity: 0.55;
+  filter: grayscale(0.65);
+}
+
+.nameBtn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.4s;
+  background: rgba(251, 248, 239, 0.85);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  @include focus-ring;
+
+  @include reduced-motion {
+    transition: none;
+  }
+
+  @include until($bp-sm) {
+    padding: 8px 12px;
+    font-size: var(--text-overline);
+  }
+}
+
+.nameBtnActive {
+  background: var(--m-ink);
+  color: var(--m-fill);
+  border-color: var(--m-ink);
+}
+
+.detail {
+  max-width: 660px;
+  margin: 48px auto 0;
+  text-align: center;
+  min-height: 240px;
+}
+
+.detailName {
+  @include display-heading(34px, var(--m-ink));
+  margin-bottom: 24px;
+  transition: color 0.5s;
+}
+
+.detailFacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: var(--leading-small);
+  color: var(--m-ink);
+  transition: color 0.5s;
+}
+
+.detailLabel {
+  color: var(--m-label);
+  font-weight: 700;
+  transition: color 0.5s;
+}
+
+.detailQuote {
+  font-size: 14px;
+  line-height: var(--leading-body);
+  font-style: italic;
+  color: var(--m-quote);
+  margin: 28px auto 0;
+  max-width: 560px;
+  transition: color 0.5s;
+}

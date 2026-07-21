@@ -1,0 +1,72 @@
+@use "../styles/mixins" as *;
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-sand);
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.imgLoaded {
+  opacity: 1;
+}
+
+// Loading skeleton: a cream sheen sweeping over the sand surface.
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    var(--color-cream-a45) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+    background: none;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 180% 0;
+  }
+
+  to {
+    background-position: -80% 0;
+  }
+}
+
+// Missing/failed image: quiet wheat mark on the sand surface.
+.missing {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-sage);
+  opacity: 0.45;
+
+  svg {
+    width: clamp(28px, 20%, 56px);
+    height: auto;
+  }
+}

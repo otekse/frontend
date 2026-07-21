@@ -1,0 +1,93 @@
+@use "../../styles/mixins" as *;
+
+.section {
+  background: var(--color-forest);
+  position: relative;
+}
+
+.inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 80px var(--spacing-section-x) 110px;
+}
+
+.overline {
+  @include overline(var(--color-gold));
+}
+
+.title {
+  @include display-heading(var(--text-h2), var(--color-cream-bright));
+  margin-bottom: 50px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--color-cream-a16);
+
+  @include until($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.date {
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-gold);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--color-cream-bright);
+  margin-bottom: 6px;
+}
+
+.info {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-cream-a65);
+}
+
+.link {
+  font-size: var(--text-overline);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-cream);
+  }
+}
+
+.badge {
+  font-size: var(--text-badge);
+  font-weight: 700;
+  letter-spacing: var(--tracking-badge);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+  justify-self: end;
+
+  @include until($bp-sm) {
+    justify-self: start;
+  }
+}
+
+.badgeFree {
+  color: var(--color-gold);
+}
+
+.badgeTicketed {
+  color: var(--color-rust-light);
+}
+
+.badgeSoon {
+  color: var(--color-cream-a60);
+}

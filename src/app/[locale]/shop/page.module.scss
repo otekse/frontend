@@ -1,0 +1,73 @@
+@use "../../../styles/mixins" as *;
+
+.hero {
+  position: relative;
+  background: var(--color-forest);
+  padding: 120px var(--spacing-section-x) 0;
+  overflow: hidden;
+}
+
+.heroInner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.brand {
+  @include overline(var(--color-gold));
+}
+
+.title {
+  @include display-heading(var(--text-page-title), var(--color-cream-bright));
+}
+
+.sub {
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--color-cream-a70);
+  max-width: 520px;
+  margin: 24px auto 0;
+}
+
+.waveWrap {
+  margin: 60px calc(-1 * var(--spacing-section-x)) 0;
+}
+
+.products {
+  background: var(--color-cream);
+  padding: 90px var(--spacing-section-x) 110px;
+}
+
+.productsInner {
+  max-width: var(--container-content);
+  margin: 0 auto;
+}
+
+.overline {
+  @include overline(var(--color-rust));
+}
+
+.heading {
+  @include display-heading(var(--text-h2), var(--color-ink));
+  margin-bottom: 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.status {
+  color: var(--color-moss);
+}
+
+.statusError {
+  color: var(--color-rust);
+}
+
+.note {
+  margin-top: 70px;
+}

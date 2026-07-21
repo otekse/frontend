@@ -1,0 +1,53 @@
+@use "../styles/mixins" as *;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px var(--spacing-section-x);
+  z-index: 100;
+
+  @include until($bp-sm) {
+    padding: 14px 16px;
+  }
+}
+
+.group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pill {
+  @include pill(var(--color-cream-bright), var(--color-ink));
+
+  &:hover {
+    background: white;
+    color: var(--color-ink);
+  }
+}
+
+// The concerts pill carries the gold underline accent from the design.
+.pillAccent {
+  border-bottom: 3px solid var(--color-gold);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-rust);
+}
+
+.cartPill {
+  @include pill(var(--color-gold), var(--color-ink));
+  border-bottom: 3px solid var(--color-ink);
+
+  &:hover {
+    background: var(--color-gold-soft);
+  }
+}

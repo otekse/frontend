@@ -1,0 +1,94 @@
+{
+  "Nav": {
+    "concerts": "Concerts",
+    "shop": "Shop",
+    "cart": "Cart",
+    "backHome": "Back to homepage"
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "et": "Eesti",
+    "en": "English"
+  },
+  "Home": {
+    "heroAlt": "Three sisters in folk costumes running, headscarves in hand"
+  },
+  "About": {
+    "overline": "ABOUT US",
+    "title": "Three sisters, one voice",
+    "p1": "Õtekse is a folk music–inspired ensemble consisting of three sisters, blending youthful energy, strong musicianship, and a deep connection to traditional culture. Their music is characterized by fresh arrangements of folk songs, where traditional sounds blend with a contemporary approach, appealing to both younger and older audiences.",
+    "p2": "The ensemble’s journey has been marked by several notable achievements. In 2021, they won the Grand Prize at the Mooste Elohelü competition, followed by additional special awards in subsequent years. Their arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. Õtekse has appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026, the group had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. In 2026, Õtekse also participated in the TV show “Laul vs Tants” and appeared on the “Õhtu” talk show.",
+    "p3": "With their distinctive sound and sincere stage presence, Õtekse continues to carry forward Estonian folk music traditions while giving them a fresh and contemporary voice.",
+    "photoTag": "THREE SISTERS",
+    "photoAlt": "Õtekse — three sisters"
+  },
+  "Members": {
+    "overline": "THE BAND",
+    "title": "Meet the band members",
+    "locLabel": "Home",
+    "jobLabel": "Occupation",
+    "hobbyLabel": "Hobby",
+    "photoPlaceholder": "Photo of {name}"
+  },
+  "Concerts": {
+    "overline": "CONCERTS",
+    "title": "Upcoming performances",
+    "linkLabel": "MORE INFO",
+    "badgeFree": "FREE",
+    "badgeTicketed": "TICKETED",
+    "badgeSoon": "INFO SOON"
+  },
+  "ShopTeaser": {
+    "overline": "SHOP",
+    "title": "THE MERCH IS HERE!",
+    "sub": "Shirts, headscarves and albums await in the shop — pick your favourite!",
+    "cta": "Visit the shop"
+  },
+  "Footer": {
+    "about": "About",
+    "concerts": "Concerts",
+    "rights": "© {year} Õtekse"
+  },
+  "Shop": {
+    "title": "SHOP",
+    "sub": "Õtekse merch — wear folk music close to your heart!",
+    "productsOverline": "PRODUCTS",
+    "productsTitle": "Pick your favourite",
+    "empty": "No products available right now.",
+    "loading": "Loading products…",
+    "error": "Failed to load products.",
+    "outOfStock": "SOLD OUT",
+    "addToCart": "Add to cart",
+    "noteTitle": "Ordering opens soon!",
+    "noteSub": "Want to pre-order? Write to us:"
+  },
+  "Product": {
+    "backToShop": "Back to shop",
+    "notFound": "Product not found.",
+    "inStock": "In stock: {count}",
+    "outOfStock": "Sold out",
+    "addToCart": "Add to cart"
+  },
+  "Cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "total": "Total",
+    "checkout": "Check out",
+    "continueShopping": "Continue shopping"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "redirecting": "Redirecting you to secure checkout…",
+    "failed": "Could not start the checkout session. Please try again.",
+    "pending": "The payment endpoint (Stripe) is not connected yet — this step is still being built.",
+    "backToCart": "Back to cart"
+  },
+  "OrderConfirmation": {
+    "title": "Thank you for your order!",
+    "body": "We've sent a confirmation to your email. Your order is being processed.",
+    "note": "Payment success is always confirmed by our server, never by this page.",
+    "backHome": "Back home"
+  }
+}

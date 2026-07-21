@@ -1,0 +1,44 @@
+// Cart line-item layout. Shared commerce patterns (the divided list, the
+// total row, muted text) come from src/styles/ui.module.scss.
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.info {
+  flex: 1;
+}
+
+.name {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qtyInput {
+  width: 64px;
+}
+
+.lineTotal {
+  width: 96px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.continue {
+  display: inline-block;
+  margin-top: 16px;
+}
+
+.totalText {
+  font-size: 1.125rem;
+}

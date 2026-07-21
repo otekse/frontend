@@ -1,0 +1,140 @@
+@use "mixins" as *;
+
+// Shared cross-page UI classes for the commerce surfaces (shop, product,
+// cart, checkout, confirmation). Section-specific styling stays in each
+// page/component module; these are the recurring design patterns.
+
+// Page shell below the fixed pill nav, on the cream surface.
+.page {
+  background: var(--color-cream);
+  min-height: 100vh;
+  padding: 120px var(--spacing-section-x) 110px;
+}
+
+.pageInner {
+  max-width: var(--container-content);
+  margin: 0 auto;
+}
+
+.pageInnerNarrow {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.overline {
+  @include overline(var(--color-rust));
+}
+
+.heading {
+  @include display-heading(var(--text-h2), var(--color-ink));
+  margin-bottom: 40px;
+}
+
+// Primary action: dark pill with gold text.
+.pillDark {
+  @include pill(var(--color-ink), var(--color-gold));
+
+  &:hover {
+    background: var(--color-moss);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+// Gold note panel ("orders open soon" and similar callouts).
+.notePanel {
+  text-align: center;
+  background: var(--color-gold);
+  border: var(--border-card) solid var(--color-ink);
+  border-radius: var(--radius-card-lg);
+  padding: 40px 28px;
+
+  .noteTitle {
+    @include display-heading(clamp(20px, 2.6vw, 30px), var(--color-ink));
+  }
+
+  .noteSub {
+    font-size: var(--text-small);
+    margin-top: 12px;
+    color: var(--color-bronze-deep);
+
+    a {
+      color: var(--color-ink);
+      font-weight: 700;
+      @include focus-ring;
+    }
+  }
+}
+
+// Bordered content card on cream.
+.card {
+  @include bordered-card(var(--radius-card-lg));
+}
+
+.inkLink {
+  color: var(--color-ink);
+  font-size: var(--text-small);
+  text-decoration: underline;
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-rust);
+  }
+}
+
+.input {
+  border: 1.5px solid var(--color-ink);
+  border-radius: 8px;
+  background: var(--color-paper);
+  padding: 6px 10px;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  @include focus-ring;
+}
+
+// Muted body copy on the cream surface (empty states, descriptions).
+.muted {
+  color: var(--color-moss);
+}
+
+.metaSmall {
+  font-size: var(--text-small);
+  color: var(--color-sage);
+}
+
+// Hairline-divided list of line items (cart, checkout summary).
+.lineItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > li + li {
+    border-top: 1px solid var(--color-ink-a15);
+  }
+}
+
+// Order/summary total, ruled off from the items above it.
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: var(--border-card) solid var(--color-ink);
+  font-family: var(--font-display);
+  color: var(--color-ink);
+}
+
+.totalValue {
+  color: var(--color-rust);
+}
+
+// Trailing action row (a CTA or back-link under the content).
+.actions {
+  margin-top: 32px;
+}

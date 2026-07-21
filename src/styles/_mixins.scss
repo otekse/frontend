@@ -1,0 +1,128 @@
+// Shared SCSS mixins for the Õtekse design system.
+//
+// Values come EXCLUSIVELY from the CSS custom properties defined in the
+// :root block in src/app/globals.css — mixins provide structure (DRY
+// patterns), never new design values. Usage (relative path from your module):
+//   @use "../styles/mixins" as *;
+//   .cta { @include pill(var(--color-ink), var(--color-gold)); }
+
+// ---- Breakpoints (design is desktop-first; we define the collapses) ----
+$bp-sm: 640px;
+$bp-md: 900px;
+
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin until($bp) {
+  @media (max-width: ($bp - 0.02px)) {
+    @content;
+  }
+}
+
+// ---- Motion ----
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ---- Focus ----
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+// ---- Pill: the signature button/badge/nav shape ----
+@mixin pill($bg, $ink) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $bg;
+  color: $ink;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-small);
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-pill);
+  @include focus-ring;
+}
+
+// ---- Overline: the "— MEIST" section kicker ----
+@mixin overline($color) {
+  font-size: var(--text-overline);
+  font-weight: 700;
+  letter-spacing: var(--tracking-overline);
+  color: $color;
+  margin-bottom: 18px;
+}
+
+// ---- Display headings ----
+@mixin display-heading($size, $color) {
+  font-family: var(--font-display);
+  font-weight: 400; // Archivo Black is single-weight
+  font-size: $size;
+  line-height: 1.05;
+  color: $color;
+  margin: 0;
+}
+
+// ---- Bordered card: paper surface with the 2px ink outline ----
+@mixin bordered-card($radius: var(--radius-card-lg)) {
+  background: var(--color-paper);
+  border: var(--border-card) solid var(--color-ink);
+  border-radius: $radius;
+  overflow: hidden;
+}
+
+// ---- Card hover lift ----
+@mixin card-hover {
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// ---- Section shell: vertical rhythm + centered content column ----
+@mixin section-shell($maxw: var(--container-content)) {
+  padding: var(--spacing-section-y) var(--spacing-section-x);
+
+  > .inner,
+  &__inner {
+    max-width: $maxw;
+    margin: 0 auto;
+  }
+}
+
+// ---- Rotated tag: the tilted label/badge accent ----
+@mixin rotated-tag($bg, $ink, $deg: -3deg) {
+  display: inline-block;
+  background: $bg;
+  color: $ink;
+  font-weight: 700;
+  font-size: var(--text-badge);
+  letter-spacing: var(--tracking-badge);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  transform: rotate($deg);
+}
