@@ -33,10 +33,13 @@ export async function countryForIp(ip: string | null): Promise<string | null> {
 
 // The client address from X-Forwarded-For.
 //
-// SPOOFABLE: Traefik appends to any client-supplied header, so the first entry
-// is under the client's control. That is acceptable here and only here — the
-// worst outcome is a visitor forcing their own default language, which the
-// locale switcher already lets them do. Never use this value for
+// Measured against production 2026-07-28: our Traefik *replaces* this header
+// with the real peer address rather than trusting the client's, so a forged
+// value never reaches us. Do not rely on that anyway — it is proxy
+// configuration, not a guarantee, and a future change could silently restore
+// client control. Treat the value as untrusted: it is fine for choosing a
+// default language, where the worst case is a visitor picking their own (the
+// locale switcher already allows that), and must never be used for
 // authentication, authorisation, rate limiting, or audit logging.
 export function clientIpFrom(forwardedFor: string | null): string | null {
   if (!forwardedFor) return null;
