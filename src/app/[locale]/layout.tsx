@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { UmamiScript } from "@/components/UmamiScript";
 import { Providers } from "./providers";
 import "../globals.css";
 
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
             <SiteFooter />
           </Providers>
         </NextIntlClientProvider>
+        <UmamiScript />
       </body>
     </html>
   );
