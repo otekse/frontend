@@ -97,6 +97,7 @@ a {
   --color-olive-ink: #4a3a14; /* quote on gold */
 
   --color-ink-a15: rgba(22, 33, 26, 0.15); /* hairline dividers on light */
+  --color-forest-a60: rgba(13, 31, 21, 0.6); /* scrim over colour fills */
 
   /* Cream alpha steps (on dark surfaces) */
   --color-cream-a16: rgba(246, 242, 231, 0.16); /* hairline borders */

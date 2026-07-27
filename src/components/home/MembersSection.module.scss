@@ -24,7 +24,7 @@
 // .detail* rules) reads identically on every one of them. The introduction's
 // text, label, and quote colours are therefore consistent across members.
 .paletteGold {
-  --m-fill: var(--color-bronze);
+  --m-fill: var(--color-gold);
 }
 
 .paletteRust {
@@ -166,11 +166,20 @@
   border-color: var(--color-ink);
 }
 
+// The bio sits on a consistent dark scrim so the light text reads the same on
+// every fill colour — including Mirtel's light gold.
 .detail {
   max-width: 660px;
-  margin: 48px auto 0;
+  margin: 44px auto 0;
+  padding: 36px 40px 40px;
   text-align: center;
   min-height: 240px;
+  background: var(--color-forest-a60);
+  border-radius: var(--radius-panel);
+
+  @include until($bp-sm) {
+    padding: 28px 24px 32px;
+  }
 }
 
 // Consistent introduction colours for every member (they read on all three
