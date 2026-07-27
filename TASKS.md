@@ -18,7 +18,7 @@ Work top to bottom, one item at a time. Check items off as they're completed
 - [ ] Display prices VAT-inclusive once Stripe Tax / VAT handling is wired (`PROJECT_BRIEF.md` §4)
 - [x] Client-side cart (localStorage)
 - [~] Checkout + order confirmation page: confirmation page done; checkout is a stub until `POST /checkout` + Stripe exist (`PROJECT_BRIEF.md` §5)
-- [ ] Starting-point privacy policy page (scaffolding only, owner arranges legal review — `PROJECT_BRIEF.md` §11)
-- [ ] Add the Umami tracking script to the root layout, pointed at the self-hosted instance
+- [x] Starting-point privacy policy page — ET/EN text shipped and footer-linked; owner still arranges legal review, and it names `info@õtekse.ee`, which must actually exist (`PROJECT_BRIEF.md` §11)
+- [x] Add the Umami tracking script to the root layout, pointed at the self-hosted instance (renders only when `NEXT_PUBLIC_UMAMI_URL` + `NEXT_PUBLIC_UMAMI_WEBSITE_ID` are set)
 - [ ] CI pipeline per AGENTS.md "CI" (typecheck/lint/build/tests, MSW smoke check, Orval no-diff check)
 - [x] Fill in AGENTS.md "Setup & commands" and "Conventions"

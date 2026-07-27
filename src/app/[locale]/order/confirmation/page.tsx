@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
@@ -11,6 +12,7 @@ export default async function OrderConfirmationPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  assertShopEnabled();
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("OrderConfirmation");

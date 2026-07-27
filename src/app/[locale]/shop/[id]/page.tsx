@@ -7,10 +7,12 @@ import { useProductsControllerFindOne } from "@/api/generated/products/products"
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { SmartImage } from "@/components/SmartImage";
 import { formatPrice } from "@/lib/format";
+import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
 export default function ProductDetailPage() {
+  assertShopEnabled();
   const t = useTranslations("Product");
   const locale = useLocale();
   const { id } = useParams<{ id: string }>();

@@ -42,12 +42,33 @@
     "overline": "E-POOD",
     "title": "MERCH ON KOHAL!",
     "sub": "Särgid, rätikud ja albumid ootavad e-poes — vali oma lemmik!",
-    "cta": "Vaata e-poodi"
+    "cta": "Vaata e-poodi",
+    "comingSoon": "Pood avaneb varsti"
   },
   "Footer": {
     "about": "Meist",
     "concerts": "Kontserdid",
+    "privacy": "Privaatsus",
     "rights": "© {year} Õtekse"
+  },
+  "Meta": {
+    "title": "Õtekse — eesti pärimusmuusika",
+    "description": "Õtekse on eesti pärimusmuusika ansambel. Kuula, tule kontserdile ja vaata, kus me esineme."
+  },
+  "Privacy": {
+    "title": "Privaatsuspoliitika",
+    "controllerTitle": "Vastutav töötleja",
+    "controllerBody": "Selle veebilehe eest vastutab Õtekse. Küsimuste korral kirjuta {email}.",
+    "analyticsTitle": "Külastusstatistika",
+    "analyticsBody": "Kogume külastusstatistikat Umamiga, mida majutame ise oma serveris. Umami ei kasuta küpsiseid ega jälgi sind veebilehtede vahel. Sinu IP-aadressi ja brauseri andmeid töödeldakse serveris ainult anonüümse päevase tunnuse moodustamiseks — neid ei säilitata kujul, mis võimaldaks sind tuvastada, ega edastata kolmandatele isikutele. Õiguslik alus on meie õigustatud huvi mõista, kuidas lehte kasutatakse (isikuandmete kaitse üldmääruse art 6 lg 1 punkt f).",
+    "cookiesTitle": "Küpsised",
+    "cookiesBody": "Kasutame ühtainsat küpsist — NEXT_LOCALE —, mis jätab meelde sinu valitud keele. See on lehe toimimiseks vajalik ega vaja eraldi nõusolekut. Reklaami- ega jälgimisküpsiseid me ei kasuta.",
+    "thirdPartiesTitle": "Kolmandad osapooled",
+    "thirdPartiesBody": "Veebileht ei lae sisu kolmandate osapoolte serveritest. Kirjatüübid ja pildid tulevad meie enda serverist.",
+    "rightsTitle": "Sinu õigused",
+    "rightsBody": "Sul on õigus tutvuda oma andmetega, nõuda nende parandamist või kustutamist, piirata töötlemist ja esitada töötlemisele vastuväiteid. Samuti on sul õigus pöörduda Andmekaitse Inspektsiooni poole (aki.ee).",
+    "contactTitle": "Kontakt",
+    "contactBody": "Privaatsusküsimustes kirjuta {email}."
   },
   "Shop": {
     "title": "E-POOD",

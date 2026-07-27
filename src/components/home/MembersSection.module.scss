@@ -19,26 +19,20 @@
   margin-bottom: 48px;
 }
 
-// Per-member palette: sets the custom props everything below reads.
+// Per-member palette. Only the radiating FILL colour differs between members;
+// all three are deep jewel tones so a single light text scheme (see the
+// .detail* rules) reads identically on every one of them. The introduction's
+// text, label, and quote colours are therefore consistent across members.
 .paletteGold {
   --m-fill: var(--color-gold);
-  --m-ink: var(--color-ink);
-  --m-label: var(--color-bronze-label);
-  --m-quote: var(--color-olive-ink);
 }
 
 .paletteRust {
   --m-fill: var(--color-rust);
-  --m-ink: var(--color-cream-bright);
-  --m-label: var(--color-gold-soft);
-  --m-quote: var(--color-cream-a85);
 }
 
 .palettePine {
   --m-fill: var(--color-pine);
-  --m-ink: var(--color-cream-bright);
-  --m-label: var(--color-gold);
-  --m-quote: var(--color-cream-a85);
 }
 
 .panel {
@@ -49,15 +43,35 @@
   background: var(--color-paper);
 }
 
-// Radial color fill layers — clip-path animated per selection (inline).
-.fill {
+// Radial colour fill: a static backdrop (previous member) plus a radiating
+// overlay (selected member) that replays its keyframes on every pick.
+.fillBase {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: var(--m-fill);
-  transition: clip-path 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fillRadiate {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--m-fill);
+  clip-path: circle(150% at var(--fill-cx) 150px);
+  animation: member-radiate 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 
   @include reduced-motion {
-    transition: none;
+    animation: none;
+  }
+}
+
+@keyframes member-radiate {
+  from {
+    clip-path: circle(0% at var(--fill-cx) 150px);
+  }
+
+  to {
+    clip-path: circle(150% at var(--fill-cx) 150px);
   }
 }
 
@@ -109,9 +123,11 @@
   }
 }
 
+// Consistent ring on the active avatar (a light rim reads on every fill
+// colour), rather than one that changes per member palette.
 .avatarActive {
   transform: scale(1.06);
-  box-shadow: 0 0 0 4px var(--m-ink);
+  box-shadow: 0 0 0 4px var(--color-cream-bright);
 }
 
 .avatarInactive {
@@ -142,23 +158,35 @@
   }
 }
 
+// Consistent selected state for every member — the site's primary pill
+// (ink fill, gold text), not a per-palette colour.
 .nameBtnActive {
-  background: var(--m-ink);
-  color: var(--m-fill);
-  border-color: var(--m-ink);
+  background: var(--color-ink);
+  color: var(--color-gold);
+  border-color: var(--color-ink);
 }
 
+// The bio sits on a consistent dark scrim so the light text reads the same on
+// every fill colour — including Mirtel's light gold.
 .detail {
   max-width: 660px;
-  margin: 48px auto 0;
+  margin: 44px auto 0;
+  padding: 36px 40px 40px;
   text-align: center;
   min-height: 240px;
+  background: var(--color-forest-a60);
+  border-radius: var(--radius-panel);
+
+  @include until($bp-sm) {
+    padding: 28px 24px 32px;
+  }
 }
 
+// Consistent introduction colours for every member (they read on all three
+// deep fill colours): light heading + facts, gold labels, soft-cream quote.
 .detailName {
-  @include display-heading(34px, var(--m-ink));
+  @include display-heading(34px, var(--color-cream-bright));
   margin-bottom: 24px;
-  transition: color 0.5s;
 }
 
 .detailFacts {
@@ -167,22 +195,19 @@
   gap: 8px;
   font-size: 14px;
   line-height: var(--leading-small);
-  color: var(--m-ink);
-  transition: color 0.5s;
+  color: var(--color-cream-bright);
 }
 
 .detailLabel {
-  color: var(--m-label);
+  color: var(--color-gold-soft);
   font-weight: 700;
-  transition: color 0.5s;
 }
 
 .detailQuote {
   font-size: 14px;
   line-height: var(--leading-body);
   font-style: italic;
-  color: var(--m-quote);
+  color: var(--color-cream-a85);
   margin: 28px auto 0;
   max-width: 560px;
-  transition: color 0.5s;
 }

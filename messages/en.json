@@ -42,12 +42,33 @@
     "overline": "SHOP",
     "title": "THE MERCH IS HERE!",
     "sub": "Shirts, headscarves and albums await in the shop — pick your favourite!",
-    "cta": "Visit the shop"
+    "cta": "Visit the shop",
+    "comingSoon": "Shop opening soon"
   },
   "Footer": {
     "about": "About",
     "concerts": "Concerts",
+    "privacy": "Privacy",
     "rights": "© {year} Õtekse"
+  },
+  "Meta": {
+    "title": "Õtekse — Estonian folk music",
+    "description": "Õtekse is an Estonian folk music group. Listen, come to a concert, and see where we are playing next."
+  },
+  "Privacy": {
+    "title": "Privacy policy",
+    "controllerTitle": "Data controller",
+    "controllerBody": "This website is run by Õtekse. For any questions, write to {email}.",
+    "analyticsTitle": "Visitor statistics",
+    "analyticsBody": "We collect visitor statistics with Umami, which we host ourselves on our own server. Umami sets no cookies and does not track you across websites. Your IP address and browser details are processed on the server solely to derive an anonymous daily identifier — they are not retained in a form that identifies you, and are never shared with third parties. The legal basis is our legitimate interest in understanding how the site is used (GDPR Art. 6(1)(f)).",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "We use exactly one cookie — NEXT_LOCALE — which remembers the language you chose. It is strictly necessary for the site to work and so needs no separate consent. We use no advertising or tracking cookies.",
+    "thirdPartiesTitle": "Third parties",
+    "thirdPartiesBody": "This site loads no content from third-party servers. Fonts and images are served from our own server.",
+    "rightsTitle": "Your rights",
+    "rightsBody": "You have the right to access your data, to request its correction or erasure, to restrict processing, and to object to it. You may also lodge a complaint with the Estonian Data Protection Inspectorate (aki.ee).",
+    "contactTitle": "Contact",
+    "contactBody": "For privacy matters, write to {email}."
   },
   "Shop": {
     "title": "SHOP",

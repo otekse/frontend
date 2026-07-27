@@ -7,7 +7,7 @@
 // Rerun whenever an original changes, and commit the outputs. Paths the app
 // uses are defined once in src/content/assets.ts.
 import sharp from "sharp";
-import { readFileSync, mkdirSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -42,25 +42,21 @@ const jobs = [
     .toFile(join(OUT, "girls-cutout.webp")),
 ];
 
-// Member avatars: the design's hand-positioned crops are embedded as webp data
-// URIs in the design export's image-slot state. Extract + downscale them.
-const slots = JSON.parse(readFileSync(join(SRC, "image-slots.state.json"), "utf8"));
-const memberSlots = {
-  "member-mirtel": "mirtel",
-  "member-mirjam": "mirjam",
-  "member-katlin": "katlin",
+// Member avatars: square, face-focused crops from the hi-res originals
+// (assets-src/<file>, 2400x3600). Each region is hand-tuned so the sister's
+// face sits in a consistent head-and-torso framing before the 600px downscale.
+const memberCrops = {
+  mirtel: { file: "mirtel.jpg", left: 334, top: 476 },
+  mirjam: { file: "mirjam.jpg", left: 640, top: 404 },
+  katlin: { file: "kätlin.jpg", left: 640, top: 368 },
 };
-for (const [slot, name] of Object.entries(memberSlots)) {
-  const dataUri = slots[slot]?.u;
-  if (!dataUri?.startsWith("data:image/")) {
-    console.error(`slot ${slot}: no embedded image found`);
-    process.exit(1);
-  }
-  const buf = Buffer.from(dataUri.slice(dataUri.indexOf(",") + 1), "base64");
+const CROP_SIDE = 1600;
+for (const [name, c] of Object.entries(memberCrops)) {
   jobs.push(
-    sharp(buf)
-      .resize({ width: 600, height: 600, fit: "cover", withoutEnlargement: true })
-      .webp({ quality: 82 })
+    sharp(join(SRC, c.file))
+      .extract({ left: c.left, top: c.top, width: CROP_SIDE, height: CROP_SIDE })
+      .resize({ width: 600, height: 600, fit: "cover" })
+      .webp({ quality: 85 })
       .toFile(join(OUT, "members", `${name}.webp`)),
   );
 }

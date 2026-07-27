@@ -4,10 +4,12 @@ import { useTranslations } from "next-intl";
 import { useProductsControllerFindAll } from "@/api/generated/products/products";
 import { ProductCard } from "@/components/ProductCard";
 import { WheatWave } from "@/components/WheatWave";
+import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
 export default function ShopPage() {
+  assertShopEnabled();
   const t = useTranslations("Shop");
   const { data: products, isLoading, isError } = useProductsControllerFindAll();
 

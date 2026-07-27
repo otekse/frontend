@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
+import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
@@ -13,6 +14,7 @@ import styles from "./page.module.scss";
 // returned Stripe session URL — never trusting client-side prices
 // (PROJECT_BRIEF.md §4, §5). The server re-validates everything.
 export default function CheckoutPage() {
+  assertShopEnabled();
   const t = useTranslations("Checkout");
   const tCart = useTranslations("Cart");
   const locale = useLocale();

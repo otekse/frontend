@@ -11,6 +11,7 @@ export function SiteFooter() {
       <div className={styles.links}>
         <Link href="/#meist">{t("about")}</Link>
         <Link href="/#kontserdid">{t("concerts")}</Link>
+        <Link href="/privacy">{t("privacy")}</Link>
       </div>
       <div className={styles.rights}>
         {t("rights", { year: new Date().getFullYear() })}
