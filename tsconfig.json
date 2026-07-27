@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+    // Tests run on Node's built-in runner, whose ESM resolver requires explicit
+    // file extensions. Safe here because noEmit is on — nothing is compiled out.
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
