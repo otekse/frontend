@@ -51,6 +51,10 @@
     "privacy": "Privacy",
     "rights": "© {year} Õtekse"
   },
+  "Meta": {
+    "title": "Õtekse — Estonian folk music",
+    "description": "Õtekse is an Estonian folk music group. Listen, come to a concert, and see where we are playing next."
+  },
   "Privacy": {
     "title": "Privacy policy",
     "controllerTitle": "Data controller",
