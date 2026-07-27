@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
+import { SHOP_ENABLED } from "@/lib/shop";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import styles from "./SiteHeader.module.scss";
 
@@ -22,10 +23,12 @@ export function SiteHeader() {
         <Link href="/#kontserdid" className={`${styles.pill} ${styles.pillAccent}`}>
           {t("concerts")}
         </Link>
-        <Link href="/shop" className={styles.pill}>
-          <span className={styles.dot} aria-hidden />
-          {t("shop")}
-        </Link>
+        {SHOP_ENABLED && (
+          <Link href="/shop" className={styles.pill}>
+            <span className={styles.dot} aria-hidden />
+            {t("shop")}
+          </Link>
+        )}
       </div>
       <div className={styles.group}>
         {inStorefront && (

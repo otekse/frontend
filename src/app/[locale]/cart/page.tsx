@@ -4,10 +4,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
+import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
 export default function CartPage() {
+  assertShopEnabled();
   const t = useTranslations("Cart");
   const locale = useLocale();
   const { items, setQuantity, remove, totalCents } = useCart();
