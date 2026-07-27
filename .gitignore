@@ -38,6 +38,9 @@ yarn-error.log*
 # in the owner's Google Drive + the Claude Design project)
 /assets-src
 
+# GeoIP database, re-downloaded on every build by scripts/fetch-geoip.mjs
+/geoip
+
 # vercel
 .vercel
 
