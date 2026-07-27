@@ -17,10 +17,16 @@ export async function GET(request: NextRequest) {
     request.headers.get("accept-language"),
   );
 
-  const response = NextResponse.redirect(
-    new URL(`/${locale}${next}`, request.nextUrl.origin),
-    307,
-  );
+  // A relative Location on purpose. Behind Traefik, `request.nextUrl.origin`
+  // resolves to the container's own bind address, so building an absolute URL
+  // here sent real visitors to https://localhost:3000/et. The target is always
+  // same-origin, and RFC 7231 permits a relative Location, so sidestep host
+  // detection entirely rather than trying to reconstruct it from forwarded
+  // headers.
+  const response = new NextResponse(null, {
+    status: 307,
+    headers: { Location: `/${locale}${next}` },
+  });
 
   // Remember the outcome so this costs one redirect per visitor, not per request.
   response.cookies.set(LOCALE_COOKIE, locale, {
