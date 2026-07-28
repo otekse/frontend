@@ -6,17 +6,20 @@ import { IMAGES } from "@/content/assets";
 import styles from "./Hero.module.scss";
 
 // Fraction of the remaining distance the rendered offset covers each frame.
-// This easing is what the old scroll-event handler lacked: it applied the raw
-// scroll position, so the layers stepped with every wheel tick instead of
-// gliding. Lower drifts more; higher tracks the scrollbar more tightly.
-const EASE = 0.12;
+// This easing is what a plain scroll-event handler lacks: applying the raw
+// scroll position makes the layers step with every wheel tick. Keep it high
+// enough that the hero still tracks the scrollbar — below roughly 0.2 the
+// layers visibly lag behind the page and the parallax reads as sluggish
+// rather than smooth.
+const EASE = 0.25;
 // Sub-pixel remainder nobody can see — snap and let the loop stop.
 const SETTLE_PX = 0.05;
 // How much the title recedes and fades over one hero's worth of scrolling.
 // Translation alone just moves the title further; shrinking and fading it as
-// it travels is what reads as depth.
-const TITLE_SCALE_LOSS = 0.12;
-const TITLE_FADE = 0.6;
+// it travels is what reads as depth. Kept subtle — enough to sell distance,
+// not so much that the title looks like it is animating on its own.
+const TITLE_SCALE_LOSS = 0.07;
+const TITLE_FADE = 0.4;
 
 // Layered parallax hero from the design: forest photo depth stack, giant
 // ÕTEKSE title, wheat-field foreground. Each [data-parallax] layer shifts by
