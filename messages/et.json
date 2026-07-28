@@ -18,23 +18,24 @@
     "pause": "Peata",
     "unavailable": "Lugu pole veel saadaval",
     "tracklist": "Lugude nimekiri",
-    "soon": "VARSTI"
+    "soon": "VARSTI",
+    "loading": "Laen lugu…"
   },
   "About": {
     "overline": "MEIST",
     "title": "Kolm õde, üks hääl",
     "s1Title": "Meie muusika",
-    "s1Body": "Õtekse on folkmuusikast inspireeritud ansambel, mis koosneb kolmest õest ning ühendab endas noorusliku energia, musikaalsuse ja sügava sideme pärimuskultuuriga. Nende loomingut iseloomustavad värsked seaded rahvamuusikast, milles põimuvad traditsioonilised kõlad ja kaasaegne lähenemine, kõnetades igas vanuses publikut.",
+    "s1Body": "Oleme Õtekse — folkmuusikast inspireeritud ansambel, mis koosneb kolmest õest. Ühendame endas noorusliku energia, musikaalsuse ja sügava sideme pärimuskultuuriga. Meie loomingut iseloomustavad värsked seaded rahvamuusikast, milles põimuvad traditsioonilised kõlad ja kaasaegne lähenemine — nii kõnetame igas vanuses publikut.",
     "s2Title": "Meie ajalugu",
-    "s2Body": "Ansambli teekonda on saatnud mitmed märkimisväärsed saavutused — 2021. aastal võideti Mooste Elohelü konkursi peapreemia ning järgnevatel aastatel pälviti samal konkursil ka eriauhindu. Nende arranžeering „Puraviku polkast“ kõlas 13. noorte tantsupeol. Õtekse on esinenud festivalidel Hiiu Folk, Viljandi pärimusmuusika festival ja rahvusvahelisel festivalil Zemlika. 2026. aasta kevadel oli ansamblil au esineda presidendi rahvaluulepreemiate üleandmisel Eesti Kirjandusmuuseumis. Õtekse osales 2026. a ka telesaates „Laul vs Tants“ ja kutsuti „Õhtu“ saatesse.",
+    "s2Body": "Meie teekonda on saatnud mitmed märkimisväärsed saavutused — 2021. aastal võitsime Mooste Elohelü konkursi peapreemia ning järgnevatel aastatel pälvisime samal konkursil ka eriauhindu. Meie arranžeering „Puraviku polkast“ kõlas 13. noorte tantsupeol. Oleme esinenud festivalidel Hiiu Folk, Viljandi pärimusmuusika festival ja rahvusvahelisel festivalil Zemlika. 2026. aasta kevadel oli meil au esineda presidendi rahvaluulepreemiate üleandmisel Eesti Kirjandusmuuseumis. Samal aastal osalesime ka telesaates „Laul vs Tants“ ning meid kutsuti „Õhtu“ saatesse.",
     "s3Title": "Meie kõla",
-    "s3Body": "Oma erilise kõla ja siira lavalise kohaloluga kannab Õtekse edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
+    "s3Body": "Oma erilise kõla ja siira lavalise kohaloluga kanname edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
     "photoTag": "KOLM ÕDE",
     "photoAlt": "Õtekse — kolm õde"
   },
   "Members": {
     "overline": "ANSAMBEL",
-    "title": "Tutvu ansambli liikmetega",
+    "title": "Tutvu meiega",
     "locLabel": "Elukoht",
     "jobLabel": "Töökoht",
     "hobbyLabel": "Hobi",
@@ -68,12 +69,12 @@
   },
   "Meta": {
     "title": "Õtekse — eesti pärimusmuusika",
-    "description": "Õtekse on eesti pärimusmuusika ansambel. Kuula, tule kontserdile ja vaata, kus me esineme."
+    "description": "Oleme Õtekse — eesti pärimusmuusika ansambel. Kuula meid, tule kontserdile ja vaata, kus me esineme."
   },
   "Privacy": {
     "title": "Privaatsuspoliitika",
     "controllerTitle": "Vastutav töötleja",
-    "controllerBody": "Selle veebilehe eest vastutab Õtekse. Küsimuste korral kirjuta {email}.",
+    "controllerBody": "Selle veebilehe eest vastutame meie, Õtekse. Küsimuste korral kirjuta {email}.",
     "analyticsTitle": "Külastusstatistika",
     "analyticsBody": "Kogume külastusstatistikat Umamiga, mida majutame ise oma serveris. Umami ei kasuta küpsiseid ega jälgi sind veebilehtede vahel. Sinu IP-aadressi ja brauseri andmeid töödeldakse serveris ainult anonüümse päevase tunnuse moodustamiseks — neid ei säilitata kujul, mis võimaldaks sind tuvastada, ega edastata kolmandatele isikutele. Õiguslik alus on meie õigustatud huvi mõista, kuidas lehte kasutatakse (isikuandmete kaitse üldmääruse art 6 lg 1 punkt f).",
     "cookiesTitle": "Küpsised",

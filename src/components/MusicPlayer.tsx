@@ -16,6 +16,7 @@ export function MusicPlayer() {
   const t = useTranslations("Music");
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [buffering, setBuffering] = useState(false);
   const [open, setOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -55,10 +56,23 @@ export function MusicPlayer() {
     const el = audioRef.current;
     if (!el || !playable) return;
     if (el.paused) {
-      void el.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      // Flip the icon immediately. The track is several megabytes, so on a
+      // slow connection play() can take seconds to produce sound — without
+      // instant feedback the button reads as broken.
+      setPlaying(true);
+      if (el.readyState < 3) setBuffering(true);
+      void el.play().catch((err: DOMException) => {
+        // AbortError just means a newer play()/pause() superseded this one —
+        // not a failure, and not a reason to contradict the UI.
+        if (err.name !== 'AbortError') {
+          setPlaying(false);
+          setBuffering(false);
+        }
+      });
     } else {
       el.pause();
       setPlaying(false);
+      setBuffering(false);
     }
   };
 
@@ -116,11 +130,19 @@ export function MusicPlayer() {
           onClick={toggle}
           disabled={!playable}
           aria-label={
-            playable ? (playing ? t("pause") : t("play")) : t("unavailable")
+            playable
+              ? buffering
+                ? t("loading")
+                : playing
+                  ? t("pause")
+                  : t("play")
+              : t("unavailable")
           }
           title={playable ? undefined : t("unavailable")}
         >
-          {playing ? (
+          {buffering ? (
+            <span className={styles.spinner} aria-hidden />
+          ) : playing ? (
             <svg viewBox="0 0 24 24" aria-hidden>
               <rect x="6" y="5" width="4" height="14" rx="1.2" />
               <rect x="14" y="5" width="4" height="14" rx="1.2" />
@@ -156,9 +178,19 @@ export function MusicPlayer() {
       <audio
         ref={audioRef}
         src={track.src ?? undefined}
-        preload="none"
+        // "metadata" not "none": it fetches enough to know the duration and
+        // warms the connection, so the first press starts far sooner. The
+        // audio body itself still is not downloaded until play.
+        preload="metadata"
         onEnded={() => setPlaying(false)}
         onPause={() => setPlaying(false)}
+        onWaiting={() => setBuffering(true)}
+        onPlaying={() => setBuffering(false)}
+        onCanPlay={() => setBuffering(false)}
+        onError={() => {
+          setPlaying(false);
+          setBuffering(false);
+        }}
       />
     </div>
   );

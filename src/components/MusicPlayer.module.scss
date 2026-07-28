@@ -136,6 +136,22 @@
     fill: var(--color-gold);
   }
 
+  // Buffering: the press registered, the audio just is not ready yet.
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-gold);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @include reduced-motion {
+    .spinner {
+      animation-duration: 2s;
+    }
+  }
+
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -191,4 +207,10 @@
   font-size: var(--text-badge);
   letter-spacing: var(--tracking-badge);
   color: var(--color-rust);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
