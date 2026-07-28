@@ -6,7 +6,12 @@ const SITE_URL = "https://xn--tekse-cua.ee";
 
 // Marketing surfaces only. Storefront paths come back automatically when the
 // shop flag is turned on — they must never be advertised while they 404.
-const PATHS = ["", "/privacy", ...(SHOP_ENABLED ? ["/shop"] : [])];
+const PATHS = [
+  "",
+  "/concerts",
+  "/privacy",
+  ...(SHOP_ENABLED ? ["/shop"] : []),
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

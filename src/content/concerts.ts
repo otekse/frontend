@@ -4,6 +4,10 @@
 
 export type ConcertBadge = "free" | "ticketed" | "soon";
 
+// How many upcoming concerts the homepage teaser shows before sending people
+// to the full /concerts page.
+export const TEASER_COUNT = 3;
+
 export type Concert = {
   date: string;
   title: { et: string; en: string };
@@ -86,6 +90,104 @@ export const concerts: Concert[] = [
     info: {
       et: "Lisainfo peagi!",
       en: "More info coming soon!",
+    },
+  },
+];
+
+// Past performances — the archive behind the "Vaata eelnevaid" toggle on
+// /concerts. Newest first.
+//
+// Unlike an upcoming concert's `date` ("23.06"), these read as words rather
+// than numbers, so the date is translated too.
+export type PastConcert = {
+  date: { et: string; en: string };
+  title: { et: string; en: string };
+  info: { et: string; en: string };
+};
+
+export const pastConcerts: PastConcert[] = [
+  {
+    date: {
+      et: "2026 kevad",
+      en: "Spring 2026",
+    },
+    title: {
+      et: "Presidendi rahvaluulepreemiate üleandmine",
+      en: "Presidential folk poetry awards ceremony",
+    },
+    info: {
+      et: "Eesti Kirjandusmuuseum, Tartu.",
+      en: "Estonian Literary Museum, Tartu.",
+    },
+  },
+  {
+    date: {
+      et: "2026",
+      en: "2026",
+    },
+    title: {
+      et: "Telesaade „Laul vs Tants“",
+      en: "TV show “Laul vs Tants”",
+    },
+    info: {
+      et: "Lisaks külaskäik saatesse „Õhtu“.",
+      en: "Plus a guest appearance on the “Õhtu” talk show.",
+    },
+  },
+  {
+    date: {
+      et: "2025",
+      en: "2025",
+    },
+    title: {
+      et: "Rahvusvaheline festival Zemlika",
+      en: "Zemlika international festival",
+    },
+    info: {
+      et: "Läti — meie esimene suurem välisesinemine.",
+      en: "Latvia — our first big performance abroad.",
+    },
+  },
+  {
+    date: {
+      et: "2024",
+      en: "2024",
+    },
+    title: {
+      et: "Hiiu Folk",
+      en: "Hiiu Folk",
+    },
+    info: {
+      et: "Hiiumaa pärimusmuusika festival.",
+      en: "Folk music festival on Hiiumaa.",
+    },
+  },
+  {
+    date: {
+      et: "2023",
+      en: "2023",
+    },
+    title: {
+      et: "13. noorte tantsupidu",
+      en: "13th Youth Dance Festival",
+    },
+    info: {
+      et: "Meie seade „Puraviku polkast“ kõlas peo kavas.",
+      en: "Our arrangement of “Puraviku polka” was part of the programme.",
+    },
+  },
+  {
+    date: {
+      et: "2021",
+      en: "2021",
+    },
+    title: {
+      et: "Mooste Elohelü — peapreemia",
+      en: "Mooste Elohelü — Grand Prize",
+    },
+    info: {
+      et: "Järgnevatel aastatel lisandusid eriauhinnad.",
+      en: "Special awards followed in subsequent years.",
     },
   },
 ];

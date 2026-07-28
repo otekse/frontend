@@ -117,7 +117,10 @@ a {
   --color-ink-a15: rgba(22, 33, 26, 0.15); /* hairline dividers on light */
   --color-forest-a60: rgba(13, 31, 21, 0.6); /* scrim over colour fills */
 
+  --color-gold-a75: rgba(217, 161, 59, 0.75); /* archive dates, receded */
+
   /* Cream alpha steps (on dark surfaces) */
+  --color-cream-a10: rgba(246, 242, 231, 0.1); /* archive dividers, fainter */
   --color-cream-a16: rgba(246, 242, 231, 0.16); /* hairline borders */
   --color-cream-a45: rgba(246, 242, 231, 0.45); /* faint text */
   --color-cream-a60: rgba(246, 242, 231, 0.6); /* muted badge */
@@ -131,6 +134,9 @@ a {
 
   --text-hero: clamp(72px, 13vw, 185px);
   --text-page-title: clamp(52px, 8vw, 110px);
+  /* For page titles that are one long word ("KONTSERDID"), where the full
+     --text-page-title runs into the layout on either side. */
+  --text-page-title-long: clamp(46px, 7vw, 96px);
   --text-h2-lg: clamp(34px, 4.5vw, 56px);
   --text-h2: clamp(30px, 3.6vw, 44px);
   --text-h3: 19px;
@@ -159,6 +165,18 @@ a {
   --shadow-wave: 0 -14px 34px rgba(0, 0, 0, 0.45);
   --shadow-cutout: 0 14px 30px rgba(60, 35, 0, 0.35);
   --shadow-hero-title: 0 6px 40px rgba(0, 0, 0, 0.45);
+  --shadow-hero-sub: 0 2px 14px rgba(9, 22, 15, 0.95);
+  --shadow-photo-card: 0 18px 44px rgba(0, 0, 0, 0.5); /* concert hero, back */
+  --shadow-photo-card-front: 0 24px 56px rgba(0, 0, 0, 0.58);
+
+  /* Radial hole punched through the concert-hero photo scatter so the title
+     stays legible over whatever lands behind it. */
+  --gradient-hero-scrim: radial-gradient(
+    ellipse at center,
+    rgba(9, 22, 15, 0.92) 0%,
+    rgba(9, 22, 15, 0.7) 45%,
+    rgba(9, 22, 15, 0) 75%
+  );
 
   /* -- Layout -- */
   --spacing-section-y: 100px;

@@ -3,7 +3,7 @@
     "concerts": "Concerts",
     "shop": "Shop",
     "cart": "Cart",
-    "backHome": "Back to homepage"
+    "home": "Home"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -47,7 +47,24 @@
     "linkLabel": "MORE INFO",
     "badgeFree": "FREE",
     "badgeTicketed": "TICKETED",
-    "badgeSoon": "INFO SOON"
+    "badgeSoon": "INFO SOON",
+    "seeAll": "See all concerts"
+  },
+  "ConcertsPage": {
+    "overline": "ÕTEKSE",
+    "title": "CONCERTS",
+    "sub": "Upcoming performances — come see us live on stage!",
+    "footnote": "More dates are added regularly — check back soon!",
+    "pastShow": "SEE PAST CONCERTS",
+    "pastHide": "HIDE PAST CONCERTS",
+    "pastHeading": "Past performances",
+    "photo1Alt": "Õtekse dancing in a meadow",
+    "photo2Alt": "Õtekse on stage",
+    "photo3Alt": "Õtekse performing in a hall",
+    "photo4Alt": "Õtekse on the beach",
+    "liveTag": "LIVE",
+    "metaTitle": "Concerts — Õtekse",
+    "metaDescription": "Upcoming Õtekse concerts and performances. See where and when you can hear us live."
   },
   "ShopTeaser": {
     "overline": "SHOP",

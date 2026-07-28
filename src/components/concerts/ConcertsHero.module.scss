@@ -1,0 +1,186 @@
+@use "../../styles/mixins" as *;
+
+.hero {
+  position: relative;
+  background: var(--color-forest);
+  // Top padding clears the fixed nav. The bottom is not zero (as the design
+  // has it) because the front-right card's LIVE tag hangs below the stage and
+  // `overflow: hidden` would slice it in half.
+  padding: 120px var(--spacing-section-x) 30px;
+  overflow: hidden;
+
+  @include until($bp-md) {
+    padding-top: 100px;
+  }
+}
+
+.stage {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  // Scales with the viewport so the absolutely-positioned cards keep their
+  // relationship instead of piling up on narrow screens.
+  height: clamp(430px, 58vw, 620px);
+
+  // Below the clamp's floor the cards have shrunk but the stage has not,
+  // leaving a dead band between the title and the front row of photos.
+  @include until($bp-sm) {
+    height: clamp(320px, 66vw, 420px);
+  }
+}
+
+// ---- Photo cards -------------------------------------------------------
+// .card owns position/size only: the parallax hook writes `transform` here
+// every frame, so anything else transform-based must live on .tilt.
+.card {
+  position: absolute;
+}
+
+.tilt {
+  position: relative;
+}
+
+.photo {
+  height: auto;
+  border: 5px solid var(--color-cream-bright);
+  border-radius: 14px;
+  box-shadow: var(--shadow-photo-card);
+}
+
+.cardBackLeft {
+  left: 1%;
+  top: 4%;
+  z-index: 1;
+  width: clamp(120px, 21vw, 250px);
+
+  .tilt {
+    transform: rotate(-7deg);
+    // Blur + dim is the depth cue that sells these as further back.
+    filter: brightness(0.7) blur(1.2px);
+  }
+
+  .photo {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.cardBackRight {
+  right: 2%;
+  top: 0;
+  z-index: 1;
+  width: clamp(108px, 19vw, 230px);
+
+  .tilt {
+    transform: rotate(6deg);
+    filter: brightness(0.72) blur(1px);
+  }
+
+  .photo {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.cardFrontLeft {
+  left: 10%;
+  bottom: 6%;
+  z-index: 3;
+  width: clamp(160px, 27vw, 320px);
+
+  .tilt {
+    transform: rotate(4deg);
+    filter: brightness(0.9);
+  }
+
+  .photo {
+    aspect-ratio: 3 / 2;
+    border-width: 6px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-photo-card-front);
+  }
+}
+
+.cardFrontRight {
+  right: 8%;
+  bottom: 2%;
+  z-index: 4;
+  width: clamp(150px, 25vw, 300px);
+
+  .tilt {
+    transform: rotate(-5deg);
+  }
+
+  .photo {
+    aspect-ratio: 4 / 3;
+    border-width: 6px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-photo-card-front);
+  }
+}
+
+.liveTag {
+  @include rotated-tag(var(--color-gold), var(--color-ink), 3deg);
+  position: absolute;
+  bottom: -14px;
+  left: -12px;
+  border: 3px solid var(--color-ink);
+
+  @include until($bp-sm) {
+    bottom: -10px;
+    left: -8px;
+    padding: 4px 9px;
+  }
+}
+
+// ---- Title stack -------------------------------------------------------
+.scrim {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: min(560px, 92%);
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background: var(--gradient-hero-scrim);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 5;
+  // Purely decorative overlay — never swallow a click meant for a card.
+  pointer-events: none;
+}
+
+.overline {
+  @include overline(var(--color-gold));
+}
+
+.title {
+  @include display-heading(
+    var(--text-page-title-long),
+    var(--color-cream-bright)
+  );
+  text-shadow: var(--shadow-hero-title);
+}
+
+.sub {
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--color-cream-a85);
+  max-width: 380px;
+  margin: 22px auto 0;
+  text-shadow: var(--shadow-hero-sub);
+
+  @include until($bp-sm) {
+    font-size: var(--text-small);
+    max-width: 300px;
+    margin-top: 16px;
+  }
+}

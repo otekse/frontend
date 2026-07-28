@@ -1,0 +1,112 @@
+@use "../../styles/mixins" as *;
+
+.wrap {
+  margin-top: 56px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-small);
+  letter-spacing: 1px;
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  // Grows the touch target to ~44px without moving the label.
+  padding: 12px 0;
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-cream);
+  }
+}
+
+.caret {
+  display: inline-block;
+  font-size: 18px;
+  transition: transform 0.35s;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+// 0fr -> 1fr animates to the panel's real measured height, so the list can
+// grow without anyone remembering to bump a max-height.
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  // visibility (not display) keeps the collapsed rows out of the tab order and
+  // the accessibility tree; the 0s-delayed step defers it until the collapse
+  // has finished animating.
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s,
+    visibility 0s 0.5s;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s,
+    visibility 0s;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// The grid row collapses to zero height only if its child cannot force one.
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-cream-a10);
+
+  @include until($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+.date {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-gold-a75);
+}
+
+.name {
+  font-size: var(--text-body);
+  color: var(--color-cream-a85);
+  margin-bottom: 4px;
+}
+
+.info {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-cream-a45);
+}
