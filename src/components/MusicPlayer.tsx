@@ -61,6 +61,13 @@ export function MusicPlayer() {
   const track = tracks[index];
   const playable = Boolean(track?.src);
   const multiple = tracks.length > 1;
+  const startAt = track?.startAt ?? 0;
+
+  // Seek past a slow intro. Guarded on readyState because seeking before
+  // metadata has loaded is silently ignored; onLoadedMetadata covers that case.
+  const seekToStart = (el: HTMLAudioElement) => {
+    if (startAt > 0 && el.currentTime < startAt) el.currentTime = startAt;
+  };
 
   // Switching tracks: load the new source, and keep playing if we already were.
   useEffect(() => {
@@ -93,6 +100,7 @@ export function MusicPlayer() {
     const el = audioRef.current;
     if (!el || !playable) return;
     if (el.paused) {
+      seekToStart(el);
       // Flip the icon immediately. The track is several megabytes, so on a
       // slow connection play() can take seconds to produce sound — without
       // instant feedback the button reads as broken.
@@ -222,7 +230,12 @@ export function MusicPlayer() {
         // warms the connection, so the first press starts far sooner. The
         // audio body itself still is not downloaded until play.
         preload="metadata"
-        onEnded={() => setPlaying(false)}
+        onLoadedMetadata={(e) => seekToStart(e.currentTarget)}
+        onEnded={(e) => {
+          setPlaying(false);
+          // Rewind to the offset, not to 0, so a replay skips the intro too.
+          e.currentTarget.currentTime = startAt;
+        }}
         onPause={() => setPlaying(false)}
         onWaiting={() => setBuffering(true)}
         onPlaying={() => setBuffering(false)}

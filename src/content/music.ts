@@ -19,10 +19,20 @@ export type Track = {
   title: string;
   /** Path under public/, or null while the audio file is still missing. */
   src: string | null;
+  /**
+   * Seconds to skip at the start, for recordings that open with a long
+   * fade-in or room tone. Playback begins here and returns here when the
+   * track ends.
+   *
+   * Done as a playback offset rather than by trimming the file: it needs no
+   * re-encoding (which would cost a generation of quality), keeps the master
+   * intact, and can be re-tuned by editing this number.
+   */
+  startAt?: number;
 };
 
 export const tracks: Track[] = [
-  { title: "Unt aia taga", src: "/audio/unt-aia-taga.webm" },
+  { title: "Unt aia taga", src: "/audio/unt-aia-taga.webm", startAt: 2 },
   { title: "Puraviku polka", src: null },
 ];
 
