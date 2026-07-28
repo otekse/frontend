@@ -42,8 +42,13 @@
     "overline": "SHOP",
     "title": "THE MERCH IS HERE!",
     "sub": "Shirts, headscarves and albums await in the shop — pick your favourite!",
-    "cta": "Visit the shop",
-    "comingSoon": "Shop opening soon"
+    "cta": "Visit the shop"
+  },
+  "ShopClosed": {
+    "overline": "SHOP",
+    "title": "THE SHOP OPENS SOON",
+    "body": "We're getting shirts, headscarves and albums ready. We'll announce it at our concerts and here on this page when the shop opens its doors.",
+    "tag": "SOON"
   },
   "Footer": {
     "about": "About",

@@ -88,7 +88,7 @@
   right: 0;
   text-align: center;
   z-index: 5;
-  will-change: transform;
+  will-change: transform, opacity; // the title also scales and fades on scroll
   @include display-heading(var(--text-hero), var(--color-cream-bright));
   letter-spacing: 0.01em;
   text-shadow: var(--shadow-hero-title);
@@ -121,6 +121,7 @@
   height: 32%;
   z-index: 8;
   filter: drop-shadow(0 -14px 34px rgba(0, 0, 0, 0.45));
+  will-change: transform; // slight drift, so the foreground isn't dead still
 
   .layerFill {
     width: 100%;
