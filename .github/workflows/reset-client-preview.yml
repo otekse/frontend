@@ -1,0 +1,38 @@
+# Resets `client-preview` to `main` whenever a promotion lands.
+#
+# `client-preview` is the runtime orchestrator's disposable branch: it must
+# never sit behind `main`, or the client's next preview shows a stale site
+# (PROJECT_BRIEF.md §10, "The client-preview lifecycle").
+#
+# This lives in CI rather than in the orchestrator on purpose. The orchestrator
+# only learns about a merge if it happens to be running and someone opens a
+# session, so a merge made from the GitHub UI — the normal case — would leave
+# the branch stale indefinitely. CI observes every merge, including ones made
+# while the orchestrator is down.
+#
+# Force-pushing here is correct, not destructive: `client-preview` holds only
+# the current unpromoted draft, and the merge that triggers this workflow *is*
+# that draft being promoted. Nothing of value ever lives only on this branch.
+name: Reset client-preview
+
+on:
+  push:
+    branches: [main]
+
+# Never let two resets race; the newest main is the one that should win.
+concurrency:
+  group: reset-client-preview
+  cancel-in-progress: true
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Point client-preview at main
+        run: |
+          git push --force origin \
+            "${{ github.sha }}:refs/heads/client-preview"
