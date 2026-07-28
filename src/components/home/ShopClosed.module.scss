@@ -1,0 +1,61 @@
+@use "../../styles/mixins" as *;
+
+// Keeps ShopTeaser's gold band so the page rhythm is unchanged when the shop
+// flips on or off; everything inside it is different.
+.section {
+  background: var(--color-gold);
+  padding: var(--spacing-section-y) var(--spacing-section-x);
+  text-align: center;
+}
+
+// Narrower than the teaser's three-card grid: a notice reads as deliberate,
+// where a full-width frame around a short message reads as something missing.
+.inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.overline {
+  @include overline(var(--color-bronze));
+}
+
+// A dashed frame rather than the solid bordered-card outline: it reads as a
+// space held open, not as a product that failed to load.
+.panel {
+  border: var(--border-card) dashed var(--color-ink);
+  border-radius: var(--radius-panel);
+  padding: 44px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include until($bp-sm) {
+    padding: 36px 22px 32px;
+  }
+}
+
+.mark {
+  width: 46px;
+  height: auto;
+  color: var(--color-bronze);
+  opacity: 0.55;
+  margin-bottom: 22px;
+}
+
+.title {
+  @include display-heading(clamp(28px, 4vw, 46px), var(--color-ink));
+}
+
+.body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-bronze-deep);
+  max-width: 46ch;
+  margin-top: 18px;
+}
+
+// The section's one accent. A tag, not a pill — nothing here is clickable.
+.tag {
+  @include rotated-tag(var(--color-ink), var(--color-gold));
+  margin-top: 32px;
+}

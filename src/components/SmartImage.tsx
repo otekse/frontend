@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WheatMark } from "./WheatMark";
 import styles from "./SmartImage.module.scss";
 
 // Content image with design-system loading/missing states:
@@ -52,21 +53,7 @@ export function SmartImage({
 
       {state === "error" && (
         <div className={styles.missing} role="img" aria-label={alt}>
-          <svg viewBox="0 0 48 64" fill="none" aria-hidden>
-            <path
-              d="M24 62 C25 46 23 34 24 18"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            <g fill="currentColor">
-              <ellipse cx="24" cy="14" rx="4" ry="9" />
-              <ellipse cx="15" cy="24" rx="3.5" ry="8" transform="rotate(-24 15 24)" />
-              <ellipse cx="33" cy="24" rx="3.5" ry="8" transform="rotate(24 33 24)" />
-              <ellipse cx="14" cy="38" rx="3.5" ry="8" transform="rotate(-28 14 38)" />
-              <ellipse cx="34" cy="38" rx="3.5" ry="8" transform="rotate(28 34 38)" />
-            </g>
-          </svg>
+          <WheatMark />
         </div>
       )}
     </div>

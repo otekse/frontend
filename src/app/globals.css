@@ -96,6 +96,7 @@ a {
   --color-bronze-label: #8a4413; /* label on gold */
   --color-olive-ink: #4a3a14; /* quote on gold */
 
+  --color-ink-a08: rgba(22, 33, 26, 0.08); /* inset track on light surfaces */
   --color-ink-a15: rgba(22, 33, 26, 0.15); /* hairline dividers on light */
   --color-forest-a60: rgba(13, 31, 21, 0.6); /* scrim over colour fills */
 

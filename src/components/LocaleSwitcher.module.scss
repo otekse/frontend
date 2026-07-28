@@ -2,9 +2,66 @@
 
 .switcher {
   @include pill(var(--color-cream-bright), var(--color-ink));
-  padding: 10px 16px;
+  padding: 5px 8px 5px 12px;
+  gap: 9px;
 
   &:hover {
     background: white;
   }
+}
+
+.globe {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: var(--color-moss);
+}
+
+// Inset two-position track. The knob is a sibling behind the labels rather
+// than a background on the active one, so it can slide between them.
+.track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: var(--color-ink-a08);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+}
+
+.knob {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  background: var(--color-ink);
+  border-radius: var(--radius-pill);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.knobEnd {
+  transform: translateX(100%);
+}
+
+.option {
+  position: relative; // above the knob
+  padding: 4px 9px;
+  font-size: var(--text-badge);
+  letter-spacing: var(--tracking-badge);
+  text-align: center;
+  color: var(--color-moss);
+  transition: color 0.28s ease;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.optionOn {
+  color: var(--color-cream-bright);
 }

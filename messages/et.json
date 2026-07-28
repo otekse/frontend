@@ -42,8 +42,13 @@
     "overline": "E-POOD",
     "title": "MERCH ON KOHAL!",
     "sub": "Särgid, rätikud ja albumid ootavad e-poes — vali oma lemmik!",
-    "cta": "Vaata e-poodi",
-    "comingSoon": "Pood avaneb varsti"
+    "cta": "Vaata e-poodi"
+  },
+  "ShopClosed": {
+    "overline": "E-POOD",
+    "title": "E-POOD AVANEB VARSTI",
+    "body": "Valmistame ette särke, rätikuid ja albumeid. Anname kontsertidel ja siin lehel teada, kui pood uksed avab.",
+    "tag": "VARSTI"
   },
   "Footer": {
     "about": "Meist",
