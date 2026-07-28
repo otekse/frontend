@@ -5,7 +5,7 @@ import { MembersSection } from "@/components/home/MembersSection";
 import { ConcertsSection } from "@/components/home/ConcertsSection";
 import { ShopTeaser } from "@/components/home/ShopTeaser";
 import { ShopClosed } from "@/components/home/ShopClosed";
-import { SHOP_ENABLED } from "@/lib/shop";
+import { shopEnabled } from "@/lib/shop-server";
 
 // The band homepage, built from the Claude Design source (see AGENTS.md
 // "Design source"): parallax hero, about, members, concerts, shop teaser.
@@ -19,6 +19,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const shopOn = await shopEnabled();
 
   return (
     <>
@@ -26,7 +27,7 @@ export default async function HomePage({
       <AboutSection />
       <MembersSection />
       <ConcertsSection />
-      {SHOP_ENABLED ? <ShopTeaser /> : <ShopClosed />}
+      {shopOn ? <ShopTeaser /> : <ShopClosed />}
     </>
   );
 }

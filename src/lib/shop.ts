@@ -5,6 +5,29 @@ import { notFound } from "next/navigation";
 // exercising the shop; only production sets NEXT_PUBLIC_SHOP_ENABLED=false.
 export const SHOP_ENABLED = process.env.NEXT_PUBLIC_SHOP_ENABLED !== "false";
 
+/**
+ * Preview-only override, so the editor can show both storefront states without
+ * a rebuild. Deliberately gated on the mocking flag, which is set only on the
+ * `client-preview` build: in production this is a compile-time `false`, the
+ * cookie is never read, and the pages stay statically prerendered.
+ *
+ * This override can never open the real shop — production's storefront state
+ * stays a deploy-time decision (NEXT_PUBLIC_SHOP_ENABLED in Coolify).
+ */
+export const SHOP_PREVIEW_OVERRIDABLE =
+  process.env.NEXT_PUBLIC_API_MOCKING === "enabled";
+
+export const SHOP_COOKIE = "otk_shop";
+
+/** Resolve the effective state from an override cookie value. Pure — the
+ *  cookie is read by the caller (server component, or middleware on the edge). */
+export function resolveShopEnabled(cookieValue: string | undefined): boolean {
+  if (!SHOP_PREVIEW_OVERRIDABLE) return SHOP_ENABLED;
+  if (cookieValue === "on") return true;
+  if (cookieValue === "off") return false;
+  return SHOP_ENABLED;
+}
+
 // Backstop only — the real guard is in middleware.ts.
 //
 // Storefront pages are client components, and notFound() called from a client

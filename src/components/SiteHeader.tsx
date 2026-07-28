@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
-import { SHOP_ENABLED } from "@/lib/shop";
+import { useShopEnabled } from "./ShopState";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import styles from "./SiteHeader.module.scss";
 
@@ -16,6 +16,7 @@ export function SiteHeader() {
   const { count } = useCart();
   const pathname = usePathname();
   const inStorefront = STOREFRONT.test(pathname);
+  const shopOn = useShopEnabled();
 
   return (
     <nav className={styles.nav}>
@@ -23,7 +24,7 @@ export function SiteHeader() {
         <Link href="/#kontserdid" className={`${styles.pill} ${styles.pillAccent}`}>
           {t("concerts")}
         </Link>
-        {SHOP_ENABLED && (
+        {shopOn && (
           <Link href="/shop" className={styles.pill}>
             <span className={styles.dot} aria-hidden />
             {t("shop")}

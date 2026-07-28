@@ -5,9 +5,16 @@
 // would set third-party cookies and make a consent banner legally required
 // (AGENTS.md "Analytics and privacy" → consent tripwire), so keep audio local.
 //
-// To add a track: drop the MP3 in `public/audio/` and add a row here. A row
-// with `src: null` renders in the list but cannot be played — useful for
+// To add a track: drop the audio file in `public/audio/` and add a row here. A
+// row with `src: null` renders in the list but cannot be played — useful for
 // announcing a song before the file exists.
+//
+// Audio lives in `public/` rather than `assets-src/`, unlike images: there is
+// no optimisation pass to run, so the delivered file *is* the original.
+//
+// Format note: WebM/Opus plays in Chrome, Edge and Firefox, and in Safari from
+// 15 (macOS) / 17.4 (iOS). Adding an MP3 sibling would cover older Safari —
+// see the AGENTS.md note on audio formats.
 export type Track = {
   title: string;
   /** Path under public/, or null while the audio file is still missing. */
@@ -15,7 +22,7 @@ export type Track = {
 };
 
 export const tracks: Track[] = [
-  { title: "Hunt Aja Taga", src: null },
+  { title: "Unt aia taga", src: "/audio/unt-aia-taga.webm" },
   { title: "Puraviku polka", src: null },
 ];
 

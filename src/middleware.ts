@@ -2,7 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 import { LOCALE_COOKIE } from "./i18n/locale-cookie";
-import { SHOP_ENABLED } from "./lib/shop";
+import { SHOP_COOKIE, resolveShopEnabled } from "./lib/shop";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -36,7 +36,8 @@ export default function middleware(request: NextRequest) {
   // from a client component renders the not-found UI but leaves the status at
   // 200 — a soft 404 that crawlers treat as a real page. Rewriting to a path
   // that matches no route produces a genuine 404 and skips rendering entirely.
-  if (!SHOP_ENABLED && STOREFRONT.test(stripLocale(pathname))) {
+  const shopOn = resolveShopEnabled(request.cookies.get(SHOP_COOKIE)?.value);
+  if (!shopOn && STOREFRONT.test(stripLocale(pathname))) {
     return NextResponse.rewrite(new URL("/shop-disabled-404", request.url));
   }
 
