@@ -13,6 +13,7 @@
     "lint": "eslint",
     "spec:pull": "node scripts/pull-spec.mjs",
     "images:build": "node scripts/optimize-images.mjs",
+    "icons:build": "node scripts/build-icons.mjs",
     "api:generate": "orval --config orval.config.ts",
     "api:check": "orval --config orval.config.ts && git diff --exit-code src/api/generated",
     "test": "node --test \"src/**/*.test.ts\""

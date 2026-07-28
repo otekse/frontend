@@ -101,6 +101,15 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  cursor: pointer;
+  @include focus-ring;
+
+  // Hover anywhere in the column previews the pick, so the portrait reads as
+  // clickable rather than decorative.
+  &:hover .avatar {
+    opacity: 1;
+    filter: none;
+  }
 }
 
 .avatar {
@@ -146,7 +155,6 @@
   background: rgba(251, 248, 239, 0.85);
   color: var(--color-ink);
   border: 2px solid var(--color-ink);
-  @include focus-ring;
 
   @include reduced-motion {
     transition: none;
@@ -172,7 +180,7 @@
   max-width: 660px;
   margin: 44px auto 0;
   padding: 36px 40px 40px;
-  text-align: center;
+  text-align: left;
   min-height: 240px;
   background: var(--color-forest-a60);
   border-radius: var(--radius-panel);
@@ -210,4 +218,5 @@
   color: var(--color-cream-a85);
   margin: 28px auto 0;
   max-width: 560px;
+  text-align: center; // the one centred element — it reads as a pull-quote
 }

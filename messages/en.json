@@ -13,6 +13,13 @@
   "Home": {
     "heroAlt": "Three sisters in folk costumes running, headscarves in hand"
   },
+  "Music": {
+    "play": "Play",
+    "pause": "Pause",
+    "unavailable": "Track not available yet",
+    "tracklist": "Track list",
+    "soon": "SOON"
+  },
   "About": {
     "overline": "ABOUT US",
     "title": "Three sisters, one voice",

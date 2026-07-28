@@ -58,24 +58,30 @@ export function MembersSection() {
               {members.map((m, i) => {
                 const active = i === selected;
                 return (
-                  <div key={m.name} className={styles.memberCol}>
-                    <div
+                  // The whole column is the control — portrait included — so
+                  // the obvious thing to click is clickable. One button rather
+                  // than two keeps it to a single tab stop per member.
+                  <button
+                    key={m.name}
+                    type="button"
+                    onClick={() => pick(i)}
+                    aria-pressed={active}
+                    className={styles.memberCol}
+                  >
+                    <span
                       className={`${styles.avatar} ${active ? styles.avatarActive : styles.avatarInactive}`}
                     >
                       <SmartImage
                         src={m.photo}
                         alt={t("photoPlaceholder", { name: m.name })}
                       />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => pick(i)}
-                      aria-pressed={active}
+                    </span>
+                    <span
                       className={`${styles.nameBtn} ${active ? styles.nameBtnActive : ""}`}
                     >
                       {m.name}
-                    </button>
-                  </div>
+                    </span>
+                  </button>
                 );
               })}
             </div>

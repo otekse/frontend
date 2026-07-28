@@ -3,15 +3,18 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
+import { MusicPlayer } from "@/components/MusicPlayer";
 import styles from "./Hero.module.scss";
 
 // Fraction of the remaining distance the rendered offset covers each frame.
 // This easing is what a plain scroll-event handler lacks: applying the raw
-// scroll position makes the layers step with every wheel tick. Keep it high
-// enough that the hero still tracks the scrollbar — below roughly 0.2 the
-// layers visibly lag behind the page and the parallax reads as sluggish
-// rather than smooth.
-const EASE = 0.25;
+// scroll position makes the layers step with every wheel tick.
+//
+// It is deliberately high. The smoothing is only there to absorb the coarse
+// steps of a wheel tick, NOT to add float: at 0.45 the layers are ~95% settled
+// about five frames after you stop, so there is no drift-after-stop — which is
+// what reads as "bounce" when scrolling back up. Lowering this reintroduces it.
+const EASE = 0.45;
 // Sub-pixel remainder nobody can see — snap and let the loop stop.
 const SETTLE_PX = 0.05;
 // How much the title recedes and fades over one hero's worth of scrolling.
@@ -182,6 +185,10 @@ export function Hero() {
           <img src={IMAGES.girlsCutout} alt={t("heroAlt")} className={styles.cutout} />
         )}
       </div>
+
+      {/* Outside the parallax layers on purpose — a control that drifts while
+          you are reaching for it is hostile. */}
+      <MusicPlayer />
     </header>
   );
 }

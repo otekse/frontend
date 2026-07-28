@@ -18,6 +18,9 @@
   margin: 26px 0 34px;
 
   a {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 4px; // reach a comfortable touch target
     font-size: var(--text-small);
     font-weight: 700;
     color: var(--color-gold);

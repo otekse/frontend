@@ -7,6 +7,8 @@ import { routing } from "@/i18n/routing";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { UmamiScript } from "@/components/UmamiScript";
+import { ShopStateProvider } from "@/components/ShopState";
+import { shopEnabled } from "@/lib/shop-server";
 import { Providers } from "./providers";
 import "../globals.css";
 
@@ -71,6 +73,9 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  // Resolved once here so the header and the page agree; in production this
+  // is the build-time constant and reads no cookie.
+  const shopOn = await shopEnabled();
 
   return (
     <html
@@ -80,9 +85,11 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <Providers>
-            <SiteHeader />
-            <main>{children}</main>
-            <SiteFooter />
+            <ShopStateProvider enabled={shopOn}>
+              <SiteHeader />
+              <main>{children}</main>
+              <SiteFooter />
+            </ShopStateProvider>
           </Providers>
         </NextIntlClientProvider>
         <UmamiScript />

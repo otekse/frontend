@@ -1,0 +1,168 @@
+@use "../styles/mixins" as *;
+
+// Sits over the hero's forest band, above the wheat foreground (z 8) so the
+// pill never disappears behind it.
+.root {
+  position: absolute;
+  left: var(--spacing-section-x);
+  bottom: 34%;
+  z-index: 9;
+
+  @include until($bp-sm) {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30%;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+  }
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 8px 8px 8px 18px;
+  background: var(--color-forest-a60);
+  border: 1px solid var(--color-cream-a16);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill);
+  backdrop-filter: blur(10px);
+}
+
+// Idle it reads as a status light; while playing it pulses.
+.dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--color-cream-a45);
+}
+
+.dotLive {
+  background: var(--color-live);
+  animation: pulse 1.8s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.title,
+.titleStatic {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  // Vertical padding gives the track switcher a real touch target; without it
+  // the hit area was only as tall as the text.
+  padding: 12px 0;
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-cream-bright);
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  @include focus-ring;
+
+  &:hover .caret {
+    opacity: 1;
+  }
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--color-cream-a65);
+  opacity: 0.7;
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+
+  // Comfortable thumb target on touch devices, where there is no cursor to
+  // aim with. Coarse pointer rather than a width breakpoint: it is the input
+  // device that matters, not the screen size.
+  @media (pointer: coarse) {
+    width: 46px;
+    height: 46px;
+  }
+  border-radius: 50%;
+  background: var(--color-cream-bright);
+  @include focus-ring;
+
+  svg {
+    width: 17px;
+    height: 17px;
+    fill: var(--color-ink);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.list {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  min-width: 100%;
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  background: var(--color-forest-a60);
+  border: 1px solid var(--color-cream-a16);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-pill);
+  backdrop-filter: blur(10px);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  color: var(--color-cream-a65);
+  white-space: nowrap;
+  text-align: left;
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    background: var(--color-cream-a16);
+    color: var(--color-cream-bright);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.itemOn {
+  color: var(--color-cream-bright);
+}
+
+.soon {
+  margin-left: auto;
+  font-size: var(--text-badge);
+  letter-spacing: var(--tracking-badge);
+  color: var(--color-cream-a45);
+}
