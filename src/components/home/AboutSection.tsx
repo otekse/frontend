@@ -12,9 +12,22 @@ export function AboutSection() {
         <div className={styles.copy}>
           <div className={styles.overline}>— {t("overline")}</div>
           <h2 className={styles.title}>{t("title")}</h2>
-          <p>{t("p1")}</p>
-          <p>{t("p2")}</p>
-          <p>{t("p3")}</p>
+
+          {/* Native <details> rather than a JS accordion: it is keyboard- and
+              screen-reader-accessible for free, works with JS disabled, and
+              keeps this a server component. The first is open so the section
+              never reads as empty. */}
+          <div className={styles.accordion}>
+            {[1, 2, 3].map((n) => (
+              <details key={n} className={styles.item} open={n === 1}>
+                <summary className={styles.summary}>
+                  {t(`s${n}Title`)}
+                  <span className={styles.marker} aria-hidden />
+                </summary>
+                <p className={styles.body}>{t(`s${n}Body`)}</p>
+              </details>
+            ))}
+          </div>
         </div>
         <div className={styles.photoWrap}>
           <SmartImage

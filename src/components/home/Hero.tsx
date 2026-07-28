@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
-import { MusicPlayer } from "@/components/MusicPlayer";
+import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
 import styles from "./Hero.module.scss";
 
 // Fraction of the remaining distance the rendered offset covers each frame.
@@ -14,9 +14,9 @@ import styles from "./Hero.module.scss";
 // steps of a wheel tick, NOT to add float: at 0.45 the layers are ~95% settled
 // about five frames after you stop, so there is no drift-after-stop — which is
 // what reads as "bounce" when scrolling back up. Lowering this reintroduces it.
-const EASE = 0.45;
+const EASE = 0.15;
 // Sub-pixel remainder nobody can see — snap and let the loop stop.
-const SETTLE_PX = 0.05;
+const SETTLE_PX = 0.01;
 // How much the title recedes and fades over one hero's worth of scrolling.
 // Translation alone just moves the title further; shrinking and fading it as
 // it travels is what reads as depth. Kept subtle — enough to sell distance,
@@ -186,9 +186,11 @@ export function Hero() {
         )}
       </div>
 
-      {/* Outside the parallax layers on purpose — a control that drifts while
-          you are reaching for it is hostile. */}
-      <MusicPlayer />
+      {/* On phones the player portals into here. Outside the parallax layers
+          on purpose — a control that drifts while you reach for it is
+          hostile. Empty and invisible on desktop, where the player stays in
+          the nav. */}
+      <div id={HERO_PLAYER_SLOT} className={styles.playerSlot} />
     </header>
   );
 }

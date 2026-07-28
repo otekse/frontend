@@ -11,8 +11,14 @@
   padding: 22px var(--spacing-section-x);
   z-index: 100;
 
+  // Four control groups cannot fit 390px once the shop pill is on. Wrapping
+  // to a second row is the honest failure mode: nothing is clipped or pushed
+  // off-screen, and it collapses back to one row as soon as there is space.
+  flex-wrap: wrap;
+  row-gap: 8px;
+
   @include until($bp-sm) {
-    padding: 14px 16px;
+    padding: 12px 10px;
   }
 }
 
@@ -22,7 +28,7 @@
   align-items: center;
 
   @include until($bp-sm) {
-    gap: 6px;
+    gap: 5px;
   }
 }
 
@@ -31,8 +37,8 @@
   white-space: nowrap; // "E-pood" was breaking across two lines on phones
 
   @include until($bp-sm) {
-    padding: 9px 12px;
-    gap: 6px;
+    padding: 8px 10px;
+    gap: 5px;
   }
 
   &:hover {

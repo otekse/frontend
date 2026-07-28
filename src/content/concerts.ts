@@ -21,8 +21,8 @@ export const concerts: Concert[] = [
       en: "Tabivere Midsummer bonfire",
     },
     info: {
-      et: "Üritus algab kell 19.00, Õtekse astub lavale kell 20.00.",
-      en: "The event starts at 7 p.m.; Õtekse takes the stage at 8 p.m.",
+      et: "Üritus algab kell 19.00, meie astume lavale kell 20.00.",
+      en: "The event starts at 7 p.m.; we take the stage at 8 p.m.",
     },
   },
   {

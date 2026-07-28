@@ -1,6 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
 import { concerts, type ConcertBadge } from "@/content/concerts";
-import { WheatWave } from "@/components/WheatWave";
 import styles from "./ConcertsSection.module.scss";
 
 const badgeClass: Record<ConcertBadge, string> = {
@@ -21,7 +20,6 @@ export function ConcertsSection() {
 
   return (
     <section id="kontserdid" className={styles.section}>
-      <WheatWave variant="curve" height={110} />
       <div className={styles.inner}>
         <div className={styles.overline}>— {t("overline")}</div>
         <h2 className={styles.title}>{t("title")}</h2>

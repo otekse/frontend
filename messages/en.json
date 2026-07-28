@@ -18,20 +18,24 @@
     "pause": "Pause",
     "unavailable": "Track not available yet",
     "tracklist": "Track list",
-    "soon": "SOON"
+    "soon": "SOON",
+    "loading": "Loading track…"
   },
   "About": {
     "overline": "ABOUT US",
     "title": "Three sisters, one voice",
-    "p1": "Õtekse is a folk music–inspired ensemble consisting of three sisters, blending youthful energy, strong musicianship, and a deep connection to traditional culture. Their music is characterized by fresh arrangements of folk songs, where traditional sounds blend with a contemporary approach, appealing to both younger and older audiences.",
-    "p2": "The ensemble’s journey has been marked by several notable achievements. In 2021, they won the Grand Prize at the Mooste Elohelü competition, followed by additional special awards in subsequent years. Their arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. Õtekse has appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026, the group had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. In 2026, Õtekse also participated in the TV show “Laul vs Tants” and appeared on the “Õhtu” talk show.",
-    "p3": "With their distinctive sound and sincere stage presence, Õtekse continues to carry forward Estonian folk music traditions while giving them a fresh and contemporary voice.",
+    "s1Title": "Our music",
+    "s1Body": "We are Õtekse — a folk-music-inspired ensemble of three sisters. We bring together youthful energy, strong musicianship, and a deep connection to traditional culture. Our music is characterised by fresh arrangements of folk songs, where traditional sounds blend with a contemporary approach — which is how we reach audiences of every age.",
+    "s2Title": "Our story",
+    "s2Body": "Our journey has been marked by several notable achievements. In 2021 we won the Grand Prize at the Mooste Elohelü competition, and in the years that followed we picked up special awards at the same competition. Our arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. We have appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026 we had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. That same year we also took part in the TV show “Laul vs Tants” and were invited onto the “Õhtu” talk show.",
+    "s3Title": "Our sound",
+    "s3Body": "With our distinctive sound and sincere stage presence, we carry Estonian folk music traditions forward while giving them a fresh, contemporary voice.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters"
   },
   "Members": {
     "overline": "THE BAND",
-    "title": "Meet the band members",
+    "title": "Meet us",
     "locLabel": "Home",
     "jobLabel": "Occupation",
     "hobbyLabel": "Hobby",
@@ -65,12 +69,12 @@
   },
   "Meta": {
     "title": "Õtekse — Estonian folk music",
-    "description": "Õtekse is an Estonian folk music group. Listen, come to a concert, and see where we are playing next."
+    "description": "We are Õtekse, an Estonian folk music group. Listen to us, come to a concert, and see where we are playing next."
   },
   "Privacy": {
     "title": "Privacy policy",
     "controllerTitle": "Data controller",
-    "controllerBody": "This website is run by Õtekse. For any questions, write to {email}.",
+    "controllerBody": "This website is run by us, Õtekse. For any questions, write to {email}.",
     "analyticsTitle": "Visitor statistics",
     "analyticsBody": "We collect visitor statistics with Umami, which we host ourselves on our own server. Umami sets no cookies and does not track you across websites. Your IP address and browser details are processed on the server solely to derive an anonymous daily identifier — they are not retained in a form that identifies you, and are never shared with third parties. The legal basis is our legitimate interest in understanding how the site is used (GDPR Art. 6(1)(f)).",
     "cookiesTitle": "Cookies",

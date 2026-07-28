@@ -1,42 +1,83 @@
 @use "../styles/mixins" as *;
 
-// Sits over the hero's forest band, above the wheat foreground (z 8) so the
-// pill never disappears behind it.
+// Two placements, one component (see MusicPlayer.tsx): beside the language
+// switch in the nav on desktop, and centred on the hero banner on phones.
 .root {
-  position: absolute;
-  left: var(--spacing-section-x);
-  bottom: 34%;
-  z-index: 9;
-
-  @include until($bp-sm) {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 30%;
-    width: max-content;
-    max-width: calc(100vw - 32px);
-  }
+  position: relative;
 }
 
+// Nav placement (desktop, and any page without a hero): sits inline in the
+// nav's right-hand group and needs no positioning of its own. Named rather
+// than left implicit so both placements are explicit in one place — and so
+// the class is never `undefined`.
+.inNav {
+  position: relative;
+}
+
+// Phone placement: sits just under the ÕTEKSE wordmark inside the hero.
+//
+// Absolute, not fixed — it scrolls away with the banner like any other element
+// rather than following the viewport. It carries no [data-parallax], so it is
+// the one thing in the hero that does not drift: still relative to the banner
+// while the layers behind it move.
+//
+// `top` is derived from the title's own metrics rather than a magic number —
+// the title sits at 26% of the hero and is --text-hero tall (line-height 1.05)
+// — so the widget stays under the wordmark as the clamp resizes it.
+.inHero {
+  position: absolute;
+  top: calc(26% + var(--text-hero) * 1.05 + 22px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9; // above the near wheat band (8)
+  width: max-content;
+  max-width: calc(100vw - 32px);
+}
+
+// Matches the nav's pill language (cream surface, ink text) rather than the
+// dark hero treatment it started with — the nav sits over cream sections too.
 .pill {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   max-width: 100%;
-  padding: 8px 8px 8px 18px;
-  background: var(--color-forest-a60);
-  border: 1px solid var(--color-cream-a16);
+  padding: 4px 4px 4px 14px;
+  background: var(--color-cream-bright);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-pill);
-  backdrop-filter: blur(10px);
+
+  @include until($bp-md) {
+    padding: 3px;
+    gap: 2px;
+  }
+
+  // Glass over the banner photo — the nav's opaque cream would sit on the
+  // hero like a sticker.
+  .inHero & {
+    padding: 8px 8px 8px 18px;
+    gap: 12px;
+    background: var(--color-forest-a60);
+    border: 1px solid var(--color-cream-a16);
+    box-shadow: var(--shadow-pill);
+    backdrop-filter: blur(10px);
+  }
 }
 
-// Idle it reads as a status light; while playing it pulses.
 .dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   flex: none;
   border-radius: 50%;
-  background: var(--color-cream-a45);
+  background: var(--color-ink-a15);
+
+  @include until($bp-md) {
+    display: none; // the play/pause icon already states the status
+  }
+
+  .inHero & {
+    display: block;
+    background: var(--color-cream-a45);
+  }
 }
 
 .dotLive {
@@ -50,7 +91,7 @@
 
 @keyframes pulse {
   50% {
-    opacity: 0.45;
+    opacity: 0.4;
   }
 }
 
@@ -58,17 +99,31 @@
 .titleStatic {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  // Vertical padding gives the track switcher a real touch target; without it
-  // the hit area was only as tall as the text.
-  padding: 12px 0;
-  font-size: var(--text-small);
+  gap: 7px;
+  padding: 10px 0;
+  font-size: var(--text-badge);
   font-weight: 700;
-  color: var(--color-cream-bright);
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
   white-space: nowrap;
   min-width: 0;
+  max-width: 22ch;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  // The nav has no room for a track name on a phone; the play button and the
+  // list stay, so nothing becomes unreachable.
+  @include until($bp-md) {
+    display: none;
+  }
+
+  // ...but the hero has room, so it comes back there.
+  .inHero & {
+    display: inline-flex;
+    color: var(--color-cream-bright);
+    font-size: var(--text-small);
+    letter-spacing: normal;
+  }
 }
 
 .title {
@@ -80,57 +135,137 @@
 }
 
 .caret {
+  flex: none;
   width: 0;
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 5px solid var(--color-cream-a65);
+  border-top: 5px solid var(--color-moss);
   opacity: 0.7;
+
+  .inHero & {
+    border-top-color: var(--color-cream-a65);
+  }
+}
+
+// Only exists below $bp-md, where the title (and its caret) is hidden.
+.listBtn {
+  display: none;
+  place-items: center;
+  width: 28px;
+  height: 34px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  @include focus-ring;
+
+  @include until($bp-md) {
+    display: grid;
+  }
+
+  @media (pointer: coarse) {
+    width: 26px;
+    height: 40px;
+  }
+
+  // The hero shows the full title, whose own caret opens the list.
+  .inHero & {
+    display: none;
+  }
 }
 
 .play {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   flex: none;
-
-  // Comfortable thumb target on touch devices, where there is no cursor to
-  // aim with. Coarse pointer rather than a width breakpoint: it is the input
-  // device that matters, not the screen size.
-  @media (pointer: coarse) {
-    width: 46px;
-    height: 46px;
-  }
   border-radius: 50%;
-  background: var(--color-cream-bright);
+  background: var(--color-ink);
   @include focus-ring;
 
+  .inHero & {
+    width: 40px;
+    height: 40px;
+    background: var(--color-cream-bright);
+
+    @media (pointer: coarse) {
+      width: 46px;
+      height: 46px;
+    }
+
+    svg {
+      width: 17px;
+      height: 17px;
+      fill: var(--color-ink);
+    }
+
+    .spinner {
+      border-color: var(--color-ink);
+      border-top-color: transparent;
+    }
+  }
+
+  // Comfortable thumb target on touch devices, where there is no cursor to aim
+  // with. Keyed on pointer type rather than viewport width: it is the input
+  // device that matters, not the screen size.
+  @media (pointer: coarse) {
+    width: 40px;
+    height: 40px;
+  }
+
   svg {
-    width: 17px;
-    height: 17px;
-    fill: var(--color-ink);
+    width: 15px;
+    height: 15px;
+    fill: var(--color-gold);
+  }
+
+  // Buffering: the press registered, the audio just is not ready yet.
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-gold);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @include reduced-motion {
+    .spinner {
+      animation-duration: 2s;
+    }
   }
 
   &:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 }
 
+// Drops downward — the player is in a top nav now, not over the hero.
 .list {
   position: absolute;
-  bottom: calc(100% + 8px);
-  left: 0;
-  min-width: 100%;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 210px;
   list-style: none;
   padding: 6px;
   margin: 0;
-  background: var(--color-forest-a60);
-  border: 1px solid var(--color-cream-a16);
+  background: var(--color-cream-bright);
+  border: var(--border-card) solid var(--color-ink);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-pill);
-  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-card-hover);
+
+  // Opens upward on the hero: there is more room above than below down there.
+  .inHero & {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 0;
+    right: auto;
+    background: var(--color-forest-a60);
+    border: 1px solid var(--color-cream-a16);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-pill);
+  }
 }
 
 .item {
@@ -138,31 +273,52 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: var(--radius-pill);
   font-size: var(--text-small);
-  color: var(--color-cream-a65);
+  color: var(--color-moss);
   white-space: nowrap;
   text-align: left;
   @include focus-ring;
 
   &:hover:not(:disabled) {
-    background: var(--color-cream-a16);
-    color: var(--color-cream-bright);
+    background: var(--color-sand);
+    color: var(--color-ink);
+  }
+
+  .inHero & {
+    color: var(--color-cream-a65);
+
+    &:hover:not(:disabled) {
+      background: var(--color-cream-a16);
+      color: var(--color-cream-bright);
+    }
   }
 
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.55;
   }
 }
 
 .itemOn {
-  color: var(--color-cream-bright);
+  color: var(--color-ink);
+  font-weight: 700;
+
+  .inHero & {
+    color: var(--color-cream-bright);
+  }
 }
 
 .soon {
   margin-left: auto;
   font-size: var(--text-badge);
   letter-spacing: var(--tracking-badge);
-  color: var(--color-cream-a45);
+  color: var(--color-rust);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
