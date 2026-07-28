@@ -55,6 +55,23 @@ button {
   cursor: pointer;
 }
 
+/*
+ * Suppress the grey/blue box WebKit paints over a tapped control. It ignores
+ * border-radius, so on our pills it flashes a rectangle over a rounded shape.
+ *
+ * Removing it would also remove the only "I registered your tap" signal, so
+ * the :active rule below replaces it — scoped to devices that cannot hover, so
+ * desktop hover states are untouched.
+ */
+@media (hover: none) {
+  a:active,
+  button:active,
+  summary:active,
+  [role="button"]:active {
+    opacity: 0.6;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -159,6 +176,8 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* See the tap-highlight note in the reset above. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
