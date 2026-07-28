@@ -13,6 +13,13 @@
   "Home": {
     "heroAlt": "Kolm õde rahvariietes jooksmas, rätikud käes"
   },
+  "Music": {
+    "play": "Esita",
+    "pause": "Peata",
+    "unavailable": "Lugu pole veel saadaval",
+    "tracklist": "Lugude nimekiri",
+    "soon": "VARSTI"
+  },
   "About": {
     "overline": "MEIST",
     "title": "Kolm õde, üks hääl",
