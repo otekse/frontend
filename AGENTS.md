@@ -89,8 +89,6 @@ npm install
 npm run dev                       # http://localhost:3000
 ```
 
-Commands: `npm run build`, `npm run lint`, `npm start`.
-
 API client workflow (see "API client" above):
 - `npm run spec:pull` — refresh `openapi.json` from the backend (`API_SPEC_URL=…` for the live API; defaults to copying `../backend/openapi.json`).
 - `npm run api:generate` — regenerate the typed client, hooks, and MSW mocks into `src/api/generated`. Commit `openapi.json` and the generated output together.
