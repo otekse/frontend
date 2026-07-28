@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { SHOP_ENABLED } from "./shop";
 
 // Client-side only cart (localStorage). No server-side cart table — v1 keeps
 // the cart entirely in the browser (PROJECT_BRIEF.md §4). Prices here are for
@@ -50,8 +51,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setHydrated(true);
   }, []);
 
+  // Never write storage while the storefront is off. Without this the provider
+  // persists an empty cart on the marketing-only site, putting a key on the
+  // visitor's device for a feature that is switched off — and contradicting
+  // the privacy policy, which states the locale cookie is the only thing we
+  // store. Reading above stays unconditional so an existing cart survives the
+  // shop being toggled back on.
   useEffect(() => {
-    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    if (hydrated && SHOP_ENABLED) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
   }, [items, hydrated]);
 
   const add = useCallback((item: Omit<CartItem, "quantity">, qty = 1) => {

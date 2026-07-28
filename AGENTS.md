@@ -137,8 +137,12 @@ crawls from.
 - The database is DB-IP Lite, downloaded into gitignored `geoip/` by the
   `prebuild` script on every build. **Everything fails soft** — a missing or
   unreachable database degrades to Accept-Language, never a broken build.
-- `X-Forwarded-For` is client-spoofable here. That is fine for choosing a
-  default language and **must never** be used for auth, rate limiting, or audit.
+- `X-Forwarded-For`: our Traefik replaces it with the real peer address rather
+  than trusting the client's (measured 2026-07-28), so forged values do not
+  reach the app. That is proxy configuration, not a guarantee — treat the value
+  as untrusted. Fine for choosing a default language; **never** for auth, rate
+  limiting, or audit. It also means you cannot test other countries against
+  production by forging the header — verify locally, where it does pass through.
 
 ## Analytics and privacy
 
