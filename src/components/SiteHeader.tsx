@@ -5,6 +5,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { useShopEnabled } from "./ShopState";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { MusicPlayer } from "./MusicPlayer";
 import styles from "./SiteHeader.module.scss";
 
 // The cart pill only belongs on the storefront surfaces — shop, product,
@@ -38,6 +39,7 @@ export function SiteHeader() {
             {count}
           </Link>
         )}
+        <MusicPlayer />
         <LocaleSwitcher />
       </div>
     </nav>

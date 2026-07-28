@@ -94,6 +94,22 @@ export function MusicPlayer() {
           </span>
         )}
 
+        {/* The nav has no room for the track name on a phone, so the list gets
+            its own control there — otherwise switching tracks would be
+            unreachable on mobile. */}
+        {multiple && (
+          <button
+            type="button"
+            className={styles.listBtn}
+            aria-expanded={open}
+            aria-haspopup="listbox"
+            aria-label={t("tracklist")}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className={styles.caret} aria-hidden />
+          </button>
+        )}
+
         <button
           type="button"
           className={styles.play}

@@ -23,9 +23,12 @@
   "About": {
     "overline": "MEIST",
     "title": "Kolm õde, üks hääl",
-    "p1": "Õtekse on folkmuusikast inspireeritud ansambel, mis koosneb kolmest õest ning ühendab endas noorusliku energia, musikaalsuse ja sügava sideme pärimuskultuuriga. Nende loomingut iseloomustavad värsked seaded rahvamuusikast, milles põimuvad traditsioonilised kõlad ja kaasaegne lähenemine, kõnetades igas vanuses publikut.",
-    "p2": "Ansambli teekonda on saatnud mitmed märkimisväärsed saavutused — 2021. aastal võideti Mooste Elohelü konkursi peapreemia ning järgnevatel aastatel pälviti samal konkursil ka eriauhindu. Nende arranžeering „Puraviku polkast“ kõlas 13. noorte tantsupeol. Õtekse on esinenud festivalidel Hiiu Folk, Viljandi pärimusmuusika festival ja rahvusvahelisel festivalil Zemlika. 2026. aasta kevadel oli ansamblil au esineda presidendi rahvaluulepreemiate üleandmisel Eesti Kirjandusmuuseumis. Õtekse osales 2026. a ka telesaates „Laul vs Tants“ ja kutsuti „Õhtu“ saatesse.",
-    "p3": "Oma erilise kõla ja siira lavalise kohaloluga kannab Õtekse edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
+    "s1Title": "Meie muusika",
+    "s1Body": "Õtekse on folkmuusikast inspireeritud ansambel, mis koosneb kolmest õest ning ühendab endas noorusliku energia, musikaalsuse ja sügava sideme pärimuskultuuriga. Nende loomingut iseloomustavad värsked seaded rahvamuusikast, milles põimuvad traditsioonilised kõlad ja kaasaegne lähenemine, kõnetades igas vanuses publikut.",
+    "s2Title": "Meie ajalugu",
+    "s2Body": "Ansambli teekonda on saatnud mitmed märkimisväärsed saavutused — 2021. aastal võideti Mooste Elohelü konkursi peapreemia ning järgnevatel aastatel pälviti samal konkursil ka eriauhindu. Nende arranžeering „Puraviku polkast“ kõlas 13. noorte tantsupeol. Õtekse on esinenud festivalidel Hiiu Folk, Viljandi pärimusmuusika festival ja rahvusvahelisel festivalil Zemlika. 2026. aasta kevadel oli ansamblil au esineda presidendi rahvaluulepreemiate üleandmisel Eesti Kirjandusmuuseumis. Õtekse osales 2026. a ka telesaates „Laul vs Tants“ ja kutsuti „Õhtu“ saatesse.",
+    "s3Title": "Meie kõla",
+    "s3Body": "Oma erilise kõla ja siira lavalise kohaloluga kannab Õtekse edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
     "photoTag": "KOLM ÕDE",
     "photoAlt": "Õtekse — kolm õde"
   },

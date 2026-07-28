@@ -23,9 +23,12 @@
   "About": {
     "overline": "ABOUT US",
     "title": "Three sisters, one voice",
-    "p1": "Õtekse is a folk music–inspired ensemble consisting of three sisters, blending youthful energy, strong musicianship, and a deep connection to traditional culture. Their music is characterized by fresh arrangements of folk songs, where traditional sounds blend with a contemporary approach, appealing to both younger and older audiences.",
-    "p2": "The ensemble’s journey has been marked by several notable achievements. In 2021, they won the Grand Prize at the Mooste Elohelü competition, followed by additional special awards in subsequent years. Their arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. Õtekse has appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026, the group had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. In 2026, Õtekse also participated in the TV show “Laul vs Tants” and appeared on the “Õhtu” talk show.",
-    "p3": "With their distinctive sound and sincere stage presence, Õtekse continues to carry forward Estonian folk music traditions while giving them a fresh and contemporary voice.",
+    "s1Title": "Our music",
+    "s1Body": "Õtekse is a folk music–inspired ensemble consisting of three sisters, blending youthful energy, strong musicianship, and a deep connection to traditional culture. Their music is characterized by fresh arrangements of folk songs, where traditional sounds blend with a contemporary approach, appealing to both younger and older audiences.",
+    "s2Title": "Our story",
+    "s2Body": "The ensemble’s journey has been marked by several notable achievements. In 2021, they won the Grand Prize at the Mooste Elohelü competition, followed by additional special awards in subsequent years. Their arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. Õtekse has appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026, the group had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. In 2026, Õtekse also participated in the TV show “Laul vs Tants” and appeared on the “Õhtu” talk show.",
+    "s3Title": "Our sound",
+    "s3Body": "With their distinctive sound and sincere stage presence, Õtekse continues to carry forward Estonian folk music traditions while giving them a fresh and contemporary voice.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters"
   },
