@@ -1,14 +1,33 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { ARTIST, tracks } from "@/content/music";
 import styles from "./MusicPlayer.module.scss";
 
-// Floating audio player over the hero: a dark pill carrying a live dot, the
-// current track, and a play/pause button. Tracks come from src/content/music.ts
-// and are served from our own origin — never a Spotify/YouTube embed, which
-// would trip the consent-banner requirement (AGENTS.md).
+/** The Hero renders this element; on phones the player moves into it. */
+export const HERO_PLAYER_SLOT = "hero-player-slot";
+
+// Below this the nav has no room for the player, so it goes back to the middle
+// of the hero banner where there is space for the track name.
+const HERO_PLACEMENT = "(max-width: 899.98px)";
+
+// useLayoutEffect runs before paint (so the player never flashes in the nav
+// first) but warns during SSR, where layout does not exist.
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+// Audio player: a pill carrying a live dot, the current track, and a
+// play/pause button. Tracks come from src/content/music.ts and are served from
+// our own origin — never a Spotify/YouTube embed, which would trip the
+// consent-banner requirement (AGENTS.md).
+//
+// Placement is responsive. On desktop it sits in the nav, so it is reachable
+// from every page. On phones the nav cannot fit it, so it moves into the
+// middle of the hero banner in its glass treatment — rendered through a portal
+// rather than mounted twice, so there is only ever one <audio> element and one
+// piece of playback state. Pages without a hero keep the nav placement.
 //
 // A single <audio> element is reused across tracks so switching never leaves a
 // second one playing. Renders nothing when there are no tracks at all.
@@ -20,6 +39,24 @@ export function MusicPlayer() {
   const [open, setOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const [heroSlot, setHeroSlot] = useState<HTMLElement | null>(null);
+
+  // Re-evaluate on resize so rotating a phone moves the player to the right
+  // place instead of stranding it.
+  useIsomorphicLayoutEffect(() => {
+    const mq = window.matchMedia(HERO_PLACEMENT);
+    const apply = () =>
+      setHeroSlot(
+        mq.matches ? document.getElementById(HERO_PLAYER_SLOT) : null,
+      );
+    apply();
+    mq.addEventListener("change", apply);
+    window.addEventListener("resize", apply);
+    return () => {
+      mq.removeEventListener("change", apply);
+      window.removeEventListener("resize", apply);
+    };
+  }, []);
 
   const track = tracks[index];
   const playable = Boolean(track?.src);
@@ -83,8 +120,11 @@ export function MusicPlayer() {
     if (!playing) setPlaying(true);
   };
 
-  return (
-    <div ref={rootRef} className={styles.root}>
+  const ui = (
+    <div
+      ref={rootRef}
+      className={`${styles.root} ${heroSlot ? styles.inHero : styles.inNav}`}
+    >
       <div className={styles.pill}>
         <span
           className={`${styles.dot} ${playing ? styles.dotLive : ""}`}
@@ -194,4 +234,6 @@ export function MusicPlayer() {
       />
     </div>
   );
+
+  return heroSlot ? createPortal(ui, heroSlot) : ui;
 }

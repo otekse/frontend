@@ -143,3 +143,9 @@
   z-index: 7;
   filter: drop-shadow(var(--shadow-cutout));
 }
+
+// Portal target for the music player on phones (see MusicPlayer.tsx). Has no
+// box of its own — the player positions itself against the hero.
+.playerSlot {
+  position: static;
+}

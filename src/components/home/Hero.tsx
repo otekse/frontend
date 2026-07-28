@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
+import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
 import styles from "./Hero.module.scss";
 
 // Fraction of the remaining distance the rendered offset covers each frame.
@@ -184,6 +185,12 @@ export function Hero() {
           <img src={IMAGES.girlsCutout} alt={t("heroAlt")} className={styles.cutout} />
         )}
       </div>
+
+      {/* On phones the player portals into here. Outside the parallax layers
+          on purpose — a control that drifts while you reach for it is
+          hostile. Empty and invisible on desktop, where the player stays in
+          the nav. */}
+      <div id={HERO_PLAYER_SLOT} className={styles.playerSlot} />
     </header>
   );
 }
