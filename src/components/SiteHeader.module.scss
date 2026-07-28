@@ -20,10 +20,20 @@
   display: flex;
   gap: 10px;
   align-items: center;
+
+  @include until($bp-sm) {
+    gap: 6px;
+  }
 }
 
 .pill {
   @include pill(var(--color-cream-bright), var(--color-ink));
+  white-space: nowrap; // "E-pood" was breaking across two lines on phones
+
+  @include until($bp-sm) {
+    padding: 9px 12px;
+    gap: 6px;
+  }
 
   &:hover {
     background: white;

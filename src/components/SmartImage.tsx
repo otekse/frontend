@@ -35,7 +35,9 @@ export function SmartImage({
   }, []);
 
   return (
-    <div className={`${styles.frame} ${className ?? ""}`}>
+    // Spans rather than divs: this renders inside a <button> in the members
+    // section, and a button may only contain phrasing content.
+    <span className={`${styles.frame} ${className ?? ""}`}>
       {src && state !== "error" && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -49,13 +51,13 @@ export function SmartImage({
         />
       )}
 
-      {state === "loading" && <div className={styles.skeleton} aria-hidden />}
+      {state === "loading" && <span className={styles.skeleton} aria-hidden />}
 
       {state === "error" && (
-        <div className={styles.missing} role="img" aria-label={alt}>
+        <span className={styles.missing} role="img" aria-label={alt}>
           <WheatMark />
-        </div>
+        </span>
       )}
-    </div>
+    </span>
   );
 }

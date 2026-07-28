@@ -54,6 +54,11 @@
 }
 
 .link {
+  display: inline-flex;
+  align-items: center;
+  // Padding rather than a height: it grows the touch target to ~44px without
+  // changing where the label sits.
+  padding: 12px 0;
   font-size: var(--text-overline);
   font-weight: 700;
   letter-spacing: 1px;

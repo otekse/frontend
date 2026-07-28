@@ -21,6 +21,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  max-width: 100%;
   padding: 8px 8px 8px 18px;
   background: var(--color-forest-a60);
   border: 1px solid var(--color-cream-a16);
@@ -58,10 +59,16 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  // Vertical padding gives the track switcher a real touch target; without it
+  // the hit area was only as tall as the text.
+  padding: 12px 0;
   font-size: var(--text-small);
   font-weight: 700;
   color: var(--color-cream-bright);
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title {
@@ -84,9 +91,17 @@
 .play {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   flex: none;
+
+  // Comfortable thumb target on touch devices, where there is no cursor to
+  // aim with. Coarse pointer rather than a width breakpoint: it is the input
+  // device that matters, not the screen size.
+  @media (pointer: coarse) {
+    width: 46px;
+    height: 46px;
+  }
   border-radius: 50%;
   background: var(--color-cream-bright);
   @include focus-ring;

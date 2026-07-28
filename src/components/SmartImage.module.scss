@@ -1,6 +1,7 @@
 @use "../styles/mixins" as *;
 
 .frame {
+  display: block; // a <span> by default is inline
   position: relative;
   overflow: hidden;
   background: var(--color-sand);
