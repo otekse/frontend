@@ -12,6 +12,12 @@
   @include until($bp-md) {
     padding-top: 100px;
   }
+
+  // Room under the stage for the music player, which portals in here on
+  // phones. Without it `overflow: hidden` clips the pill.
+  @include until($bp-sm) {
+    padding-bottom: 76px;
+  }
 }
 
 .stage {
@@ -192,4 +198,16 @@
     max-width: 300px;
     margin-top: 16px;
   }
+}
+
+// Portal target for the music player on phones (see MusicPlayer.tsx).
+//
+// Unlike the homepage's slot this one is `relative`, so the player anchors to
+// the slot rather than to the whole banner. The homepage hero is tall enough
+// that the player's `top: 90%` lands inside it; this banner is far shorter, so
+// the same 90% overshot the bottom edge and `overflow: hidden` sliced the pill
+// in half. Anchoring to the slot puts it under the stage at any height.
+.playerSlot {
+  position: relative;
+  z-index: 6; // above the scrim (4) and the front cards (3, 4)
 }
