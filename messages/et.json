@@ -101,7 +101,7 @@
     "thirdPartiesTitle": "Kolmandad osapooled",
     "thirdPartiesBody": "Veebileht ei lae sisu kolmandate osapoolte serveritest. Kirjatüübid ja pildid tulevad meie enda serverist.",
     "rightsTitle": "Sinu õigused",
-    "rightsBody": "Sul on õigus tutvuda oma andmetega, nõuda nende parandamist või kustutamist, piirata töötlemist ja esitada töötlemisele vastuväiteid. Samuti on sul õigus pöörduda Andmekaitse Inspektsiooni poole (aki.ee).",
+    "rightsBody": "Kogutav statistika ei ole seotud tuvastatava isikuga, mistõttu me ei saa sinu andmeid üles otsida, parandada ega kustutada — meil pole võimalust sind nende põhjal tuvastada (isikuandmete kaitse üldmääruse art 11). Kuna töötleme andmeid õigustatud huvi alusel, on sul õigus töötlemisele vastuväiteid esitada — kirjuta selleks {email}. Samuti on sul õigus pöörduda Andmekaitse Inspektsiooni poole (aki.ee).",
     "contactTitle": "Kontakt",
     "contactBody": "Privaatsusküsimustes kirjuta {email}."
   },

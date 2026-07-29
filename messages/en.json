@@ -101,7 +101,7 @@
     "thirdPartiesTitle": "Third parties",
     "thirdPartiesBody": "This site loads no content from third-party servers. Fonts and images are served from our own server.",
     "rightsTitle": "Your rights",
-    "rightsBody": "You have the right to access your data, to request its correction or erasure, to restrict processing, and to object to it. You may also lodge a complaint with the Estonian Data Protection Inspectorate (aki.ee).",
+    "rightsBody": "The statistics we collect are not linked to an identifiable person, so we cannot look up, correct or delete your data — we have no way to identify you from it (GDPR Art. 11). Because we process it on the basis of our legitimate interest, you have the right to object at any time — write to {email}. You also have the right to lodge a complaint with the Estonian Data Protection Inspectorate (aki.ee).",
     "contactTitle": "Contact",
     "contactBody": "For privacy matters, write to {email}."
   },
