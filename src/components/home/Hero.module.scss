@@ -1,7 +1,7 @@
 @use "../../styles/mixins" as *;
 
-// This hero is expensive to composite: seven promoted full-viewport layers
-// (`will-change: transform` below), five of them carrying a drop-shadow
+// This hero is expensive to composite: six promoted full-viewport layers
+// (`will-change: transform` below), four of them carrying a drop-shadow
 // filter, plus clip-paths and a backdrop-filtered pill on phones. That is fine
 // while the page is still, because a still page produces no frames at all —
 // measured idle cost is 0% of a CPU core.
@@ -37,7 +37,10 @@
   will-change: transform;
 }
 
-// The three wave-clipped forest layers, darkening towards the viewer.
+// The wave-clipped forest layers, darkening towards the viewer. There were
+// three; the closest and darkest was dropped for cost — it was ~14% of the
+// hero's per-frame compositing on its own (measured 50% -> 43% of a CPU core
+// at a steady 60fps), for the least visible band of the depth ramp.
 .layer {
   position: absolute;
   left: 0;
@@ -71,17 +74,6 @@
   .layerFill {
     background-position: center 55%;
     filter: brightness(0.44);
-  }
-}
-
-.layerC {
-  top: 52%;
-  height: 46%;
-  z-index: 3;
-
-  .layerFill {
-    background-position: center 70%;
-    filter: brightness(0.3);
   }
 }
 
