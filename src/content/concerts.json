@@ -1,5 +1,5 @@
 {
-  "_help": "Kontsertide nimekiri. Kuupäev on alati kujul AAAA-KK-PP. Ära tõsta esinemisi käsitsi ümber — sait sorteerib ise ja viib möödunud kuupäevad automaatselt arhiivi. / Concert list. Dates are always YYYY-MM-DD. Never move entries by hand: the site sorts them and moves past dates into the archive on its own.",
+  "_help": "Kontsertide nimekiri. Kuupäev on alati kujul AAAA-KK-PP. Ära tõsta esinemisi käsitsi ümber — sait sorteerib ise ja viib möödunud kuupäevad automaatselt arhiivi. Kontserdi ajutiseks peitmiseks lisa \"hidden\": true — kustutada pole vaja. / Concert list. Dates are always YYYY-MM-DD. Never move entries by hand: the site sorts them and moves past dates into the archive on its own. To take a concert off the site without losing it, add \"hidden\": true.",
   "concerts": [
     {
       "start": "2026-06-23",

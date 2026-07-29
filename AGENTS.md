@@ -101,7 +101,11 @@ API client workflow (see "API client" above):
 - **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. Never trust these client-side prices for payment — the backend re-validates at checkout.
 - **Cart is client-only** (`@/lib/cart`, localStorage). No server cart.
 - `src/api/generated/**` is generated and git-ignored by ESLint — never hand-edit it.
-- **Editable content collections** (concerts, members, teaser items, asset paths) live in `src/content/` as typed modules with `{et, en}` fields — the allowlist-friendly directory the runtime orchestrator will be scoped to (`PROJECT_BRIEF.md` §10). UI strings stay in `messages/`.
+- **Editable content collections** (concerts, members, teaser items, asset paths) live in `src/content/` as typed modules with `{et, en}` fields — the allowlist-friendly directory the runtime orchestrator is scoped to (`PROJECT_BRIEF.md` §10). UI strings stay in `messages/`.
+- **Concerts are data, not code.** They live in `src/content/concerts.json` — inert, so an orchestrator edit can never introduce executable code into the build. The rules that check that file live in `src/lib/concerts.ts`, deliberately *outside* the AI-editable directory: the data is editable, the validation is not. `parseConcerts()` runs at import time, so bad data fails `next build` rather than shipping; its messages name the exact field because the orchestrator reads build output to fix its own edit.
+  - There is no "past concerts" list. Every entry carries an ISO `start` and `splitConcerts()` files it by today's date (in `Europe/Tallinn` — the server runs UTC and Estonia is UTC+2/+3, so a UTC comparison retires concerts early). **Never sort or move entries by hand.**
+  - `hidden: true` takes an entry off the site without deleting it; `displayDate` overrides the rendered date for historical entries whose exact day is unknown.
+  - Because the split depends on today, `/[locale]/concerts` must stay server-rendered per request (`ƒ` in the build output). If it is ever prerendered, "today" freezes at build time.
 
 ## Styling (design system)
 

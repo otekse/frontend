@@ -96,6 +96,19 @@ describe("parseConcerts", () => {
     );
   });
 
+  it("accepts an explicit hidden flag", () => {
+    const out = parseConcerts({ concerts: [concert({ hidden: true })] });
+    assert.equal(out[0].hidden, true);
+  });
+
+  it("rejects a quoted hidden flag", () => {
+    // "false" is truthy — the one typo that would hide a concert silently.
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), hidden: "false" }] }),
+      /hidden must be true or false without quotes/,
+    );
+  });
+
   it("rejects a non-https url", () => {
     assert.throws(
       () =>
@@ -164,6 +177,25 @@ describe("splitConcerts", () => {
     const { upcoming, past } = splitConcerts(list, "2030-01-01");
     assert.equal(upcoming.length, 0);
     assert.equal(past.length, 3);
+  });
+
+  it("leaves hidden entries out of both lists", () => {
+    const withHidden = [
+      concert({ start: "2026-08-23", hidden: true }),
+      concert({ start: "2026-06-23", hidden: true }),
+      concert({ start: "2026-09-01" }),
+    ];
+    const { upcoming, past } = splitConcerts(withHidden, "2026-07-29");
+    assert.deepEqual(
+      upcoming.map((c) => c.start),
+      ["2026-09-01"],
+    );
+    assert.equal(past.length, 0);
+  });
+
+  it("shows an entry again once hidden goes back to false", () => {
+    const c = concert({ start: "2026-09-01", hidden: false });
+    assert.equal(splitConcerts([c], "2026-07-29").upcoming.length, 1);
   });
 });
 

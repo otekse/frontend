@@ -22,6 +22,12 @@ export type Concert = {
    * `start` to sort by, and this keeps that invented precision off the page.
    */
   displayDate?: Localized;
+  /**
+   * Keeps an entry in the file but off the site — for a date that is not
+   * public yet, or one that fell through. Deleting loses the text; hiding
+   * keeps it a single word away from coming back.
+   */
+  hidden?: boolean;
   badge: ConcertBadge;
   url?: string;
   title: Localized;
@@ -113,10 +119,18 @@ function parseConcert(input: unknown, index: number): Concert {
       `${where}.url must start with https:// (got ${JSON.stringify(c.url)})`,
     );
   }
+  // Caught explicitly because the string "false" is truthy — the one mistake
+  // that would silently hide a concert the moderator meant to show.
+  if (c.hidden !== undefined && typeof c.hidden !== "boolean") {
+    throw new ConcertDataError(
+      `${where}.hidden must be true or false without quotes (got ${JSON.stringify(c.hidden)})`,
+    );
+  }
 
   return {
     start: c.start,
     ...(c.end !== undefined ? { end: c.end as string } : {}),
+    ...(c.hidden !== undefined ? { hidden: c.hidden as boolean } : {}),
     ...(c.displayDate !== undefined
       ? { displayDate: requireLocalized(c.displayDate, `${where}.displayDate`) }
       : {}),
@@ -161,6 +175,8 @@ export function todayInTallinn(now: Date = new Date()): string {
  * Split by date. A concert stays upcoming for the whole of its final day —
  * people look an event up on the day they are attending it.
  *
+ * Hidden entries appear in neither list: they stay in the file, off the site.
+ *
  * Upcoming reads soonest-first; the archive reads most-recent-first.
  */
 export function splitConcerts(
@@ -171,6 +187,7 @@ export function splitConcerts(
   const past: Concert[] = [];
 
   for (const c of list) {
+    if (c.hidden) continue;
     if ((c.end ?? c.start) >= today) upcoming.push(c);
     else past.push(c);
   }
