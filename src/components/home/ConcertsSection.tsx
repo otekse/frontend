@@ -1,22 +1,17 @@
-import { useLocale, useTranslations } from "next-intl";
-import { concerts, type ConcertBadge } from "@/content/concerts";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { concerts } from "@/content/concerts";
+import { splitConcerts, TEASER_COUNT } from "@/lib/concerts";
+import { ConcertRow } from "@/components/concerts/ConcertRow";
 import styles from "./ConcertsSection.module.scss";
 
-const badgeClass: Record<ConcertBadge, string> = {
-  free: styles.badgeFree,
-  ticketed: styles.badgeTicketed,
-  soon: styles.badgeSoon,
-};
-
+// Homepage teaser: the next few dates, then through to the full /concerts
+// page. Deliberately not the whole list — that page owns it now.
+//
+// Which dates are "next" is decided by today, not by hand (see splitConcerts).
 export function ConcertsSection() {
   const t = useTranslations("Concerts");
-  const locale = useLocale() as "et" | "en";
-
-  const badgeLabel: Record<ConcertBadge, string> = {
-    free: t("badgeFree"),
-    ticketed: t("badgeTicketed"),
-    soon: t("badgeSoon"),
-  };
+  const { upcoming } = splitConcerts(concerts);
 
   return (
     <section id="kontserdid" className={styles.section}>
@@ -24,28 +19,17 @@ export function ConcertsSection() {
         <div className={styles.overline}>— {t("overline")}</div>
         <h2 className={styles.title}>{t("title")}</h2>
 
-        {concerts.map((c) => (
-          <div key={`${c.date}-${c.title.et}`} className={styles.row}>
-            <div className={styles.date}>{c.date}</div>
-            <div>
-              <div className={styles.name}>{c.title[locale]}</div>
-              <div className={styles.info}>{c.info[locale]}</div>
-              {c.url && (
-                <a
-                  href={c.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.link}
-                >
-                  {t("linkLabel")} ↗
-                </a>
-              )}
-            </div>
-            <div className={`${styles.badge} ${badgeClass[c.badge]}`}>
-              {badgeLabel[c.badge]}
-            </div>
-          </div>
-        ))}
+        {upcoming.length > 0 ? (
+          upcoming
+            .slice(0, TEASER_COUNT)
+            .map((c) => <ConcertRow key={`${c.start}-${c.title.et}`} concert={c} />)
+        ) : (
+          <p className={styles.empty}>{t("noUpcoming")}</p>
+        )}
+
+        <Link href="/concerts" className={styles.seeAll}>
+          {t("seeAll")} →
+        </Link>
       </div>
     </section>
   );

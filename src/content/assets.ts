@@ -14,6 +14,13 @@ export const IMAGES = {
   band: "/images/band.jpg",
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
+  /** Live photos scattered across the concerts-page hero. */
+  live: {
+    one: "/images/concerts/live-1.webp",
+    two: "/images/concerts/live-2.webp",
+    three: "/images/concerts/live-3.webp",
+    four: "/images/concerts/live-4.webp",
+  },
   /** Member avatars — the design's hand-positioned crops. */
   members: {
     mirtel: "/images/members/mirtel.webp",

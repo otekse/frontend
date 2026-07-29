@@ -1,22 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
 import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
+import { useParallax } from "@/lib/use-parallax";
 import styles from "./Hero.module.scss";
 
-// Fraction of the remaining distance the rendered offset covers each frame.
-// This easing is what a plain scroll-event handler lacks: applying the raw
-// scroll position makes the layers step with every wheel tick.
-//
-// It is deliberately high. The smoothing is only there to absorb the coarse
-// steps of a wheel tick, NOT to add float: at 0.45 the layers are ~95% settled
-// about five frames after you stop, so there is no drift-after-stop — which is
-// what reads as "bounce" when scrolling back up. Lowering this reintroduces it.
-const EASE = 0.15;
-// Sub-pixel remainder nobody can see — snap and let the loop stop.
-const SETTLE_PX = 0.01;
 // How much the title recedes and fades over one hero's worth of scrolling.
 // Translation alone just moves the title further; shrinking and fading it as
 // it travels is what reads as depth. Kept subtle — enough to sell distance,
@@ -25,95 +15,22 @@ const TITLE_SCALE_LOSS = 0.07;
 const TITLE_FADE = 0.4;
 
 // Layered parallax hero from the design: forest photo depth stack, giant
-// ÕTEKSE title, wheat-field foreground. Each [data-parallax] layer shifts by
-// offset * its factor, where offset eases toward the scroll position inside a
-// rAF loop. The loop parks itself once motion settles and while the hero is
-// off-screen. Disabled entirely under prefers-reduced-motion.
+// ÕTEKSE title, wheat-field foreground. The scroll loop itself lives in
+// useParallax (shared with the concerts hero); all this adds is the title's
+// recede-and-fade, which no other hero has.
 export function Hero() {
   const t = useTranslations("Home");
   const rootRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const root = rootRef.current;
-    if (!root) return;
-
-    const layers = Array.from(
-      root.querySelectorAll<HTMLElement>("[data-parallax]"),
-    ).map((el) => ({
-      el,
-      factor: parseFloat(el.dataset.parallax!),
-      isTitle: el.dataset.heroTitle !== undefined,
-    }));
-
-    let rendered = window.scrollY;
-    let target = rendered;
-    let frame = 0; // rAF ids are always positive, so 0 means "none pending"
-    let onScreen = true;
-    let heroHeight = root.offsetHeight || 1; // cached: reading it per frame forces reflow
-
-    const paint = () => {
-      const progress = Math.min(Math.max(rendered / heroHeight, 0), 1);
-      for (const { el, factor, isTitle } of layers) {
-        const y = (rendered * factor).toFixed(2);
-        if (isTitle) {
-          const scale = 1 - progress * TITLE_SCALE_LOSS;
-          el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale.toFixed(4)})`;
-          el.style.opacity = (1 - progress * TITLE_FADE).toFixed(3);
-        } else {
-          el.style.transform = `translate3d(0, ${y}px, 0)`;
-        }
-      }
-    };
-
-    const tick = () => {
-      frame = 0;
-      const gap = target - rendered;
-      rendered = Math.abs(gap) < SETTLE_PX ? target : rendered + gap * EASE;
-      paint();
-      if (rendered !== target) frame = requestAnimationFrame(tick);
-    };
-    const request = () => {
-      if (!frame && onScreen) frame = requestAnimationFrame(tick);
-    };
-
-    const onScroll = () => {
-      target = window.scrollY;
-      request();
-    };
-    const onResize = () => {
-      heroHeight = root.offsetHeight || 1;
-      request();
-    };
-
-    // Nothing to animate once the hero has scrolled away; snap on re-entry so
-    // coming back doesn't play a catch-up slide from a stale offset.
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        onScreen = entry.isIntersecting;
-        if (onScreen) {
-          rendered = target = window.scrollY;
-          paint();
-        } else if (frame) {
-          cancelAnimationFrame(frame);
-          frame = 0;
-        }
-      },
-      { rootMargin: "120px" },
-    );
-    io.observe(root);
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    paint();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
-      io.disconnect();
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
+  useParallax(rootRef, (el, y, progress) => {
+    if (el.dataset.heroTitle === undefined) {
+      el.style.transform = `translate3d(0, ${y}px, 0)`;
+      return;
+    }
+    const scale = 1 - progress * TITLE_SCALE_LOSS;
+    el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale.toFixed(4)})`;
+    el.style.opacity = (1 - progress * TITLE_FADE).toFixed(3);
+  });
 
   const forest = `url('${IMAGES.forest}')`;
   const wheat = `url('${IMAGES.wheat}')`;

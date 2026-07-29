@@ -1,0 +1,28 @@
+@use "../../../styles/mixins" as *;
+
+.section {
+  background: var(--color-forest);
+  // The hero supplies the top spacing; this only closes the page out.
+  padding: 0 var(--spacing-section-x) 120px;
+}
+
+.inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+}
+
+.footnote {
+  margin-top: 60px;
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--color-cream-a45);
+}
+
+// Shown instead of the list once every announced date has passed.
+.empty {
+  padding: 50px 0 10px;
+  text-align: center;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-cream-a65);
+}

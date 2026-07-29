@@ -3,7 +3,7 @@
     "concerts": "Kontserdid",
     "shop": "E-pood",
     "cart": "Ostukorv",
-    "backHome": "Kodulehele"
+    "home": "Koduleht"
   },
   "LocaleSwitcher": {
     "label": "Keel",
@@ -47,7 +47,26 @@
     "linkLabel": "VAATA LÄHEMALT",
     "badgeFree": "TASUTA",
     "badgeTicketed": "PILETIGA",
-    "badgeSoon": "INFO PEAGI"
+    "badgeSoon": "INFO PEAGI",
+    "seeAll": "Vaata kõiki kontserte",
+    "noUpcoming": "Uued kuupäevad on tulemas — anname siin lehel teada, kui järgmine kontsert on paigas."
+  },
+  "ConcertsPage": {
+    "overline": "ÕTEKSE",
+    "title": "KONTSERDID",
+    "sub": "Tulevased esinemised — tule kuula meid lavale!",
+    "footnote": "Rohkem kuupäevi lisandub jooksvalt — vaata varsti tagasi!",
+    "pastShow": "VAATA EELNEVAID",
+    "pastHide": "PEIDA EELNEVAD",
+    "pastHeading": "Eelnevad esinemised",
+    "photo1Alt": "Õtekse tantsib niidul",
+    "photo2Alt": "Õtekse laval",
+    "photo3Alt": "Õtekse kontsert saalis",
+    "photo4Alt": "Õtekse rannal",
+    "liveTag": "LIVE",
+    "metaTitle": "Kontserdid — Õtekse",
+    "metaDescription": "Õtekse tulevased kontserdid ja esinemised. Vaata, kus ja millal meid kuulata saab.",
+    "noUpcoming": "Hetkel pole ühtegi kuupäeva välja kuulutatud. Uued esinemised lisanduvad jooksvalt — vaata varsti tagasi!"
   },
   "ShopTeaser": {
     "overline": "E-POOD",
