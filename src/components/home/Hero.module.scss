@@ -1,5 +1,20 @@
 @use "../../styles/mixins" as *;
 
+// This hero is expensive to composite: six promoted full-viewport layers
+// (`will-change: transform` below), four of them carrying a drop-shadow
+// filter, plus clip-paths and a backdrop-filtered pill on phones. That is fine
+// while the page is still, because a still page produces no frames at all —
+// measured idle cost is 0% of a CPU core.
+//
+// It stops being fine the moment anything animates continuously. Any endless
+// animation anywhere on the page makes the compositor produce a frame every
+// 16ms, and every one of those frames pays for this stack: an 8px pulsing dot
+// in the music player cost 26–39% of a core for as long as a track played, and
+// starved the scroll parallax into stuttering (see MusicPlayer.module.scss).
+//
+// So: no `animation: … infinite` on any page that renders this hero unless it
+// is genuinely worth a permanent 60fps recomposite. Transient animations
+// (spinners, load shimmers) are fine — they stop.
 .hero {
   position: relative;
   height: 100vh;
@@ -22,7 +37,10 @@
   will-change: transform;
 }
 
-// The three wave-clipped forest layers, darkening towards the viewer.
+// The wave-clipped forest layers, darkening towards the viewer. There were
+// three; the closest and darkest was dropped for cost — it was ~14% of the
+// hero's per-frame compositing on its own (measured 50% -> 43% of a CPU core
+// at a steady 60fps), for the least visible band of the depth ramp.
 .layer {
   position: absolute;
   left: 0;
@@ -56,17 +74,6 @@
   .layerFill {
     background-position: center 55%;
     filter: brightness(0.44);
-  }
-}
-
-.layerC {
-  top: 52%;
-  height: 46%;
-  z-index: 3;
-
-  .layerFill {
-    background-position: center 70%;
-    filter: brightness(0.3);
   }
 }
 

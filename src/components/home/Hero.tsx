@@ -48,9 +48,6 @@ export function Hero() {
           <clipPath id="hero-wave-b" clipPathUnits="objectBoundingBox">
             <path d="M0,0.1 C0.06,0.22 0.16,0.28 0.28,0.2 C0.4,0.12 0.48,0.3 0.6,0.26 C0.72,0.22 0.78,0.04 0.88,0.08 C0.94,0.11 0.98,0.2 1,0.18 L1,1 L0,1 Z" />
           </clipPath>
-          <clipPath id="hero-wave-c" clipPathUnits="objectBoundingBox">
-            <path d="M0,0.22 C0.1,0.06 0.2,0.16 0.32,0.12 C0.46,0.07 0.52,0.24 0.66,0.18 C0.78,0.13 0.86,0.02 1,0.12 L1,1 L0,1 Z" />
-          </clipPath>
           <clipPath id="hero-wave-wheat" clipPathUnits="objectBoundingBox">
             <path d="M0,0.3 C0.1,0.16 0.22,0.12 0.36,0.18 C0.5,0.24 0.62,0.14 0.74,0.09 C0.84,0.05 0.93,0.02 1,0.02 L1,1 L0,1 Z" />
           </clipPath>
@@ -72,13 +69,6 @@ export function Hero() {
           style={{ backgroundImage: forest, clipPath: "url(#hero-wave-b)" }}
         />
       </div>
-      <div data-parallax="0.2" className={`${styles.layer} ${styles.layerC}`}>
-        <div
-          className={styles.layerFill}
-          style={{ backgroundImage: forest, clipPath: "url(#hero-wave-c)" }}
-        />
-      </div>
-
       <div className={styles.vignette} />
 
       <h1 data-parallax="0.6" data-hero-title className={styles.title}>
