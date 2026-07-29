@@ -85,7 +85,7 @@
 //
 // `infinite` here was expensive out of all proportion to an 8px dot. A running
 // animation — any animation — forces the compositor to produce a frame every
-// 16ms, and on this site a frame means recompositing the hero's seven promoted
+// 16ms, and on this site a frame means recompositing the hero's promoted
 // full-viewport layers and their drop-shadow filters. Measured on the live
 // site, page otherwise idle: 0% of a CPU core paused, 26% (desktop, nav
 // placement) to 39% (phone, hero placement) while a track played, for as long
@@ -101,6 +101,14 @@ $dot-pulses: 3;
 .dotLive {
   background: var(--color-live);
   animation: pulse 1.8s ease-in-out $dot-pulses;
+
+  // `.inHero .dot` above sets the inert cream and outranks a bare `.dotLive`,
+  // so without this the live colour never lands in the hero placement and the
+  // phone dot looks the same paused and playing. It only ties `.inHero .dot`
+  // on specificity — it wins on being later in the file, so keep it below.
+  .inHero & {
+    background: var(--color-live);
+  }
 
   @include reduced-motion {
     animation: none;
