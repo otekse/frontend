@@ -20,12 +20,12 @@
   margin: 0 auto;
   // Scales with the viewport so the absolutely-positioned cards keep their
   // relationship instead of piling up on narrow screens.
-  height: clamp(430px, 58vw, 620px);
+  height: clamp(300px, 41vw, 434px);
 
   // Below the clamp's floor the cards have shrunk but the stage has not,
   // leaving a dead band between the title and the front row of photos.
   @include until($bp-sm) {
-    height: clamp(320px, 66vw, 420px);
+    height: clamp(224px, 46vw, 294px);
   }
 }
 
@@ -142,6 +142,15 @@
   background: var(--gradient-hero-scrim);
   z-index: 4;
   pointer-events: none;
+
+  // On phones the shortened stage brings the front cards up behind the
+  // subtitle, so the scrim has to reach further down to keep it readable —
+  // the cards are deliberately large here and are not shrinking to make room.
+  @include until($bp-sm) {
+    top: 45%;
+    width: 118%;
+    height: 118%;
+  }
 }
 
 .copy {
