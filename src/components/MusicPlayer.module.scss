@@ -80,9 +80,27 @@
   }
 }
 
+// The live colour is what states "playing"; the pulse only draws the eye when
+// playback starts, so it runs a fixed number of times instead of forever.
+//
+// `infinite` here was expensive out of all proportion to an 8px dot. A running
+// animation — any animation — forces the compositor to produce a frame every
+// 16ms, and on this site a frame means recompositing the hero's seven promoted
+// full-viewport layers and their drop-shadow filters. Measured on the live
+// site, page otherwise idle: 0% of a CPU core paused, 26% (desktop, nav
+// placement) to 39% (phone, hero placement) while a track played, for as long
+// as it played. That left no headroom for the scroll parallax, which is what
+// made scrolling stutter while music was on.
+//
+// The cost is the hero, not the dot: promoting the dot to its own layer, and
+// removing the pill's backdrop-filter, each changed nothing. Only stopping the
+// animation returned the page to idle. See the hero's own note in
+// Hero.module.scss before adding any other endless animation over it.
+$dot-pulses: 3;
+
 .dotLive {
   background: var(--color-live);
-  animation: pulse 1.8s ease-in-out infinite;
+  animation: pulse 1.8s ease-in-out $dot-pulses;
 
   @include reduced-motion {
     animation: none;

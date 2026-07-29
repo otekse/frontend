@@ -1,5 +1,20 @@
 @use "../../styles/mixins" as *;
 
+// This hero is expensive to composite: seven promoted full-viewport layers
+// (`will-change: transform` below), five of them carrying a drop-shadow
+// filter, plus clip-paths and a backdrop-filtered pill on phones. That is fine
+// while the page is still, because a still page produces no frames at all —
+// measured idle cost is 0% of a CPU core.
+//
+// It stops being fine the moment anything animates continuously. Any endless
+// animation anywhere on the page makes the compositor produce a frame every
+// 16ms, and every one of those frames pays for this stack: an 8px pulsing dot
+// in the music player cost 26–39% of a core for as long as a track played, and
+// starved the scroll parallax into stuttering (see MusicPlayer.module.scss).
+//
+// So: no `animation: … infinite` on any page that renders this hero unless it
+// is genuinely worth a permanent 60fps recomposite. Transient animations
+// (spinners, load shimmers) are fine — they stop.
 .hero {
   position: relative;
   height: 100vh;
