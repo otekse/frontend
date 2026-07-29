@@ -48,7 +48,8 @@
     "badgeFree": "FREE",
     "badgeTicketed": "TICKETED",
     "badgeSoon": "INFO SOON",
-    "seeAll": "See all concerts"
+    "seeAll": "See all concerts",
+    "noUpcoming": "New dates are on the way — we will announce the next concert here."
   },
   "ConcertsPage": {
     "overline": "ÕTEKSE",
@@ -64,7 +65,8 @@
     "photo4Alt": "Õtekse on the beach",
     "liveTag": "LIVE",
     "metaTitle": "Concerts — Õtekse",
-    "metaDescription": "Upcoming Õtekse concerts and performances. See where and when you can hear us live."
+    "metaDescription": "Upcoming Õtekse concerts and performances. See where and when you can hear us live.",
+    "noUpcoming": "No dates are announced right now. New performances are added regularly — check back soon!"
   },
   "ShopTeaser": {
     "overline": "SHOP",

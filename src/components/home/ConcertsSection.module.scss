@@ -22,6 +22,14 @@
 
 // Row/badge styling moved to the shared ConcertRow component, which this
 // section and the /concerts page both render.
+
+// Shown instead of the rows once every announced date has passed.
+.empty {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-cream-a65);
+}
+
 .seeAll {
   display: inline-flex;
   align-items: center;

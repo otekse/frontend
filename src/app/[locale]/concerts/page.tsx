@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { concerts } from "@/content/concerts";
+import { splitConcerts } from "@/lib/concerts";
 import { ConcertRow } from "@/components/concerts/ConcertRow";
 import { ConcertsHero } from "@/components/concerts/ConcertsHero";
 import { PastConcerts } from "@/components/concerts/PastConcerts";
@@ -16,6 +17,11 @@ import styles from "./page.module.scss";
 // We deliberately keep the standard header and swap only its first pill
 // (Kontserdid -> Koduleht) — see the spec in
 // workspace/docs/superpowers/specs/2026-07-29-concerts-page-design.md.
+//
+// Upcoming vs past is decided by today's date, so this route must stay
+// server-rendered per request (`ƒ` in the build output). If it were ever
+// prerendered as static, "today" would freeze at build time and concerts
+// would stop retiring — add `revalidate` if that changes.
 
 export async function generateMetadata({
   params,
@@ -53,6 +59,9 @@ export default async function ConcertsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("ConcertsPage");
+  // Split per request, not at build time — see the note above about staying
+  // dynamically rendered.
+  const { upcoming, past } = splitConcerts(concerts);
 
   return (
     <>
@@ -60,13 +69,20 @@ export default async function ConcertsPage({
 
       <section id="kontserdid" className={styles.section}>
         <div className={styles.inner}>
-          {concerts.map((c) => (
-            <ConcertRow key={`${c.date}-${c.title.et}`} concert={c} />
-          ))}
+          {upcoming.length > 0 ? (
+            <>
+              {upcoming.map((c) => (
+                <ConcertRow key={`${c.start}-${c.title.et}`} concert={c} />
+              ))}
+              <p className={styles.footnote}>{t("footnote")}</p>
+            </>
+          ) : (
+            // Reachable in the ordinary course of things: once the last
+            // announced date passes, this is the page until a new one is added.
+            <p className={styles.empty}>{t("noUpcoming")}</p>
+          )}
 
-          <p className={styles.footnote}>{t("footnote")}</p>
-
-          <PastConcerts />
+          <PastConcerts concerts={past} />
         </div>
       </section>
     </>

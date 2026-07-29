@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
-import type { Concert, ConcertBadge } from "@/content/concerts";
+import { formatConcertDate, type Concert, type ConcertBadge } from "@/lib/concerts";
 import styles from "./ConcertRow.module.scss";
 
 const badgeClass: Record<ConcertBadge, string> = {
@@ -23,7 +23,9 @@ export function ConcertRow({ concert }: { concert: Concert }) {
 
   return (
     <div className={styles.row}>
-      <div className={styles.date}>{concert.date}</div>
+      <div className={styles.date}>
+        {formatConcertDate(concert, locale, "upcoming")}
+      </div>
       <div>
         <div className={styles.name}>{concert.title[locale]}</div>
         <div className={styles.info}>{concert.info[locale]}</div>

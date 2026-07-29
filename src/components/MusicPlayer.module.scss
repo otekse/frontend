@@ -14,19 +14,19 @@
   position: relative;
 }
 
-// Phone placement: sits just under the ÕTEKSE wordmark inside the hero.
+// Phone placement: sits low on the hero banner, over the wheat field.
 //
 // Absolute, not fixed — it scrolls away with the banner like any other element
 // rather than following the viewport. It carries no [data-parallax], so it is
 // the one thing in the hero that does not drift: still relative to the banner
 // while the layers behind it move.
 //
-// `top` is derived from the title's own metrics rather than a magic number —
-// the title sits at 26% of the hero and is --text-hero tall (line-height 1.05)
-// — so the widget stays under the wordmark as the clamp resizes it.
+// `top` is a share of the banner rather than a measurement off the wordmark:
+// the widget is meant to sit near the foot of the hero, not tucked under the
+// title, so it no longer needs to track the title's clamp.
 .inHero {
   position: absolute;
-  top: calc(26% + var(--text-hero) * 1.05 + 22px);
+  top: 90%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9; // above the near wheat band (8)

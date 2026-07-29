@@ -2,16 +2,22 @@
 
 import { useId, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { pastConcerts } from "@/content/concerts";
+import { formatConcertDate, type Concert } from "@/lib/concerts";
 import styles from "./PastConcerts.module.scss";
 
 // The archive behind the "Vaata eelnevaid" toggle. Collapsed by default —
 // upcoming dates are what people come for.
-export function PastConcerts() {
+//
+// The rows arrive as a prop rather than from their own collection: past and
+// upcoming are the same list split by date (see `splitConcerts`), so a concert
+// files itself here the day after it happens.
+export function PastConcerts({ concerts }: { concerts: Concert[] }) {
   const t = useTranslations("ConcertsPage");
   const locale = useLocale() as "et" | "en";
   const [open, setOpen] = useState(false);
   const panelId = useId();
+
+  if (concerts.length === 0) return null;
 
   return (
     <div className={styles.wrap}>
@@ -36,9 +42,11 @@ export function PastConcerts() {
           {/* The toggle already labels this list on screen, so the heading is
               here for document structure only. */}
           <h2 className="sr-only">{t("pastHeading")}</h2>
-          {pastConcerts.map((c) => (
-            <div key={`${c.date.et}-${c.title.et}`} className={styles.row}>
-              <div className={styles.date}>{c.date[locale]}</div>
+          {concerts.map((c) => (
+            <div key={`${c.start}-${c.title.et}`} className={styles.row}>
+              <div className={styles.date}>
+                {formatConcertDate(c, locale, "past")}
+              </div>
               <div>
                 <div className={styles.name}>{c.title[locale]}</div>
                 <div className={styles.info}>{c.info[locale]}</div>
