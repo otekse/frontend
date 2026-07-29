@@ -33,7 +33,7 @@ export type Track = {
 
 export const tracks: Track[] = [
   { title: "Unt aia taga", src: "/audio/unt-aia-taga.webm", startAt: 3 },
-  { title: "Puraviku polka", src: null },
+  { title: "Armastuse rohi", src: "/audio/armastuse-rohi.webm" },
 ];
 
 /** Shown next to the track title in the player pill. */
