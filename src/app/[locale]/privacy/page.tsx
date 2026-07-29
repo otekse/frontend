@@ -5,7 +5,7 @@ import styles from "./page.module.scss";
 // Starting-point privacy notice (PROJECT_BRIEF.md §11). GDPR Art. 13
 // transparency applies because Umami processes IP addresses server-side, even
 // though the site sets no analytics cookie and needs no consent banner.
-const CONTACT_EMAIL = "info@õtekse.ee";
+const CONTACT_EMAIL = "otekse@gmail.com";
 
 const SECTIONS = [
   ["controllerTitle", "controllerBody"],
