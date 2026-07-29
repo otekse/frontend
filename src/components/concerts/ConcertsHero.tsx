@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
 import { SmartImage } from "@/components/SmartImage";
+import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
 import { useParallax } from "@/lib/use-parallax";
 import styles from "./ConcertsHero.module.scss";
 
@@ -83,6 +84,13 @@ export function ConcertsHero() {
           <p className={styles.sub}>{t("sub")}</p>
         </div>
       </div>
+
+      {/* On phones the player portals into here, as it does on the homepage —
+          otherwise this page would be the one that strands it up in the nav.
+          Outside the parallax layers on purpose: a control that drifts while
+          you reach for it is hostile. Empty and invisible on desktop, where
+          the player stays in the nav. */}
+      <div id={HERO_PLAYER_SLOT} className={styles.playerSlot} />
     </header>
   );
 }

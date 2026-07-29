@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 import { ARTIST, tracks } from "@/content/music";
 import styles from "./MusicPlayer.module.scss";
 
@@ -43,6 +44,13 @@ export function MusicPlayer() {
 
   // Re-evaluate on resize so rotating a phone moves the player to the right
   // place instead of stranding it.
+  //
+  // `pathname` is a dependency because this component lives in SiteHeader,
+  // inside the persistent layout, so it never remounts on navigation. Without
+  // it the slot found on the first page is kept forever: leaving the homepage
+  // left the player portalled into a detached node, and coming back left it
+  // stranded in the nav even though a hero slot was there to receive it.
+  const pathname = usePathname();
   useIsomorphicLayoutEffect(() => {
     const mq = window.matchMedia(HERO_PLACEMENT);
     const apply = () =>
@@ -56,7 +64,7 @@ export function MusicPlayer() {
       mq.removeEventListener("change", apply);
       window.removeEventListener("resize", apply);
     };
-  }, []);
+  }, [pathname]);
 
   const track = tracks[index];
   const playable = Boolean(track?.src);
