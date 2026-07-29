@@ -1,12 +1,16 @@
-// Generates the site/app icons from the wheat texture in assets-src/.
+// Generates the site/app icons from the hero photo in assets-src/.
 //
 //   npm run icons:build
 //
-// The mark is the Õtekse "Õ" in cream on a wheat-textured rounded square. The
-// glyph is drawn as SVG geometry rather than set in Archivo Black on purpose:
-// this script must produce identical output on any machine and in CI, and the
-// display font is only ever downloaded at build time by next/font, so it is not
-// installed as a system font for librsvg to find.
+// The icon is the band's hero image — the three sisters running through the
+// wheat — square-cropped from `assets-src/hero-icon.png`. It replaced a
+// generated "Õ" mark; the photo carries the brand better at the sizes people
+// actually see (home screen, bookmarks, PWA install), at the cost of legibility
+// in a 16px browser tab, where any photograph turns to mush.
+//
+// The source is a landscape composite, so the square crop is horizontal-centre
+// and full-height. Crop here rather than editing the original: the file in
+// assets-src/ stays the untouched master.
 //
 // Outputs (committed):
 //   src/app/icon.png        — Next App Router picks this up automatically
@@ -23,27 +27,7 @@ const ROOT = join(here, "..");
 const SRC = join(ROOT, "assets-src");
 
 const SIZE = 512;
-const CREAM = "#f6f2e7"; // --color-cream-bright
 const RADIUS = 112; // ~22% — the squircle proportion of the design's app icon
-
-// The Õ, drawn at 512×512. The bowl is two concentric ellipses with
-// fill-rule="evenodd" so the counter is punched out; the tilde is a stroked
-// S-curve above it.
-const MARK = `
-<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 512 512">
-  <g fill="${CREAM}">
-    <path fill-rule="evenodd" d="
-      M 256 152
-      a 146 163 0 1 1 -0.1 0 z
-      M 256 234
-      a 60 81 0 1 0 0.1 0 z
-    " />
-  </g>
-  <path
-    d="M 178 116 C 196 72, 240 72, 258 100 C 272 122, 300 124, 318 100"
-    fill="none" stroke="${CREAM}" stroke-width="31"
-    stroke-linecap="round" stroke-linejoin="round" />
-</svg>`;
 
 // Rounded-square mask, applied last so the corners are transparent.
 const MASK = `
@@ -51,28 +35,50 @@ const MASK = `
   <rect width="${SIZE}" height="${SIZE}" rx="${RADIUS}" ry="${RADIUS}" fill="#fff"/>
 </svg>`;
 
-// Square crop from the lower half of the strip, where the ears are densest.
-const base = await sharp(join(SRC, "wheat.png"))
-  .extract({ left: 200, top: 60, width: 640, height: 640 })
+const source = sharp(join(SRC, "hero-icon.png"));
+const { width = 0, height = 0 } = await source.metadata();
+const side = Math.min(width, height);
+
+// Centre the crop horizontally; the composite is wider than it is tall, so the
+// full height is kept and only the outer edges of the scene are trimmed.
+const square = await source
+  .extract({
+    left: Math.round((width - side) / 2),
+    top: Math.round((height - side) / 2),
+    width: side,
+    height: side,
+  })
   .resize(SIZE, SIZE)
-  .modulate({ saturation: 1.05 })
+  .flatten({ background: "#0d1f15" }) // the source has alpha; --color-forest behind it
   .toBuffer();
 
-const icon = await sharp(base)
-  .composite([
-    { input: Buffer.from(MARK) },
-    { input: Buffer.from(MASK), blend: "dest-in" },
-  ])
-  .png()
-  .toBuffer();
+// A photograph as a flat PNG runs to ~700KB, and the favicon is fetched on
+// every page load. Palette quantisation takes it under ~60KB; at icon sizes the
+// banding is invisible, and the alpha the rounded corners need is preserved.
+const encode = (img) =>
+  img.png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 });
+
+const rounded = await encode(
+  sharp(square).composite([{ input: Buffer.from(MASK), blend: "dest-in" }]),
+).toBuffer();
 
 mkdirSync(join(ROOT, "public"), { recursive: true });
 
 await Promise.all([
-  sharp(icon).toFile(join(ROOT, "src", "app", "icon.png")),
-  sharp(icon).resize(180, 180).toFile(join(ROOT, "src", "app", "apple-icon.png")),
-  sharp(icon).resize(192, 192).toFile(join(ROOT, "public", "icon-192.png")),
-  sharp(icon).resize(512, 512).toFile(join(ROOT, "public", "icon-512.png")),
+  encode(sharp(rounded)).toFile(join(ROOT, "src", "app", "icon.png")),
+  // iOS applies its own mask, so this one stays a full square — a pre-rounded
+  // icon gets rounded twice and shows dark wedges in the corners.
+  encode(sharp(square).resize(180, 180)).toFile(
+    join(ROOT, "src", "app", "apple-icon.png"),
+  ),
+  encode(sharp(rounded).resize(192, 192)).toFile(
+    join(ROOT, "public", "icon-192.png"),
+  ),
+  encode(sharp(rounded).resize(512, 512)).toFile(
+    join(ROOT, "public", "icon-512.png"),
+  ),
 ]);
 
-console.log("icons written: src/app/icon.png, src/app/apple-icon.png, public/icon-{192,512}.png");
+console.log(
+  `icons written from a ${side}x${side} crop: src/app/icon.png, src/app/apple-icon.png, public/icon-{192,512}.png`,
+);
