@@ -47,7 +47,7 @@
   width: calc(50% - 3px);
   background: var(--color-ink);
   border-radius: var(--radius-pill);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.28s var(--ease-standard);
 
   @include reduced-motion {
     transition: none;
