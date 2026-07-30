@@ -183,6 +183,7 @@ $dot-pulses: 3;
   flex: none;
   border-radius: var(--radius-pill);
   @include focus-ring;
+  @include press-feedback;
 
   @include until($bp-md) {
     display: grid;
@@ -208,6 +209,9 @@ $dot-pulses: 3;
   border-radius: 50%;
   background: var(--color-ink);
   @include focus-ring;
+  // The most-pressed control on the site, and its icon only swaps once
+  // playback actually starts — which on a slow connection can be seconds.
+  @include press-feedback;
 
   .inHero & {
     width: 40px;

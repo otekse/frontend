@@ -168,6 +168,19 @@ a {
   --shadow-hero-sub: 0 2px 14px rgba(9, 22, 15, 0.95);
   --shadow-photo-card: 0 18px 44px rgba(0, 0, 0, 0.5); /* concert hero, back */
   --shadow-photo-card-front: 0 24px 56px rgba(0, 0, 0, 0.58);
+  /* Pressed pill: the resting shadow compressed, so the control reads as
+     pushed toward the surface rather than just shrinking. */
+  --shadow-pill-pressed: 0 1px 4px rgba(0, 0, 0, 0.32);
+
+  /* -- Motion -- */
+  /* Standard decelerating curve for UI state changes. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Press feedback is asymmetric on purpose: the control takes the press
+     almost immediately, then relaxes back more gently. Equal durations read
+     as mushy, and a slow press-in reads as lag. */
+  --duration-press-in: 60ms;
+  --duration-press-out: 180ms;
+  --scale-pressed: 0.96;
 
   /* Radial hole punched through the concert-hero photo scatter so the title
      stays legible over whatever lands behind it. */

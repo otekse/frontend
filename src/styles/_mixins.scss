@@ -37,6 +37,39 @@ $bp-md: 900px;
   }
 }
 
+// ---- Press feedback ----
+//
+// Makes a click or tap visibly register. Worth being explicit about why this is
+// needed: globals.css strips the WebKit tap highlight (it ignores
+// border-radius, so it flashed a rectangle over our pills), and the pills
+// carried no :active state of their own. That left a mouse click with no
+// feedback whatsoever, and a tap with only the global dim.
+//
+// A short scale plus a compressed shadow reads as the control being pushed
+// toward the surface. Keyed on :active so it covers mouse, touch and keyboard
+// activation alike, with no JS and no pointer-type guesswork.
+@mixin press-feedback($scale: var(--scale-pressed)) {
+  transition:
+    transform var(--duration-press-out) var(--ease-standard),
+    box-shadow var(--duration-press-out) var(--ease-standard);
+
+  &:active {
+    transform: scale($scale);
+    box-shadow: var(--shadow-pill-pressed);
+    // Snap in, relax out — see the duration tokens in globals.css.
+    transition-duration: var(--duration-press-in);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    // No movement, but the press must still be visible: keep the shadow change.
+    &:active {
+      transform: none;
+    }
+  }
+}
+
 // ---- Pill: the signature button/badge/nav shape ----
 @mixin pill($bg, $ink) {
   display: inline-flex;
@@ -54,6 +87,7 @@ $bp-md: 900px;
   cursor: pointer;
   box-shadow: var(--shadow-pill);
   @include focus-ring;
+  @include press-feedback;
 }
 
 // ---- Overline: the "— MEIST" section kicker ----

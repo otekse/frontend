@@ -56,6 +56,25 @@ export function useParallax(
     const root = rootRef.current;
     if (!root) return;
 
+    // Stand down where CSS can do this better. A root marked `data-css-parallax`
+    // ships scroll-timeline rules for its own layers (see Hero.module.scss), and
+    // those run on the compositor: no scroll listener, no rAF, nothing on the
+    // main thread that can fall behind the scroll. Running both would mean two
+    // writers fighting over `transform`.
+    //
+    // Opt-in per root rather than global, because a root only gets to skip the
+    // JS if it actually carries the equivalent CSS — the concerts hero does not,
+    // so it keeps this loop.
+    //
+    // Shipped in Chrome/Edge 115 and Safari 26; older Safari falls through to
+    // the loop below, which is why it stays.
+    if (
+      root.hasAttribute("data-css-parallax") &&
+      CSS.supports("animation-timeline: scroll()")
+    ) {
+      return;
+    }
+
     const layers = Array.from(
       root.querySelectorAll<HTMLElement>("[data-parallax]"),
     ).map((el) => ({ el, factor: parseFloat(el.dataset.parallax!) }));

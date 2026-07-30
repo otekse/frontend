@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
 import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
@@ -13,6 +13,16 @@ import styles from "./Hero.module.scss";
 // not so much that the title looks like it is animating on its own.
 const TITLE_SCALE_LOSS = 0.07;
 const TITLE_FADE = 0.4;
+
+// One drift factor per layer, consumed by both paths: the CSS scroll timeline
+// reads `--parallax`, the JS fallback reads `data-parallax`. Emitting them from
+// a single call keeps the two from drifting apart.
+function drift(factor: number) {
+  return {
+    "data-parallax": factor,
+    style: { "--parallax": factor } as CSSProperties,
+  };
+}
 
 // Layered parallax hero from the design: forest photo depth stack, giant
 // ÕTEKSE title, wheat-field foreground. The scroll loop itself lives in
@@ -36,9 +46,22 @@ export function Hero() {
   const wheat = `url('${IMAGES.wheat}')`;
 
   return (
-    <header ref={rootRef} className={styles.hero}>
+    // `data-css-parallax` tells useParallax to stand down where the browser can
+    // run this off the main thread; the two title constants above are handed to
+    // CSS here so the scroll-timeline path cannot disagree with the JS one.
+    <header
+      ref={rootRef}
+      className={styles.hero}
+      data-css-parallax
+      style={
+        {
+          "--title-scale-end": 1 - TITLE_SCALE_LOSS,
+          "--title-opacity-end": 1 - TITLE_FADE,
+        } as CSSProperties
+      }
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={IMAGES.forest} alt="" data-parallax="0.65" className={styles.base} />
+      <img src={IMAGES.forest} alt="" {...drift(0.65)} className={styles.base} />
 
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
         <defs>
@@ -57,13 +80,13 @@ export function Hero() {
         </defs>
       </svg>
 
-      <div data-parallax="0.5" className={`${styles.layer} ${styles.layerA}`}>
+      <div {...drift(0.5)} className={`${styles.layer} ${styles.layerA}`}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: forest, clipPath: "url(#hero-wave-a)" }}
         />
       </div>
-      <div data-parallax="0.34" className={`${styles.layer} ${styles.layerB}`}>
+      <div {...drift(0.34)} className={`${styles.layer} ${styles.layerB}`}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: forest, clipPath: "url(#hero-wave-b)" }}
@@ -71,18 +94,18 @@ export function Hero() {
       </div>
       <div className={styles.vignette} />
 
-      <h1 data-parallax="0.6" data-hero-title className={styles.title}>
+      <h1 {...drift(0.6)} data-hero-title className={styles.title}>
         ÕTEKSE
       </h1>
 
-      <div data-parallax="0.22" className={styles.wheatFar}>
+      <div {...drift(0.22)} className={styles.wheatFar}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat)" }}
         />
       </div>
 
-      <div data-parallax="0.06" className={styles.wheatNear}>
+      <div {...drift(0.06)} className={styles.wheatNear}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat2)" }}
