@@ -149,6 +149,16 @@
   transform: translateX(-50%) rotate(2deg) scaleX(1.02);
   z-index: 7;
   filter: drop-shadow(var(--shadow-cutout));
+
+  // Phones only: drop the group into the field. The hero is far taller than it
+  // is wide here, so at the design's height the cutout crowds the wordmark and
+  // leaves dead field below it. Desktop keeps the design canvas untouched.
+  //
+  // Note `top` is a share of .wheatNear's own height — 32% of the hero — so
+  // halving it moves them down about a tenth of the hero, not a third.
+  @include until($bp-sm) {
+    top: -36%;
+  }
 }
 
 // Portal target for the music player on phones (see MusicPlayer.tsx). Has no
