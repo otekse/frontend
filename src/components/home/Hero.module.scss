@@ -156,3 +156,61 @@
 .playerSlot {
   position: static;
 }
+
+// ---- Scroll-driven parallax: the same drift, run by the compositor ----
+//
+// Where the browser supports scroll timelines this replaces the rAF loop
+// entirely — useParallax sees `data-css-parallax` on the root and stands down
+// (see the note there). Nothing reads scrollY, nothing writes transforms from
+// JS, so the layers physically cannot lag the scroll. That lag is what iOS
+// exposes as jitter: the scroll runs off the main thread while the JS chasing
+// it does not.
+//
+// Shipped in Chrome/Edge 115 and Safari 26. Below that this block simply does
+// not apply and the JS loop runs as before, so there is no visual cliff —
+// worth knowing when testing, because an older iPhone is still on the old path.
+@supports (animation-timeline: scroll()) {
+  // Each layer travels `factor * one viewport` over the first viewport of
+  // scrolling, which is what the JS did while the hero was on screen. Tied to
+  // 100vh rather than the hero's box: on very short viewports `min-height`
+  // makes the hero taller than the viewport, and the layers then drift very
+  // slightly less than they used to. The *relative* rates stay exact, which is
+  // what actually reads as depth.
+  @keyframes hero-drift {
+    to {
+      transform: translate3d(0, calc(var(--parallax) * 100vh), 0);
+    }
+  }
+
+  // The title also recedes and fades. Both end values come from the component
+  // as custom properties, so TITLE_SCALE_LOSS / TITLE_FADE stay the one source
+  // of truth for the JS path and this one alike.
+  @keyframes hero-title-drift {
+    to {
+      transform: translate3d(0, calc(var(--parallax) * 100vh), 0)
+        scale(var(--title-scale-end));
+      opacity: var(--title-opacity-end);
+    }
+  }
+
+  .hero [data-parallax] {
+    // Order matters: the `animation` shorthand resets `animation-timeline` to
+    // auto, so the timeline has to be set after it or the animation runs as a
+    // normal time-based one and fires once on load.
+    animation: hero-drift both;
+    animation-timing-function: linear; // any curve here makes layers lag scroll
+    animation-timeline: scroll(root block);
+    animation-range: 0 100vh;
+  }
+
+  .hero [data-hero-title] {
+    animation-name: hero-title-drift;
+  }
+
+  // The JS path never starts under reduced motion; this one must match.
+  @include reduced-motion {
+    .hero [data-parallax] {
+      animation: none;
+    }
+  }
+}
