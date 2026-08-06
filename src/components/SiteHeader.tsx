@@ -23,13 +23,17 @@ export function SiteHeader() {
   // header keeps its shape everywhere — this is one label and one href, not a
   // different navigation (the design source mocks a back-button bar; we
   // deliberately do not follow it).
+  //
+  // The pill goes to the concerts *page*, not to `/#kontserdid`. The homepage
+  // section is a teaser; the page is the full, date-filtered listing, and an
+  // anchor left visitors scrolled to a summary wondering where the rest was.
   const onConcerts = pathname === "/concerts";
 
   return (
     <nav className={styles.nav}>
       <div className={styles.group}>
         <Link
-          href={onConcerts ? "/" : "/#kontserdid"}
+          href={onConcerts ? "/" : "/concerts"}
           className={`${styles.pill} ${styles.pillAccent}`}
         >
           {onConcerts ? t("home") : t("concerts")}
