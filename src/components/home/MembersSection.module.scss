@@ -37,10 +37,11 @@
 
 .panel {
   position: relative;
-  border: var(--border-card) solid var(--color-ink);
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-panel);
   overflow: hidden;
   background: var(--color-paper);
+  box-shadow: 0 0 0 1px var(--color-ink);
 }
 
 // Radial colour fill: a static backdrop (previous member) plus a radiating
