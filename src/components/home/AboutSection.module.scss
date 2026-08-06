@@ -3,6 +3,8 @@
 .section {
   background: var(--color-cream);
   padding: 110px var(--spacing-section-x) 90px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--color-ink);
 }
 
 .inner {
@@ -21,6 +23,7 @@
 
 .overline {
   @include overline(var(--color-rust));
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .title {
