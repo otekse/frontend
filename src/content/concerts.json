@@ -75,7 +75,8 @@
       "info": {
         "et": "Lisainfo peagi!",
         "en": "More info coming soon!"
-      }
+      },
+      "hidden": true
     },
     {
       "start": "2026-04-01",
