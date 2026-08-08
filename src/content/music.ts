@@ -32,7 +32,7 @@ export type Track = {
 };
 
 export const tracks: Track[] = [
-  { title: "Unt aia taga", src: "/audio/unt-aia-taga.webm", startAt: 3 },
+  { title: "Unt aja taga", src: "/audio/unt-aia-taga.webm", startAt: 3 },
   { title: "Armastuse rohi", src: "/audio/armastuse-rohi.webm" },
 ];
 
