@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, ViewTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
@@ -80,29 +80,36 @@ export function SiteHeader() {
 
   return (
     <nav className={styles.nav}>
-      <div ref={navLinksRef} className={styles.navLinks}>
-        <span
-          className={`${styles.navLinkIndicator} ${
-            indicatorVisible ? styles.navLinkIndicatorVisible : ""
-          } ${indicatorAnimated ? styles.navLinkIndicatorAnimated : ""}`}
-          aria-hidden
-          style={{
-            transform: `translateX(${activeIndicator.offset}px)`,
-            width: activeIndicator.width,
-          }}
-        />
-        {navLinks.map(({ href, label, active }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
-            aria-current={active ? "page" : undefined}
-            ref={active ? activeLinkRef : undefined}
-          >
-            {label}
-          </Link>
-        ))}
-      </div>
+      <ViewTransition
+        name="primary-nav"
+        share="nav-resize"
+        update="nav-resize"
+        default="none"
+      >
+        <div ref={navLinksRef} className={styles.navLinks}>
+          <span
+            className={`${styles.navLinkIndicator} ${
+              indicatorVisible ? styles.navLinkIndicatorVisible : ""
+            } ${indicatorAnimated ? styles.navLinkIndicatorAnimated : ""}`}
+            aria-hidden
+            style={{
+              transform: `translateX(${activeIndicator.offset}px)`,
+              width: activeIndicator.width,
+            }}
+          />
+          {navLinks.map(({ href, label, active }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
+              aria-current={active ? "page" : undefined}
+              ref={active ? activeLinkRef : undefined}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      </ViewTransition>
       <div className={styles.group}>
         {inStorefront && (
           <Link href="/cart" className={styles.cartPill} aria-label={t("cart")}>
