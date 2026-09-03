@@ -42,6 +42,14 @@
   box-shadow: var(--shadow-pill);
 }
 
+.navLinksWidthAnimated {
+  transition: width var(--duration-press-out) var(--ease-standard);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
 .navLinkIndicator {
   position: absolute;
   top: 0;

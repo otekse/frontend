@@ -1,9 +1,10 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, ViewTransition } from "react";
-import { useTranslations } from "next-intl";
+import { useLayoutEffect, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
+import { LOCALE_NAV_WIDTH_KEY } from "@/lib/locale-nav-transition";
 import { useShopEnabled } from "./ShopState";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MusicPlayer } from "./MusicPlayer";
@@ -15,6 +16,7 @@ const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
 
 export function SiteHeader() {
   const t = useTranslations("Nav");
+  const locale = useLocale();
   const { count } = useCart();
   const pathname = usePathname();
   const inStorefront = STOREFRONT.test(pathname);
@@ -27,6 +29,8 @@ export function SiteHeader() {
   });
   const [indicatorVisible, setIndicatorVisible] = useState(false);
   const [indicatorAnimated, setIndicatorAnimated] = useState(false);
+  const [navWidth, setNavWidth] = useState<number | null>(null);
+  const [navWidthAnimated, setNavWidthAnimated] = useState(false);
   const navLinks = [
     { href: "/", label: t("home"), active: pathname === "/" },
     {
@@ -78,38 +82,64 @@ export function SiteHeader() {
     };
   }, [pathname, shopOn]);
 
+  useLayoutEffect(() => {
+    const nav = navLinksRef.current;
+    const storedWidth = sessionStorage.getItem(LOCALE_NAV_WIDTH_KEY);
+    if (!nav || !storedWidth) return;
+
+    sessionStorage.removeItem(LOCALE_NAV_WIDTH_KEY);
+    const previousWidth = Number(storedWidth);
+    const nextWidth = nav.getBoundingClientRect().width;
+    if (!Number.isFinite(previousWidth) || previousWidth === nextWidth) return;
+
+    // This layout effect runs before the first paint of the new locale, so the
+    // bar starts at its old width rather than visibly jumping to the new one.
+    setNavWidth(previousWidth);
+    const frame = requestAnimationFrame(() => {
+      setNavWidthAnimated(true);
+      setNavWidth(nextWidth);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [locale]);
+
   return (
     <nav className={styles.nav}>
-      <ViewTransition
-        name="primary-nav"
-        share="nav-resize"
-        update="nav-resize"
-        default="none"
+      <div
+        ref={navLinksRef}
+        className={`${styles.navLinks} ${
+          navWidthAnimated ? styles.navLinksWidthAnimated : ""
+        }`}
+        data-primary-nav
+        style={{ width: navWidth ?? undefined }}
+        onTransitionEnd={(event) => {
+          if (event.propertyName !== "width") return;
+          setNavWidthAnimated(false);
+          setNavWidth(null);
+        }}
       >
-        <div ref={navLinksRef} className={styles.navLinks}>
-          <span
-            className={`${styles.navLinkIndicator} ${
-              indicatorVisible ? styles.navLinkIndicatorVisible : ""
-            } ${indicatorAnimated ? styles.navLinkIndicatorAnimated : ""}`}
-            aria-hidden
-            style={{
-              transform: `translateX(${activeIndicator.offset}px)`,
-              width: activeIndicator.width,
-            }}
-          />
-          {navLinks.map(({ href, label, active }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
-              aria-current={active ? "page" : undefined}
-              ref={active ? activeLinkRef : undefined}
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-      </ViewTransition>
+        <span
+          className={`${styles.navLinkIndicator} ${
+            indicatorVisible ? styles.navLinkIndicatorVisible : ""
+          } ${indicatorAnimated ? styles.navLinkIndicatorAnimated : ""}`}
+          aria-hidden
+          style={{
+            transform: `translateX(${activeIndicator.offset}px)`,
+            width: activeIndicator.width,
+          }}
+        />
+        {navLinks.map(({ href, label, active }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
+            aria-current={active ? "page" : undefined}
+            ref={active ? activeLinkRef : undefined}
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
       <div className={styles.group}>
         {inStorefront && (
           <Link href="/cart" className={styles.cartPill} aria-label={t("cart")}>

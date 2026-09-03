@@ -235,23 +235,8 @@ main {
   color: var(--color-ink);
 }
 
-/* The locale switch changes translated nav-label widths. Preserve the shared
-   control as one object while its size interpolates to the new language. */
-::view-transition-group(.nav-resize),
-::view-transition-old(.nav-resize),
-::view-transition-new(.nav-resize) {
-  animation-duration: var(--duration-press-out);
-  animation-timing-function: var(--ease-standard);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  ::view-transition-group(.nav-resize),
-  ::view-transition-old(.nav-resize),
-  ::view-transition-new(.nav-resize) {
-    animation: none;
   }
 }

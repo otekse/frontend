@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from "@/i18n/locale-cookie";
+import { LOCALE_NAV_WIDTH_KEY } from "@/lib/locale-nav-transition";
 import styles from "./LocaleSwitcher.module.scss";
 
 // The universal globe: meridian, equator and two parallels. An inline SVG
@@ -46,6 +47,14 @@ export function LocaleSwitcher() {
 
   const navigateToPendingLocale = () => {
     if (!pendingLocale) return;
+
+    const nav = document.querySelector<HTMLElement>("[data-primary-nav]");
+    if (nav) {
+      sessionStorage.setItem(
+        LOCALE_NAV_WIDTH_KEY,
+        String(nav.getBoundingClientRect().width),
+      );
+    }
 
     setPendingLocale(null);
     router.replace(pathname, { locale: pendingLocale });
