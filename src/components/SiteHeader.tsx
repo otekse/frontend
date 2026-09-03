@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
@@ -18,6 +19,13 @@ export function SiteHeader() {
   const pathname = usePathname();
   const inStorefront = STOREFRONT.test(pathname);
   const shopOn = useShopEnabled();
+  const navLinksRef = useRef<HTMLDivElement>(null);
+  const activeLinkRef = useRef<HTMLAnchorElement>(null);
+  const [activeIndicator, setActiveIndicator] = useState({
+    offset: 0,
+    width: 0,
+    ready: false,
+  });
   const navLinks = [
     { href: "/", label: t("home"), active: pathname === "/" },
     {
@@ -37,15 +45,52 @@ export function SiteHeader() {
       : []),
   ];
 
+  // The header stays mounted during Next.js client-side navigation. Measuring
+  // the newly active link here lets one persistent element glide to its new
+  // position instead of replacing a pill at the destination.
+  useLayoutEffect(() => {
+    const container = navLinksRef.current;
+    const activeLink = activeLinkRef.current;
+    if (!container || !activeLink) return;
+
+    const updateIndicator = () => {
+      const containerRect = container.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      setActiveIndicator({
+        offset: linkRect.left - containerRect.left,
+        width: linkRect.width,
+        ready: true,
+      });
+    };
+
+    updateIndicator();
+    const observer = new ResizeObserver(updateIndicator);
+    observer.observe(container);
+    observer.observe(activeLink);
+
+    return () => observer.disconnect();
+  }, [pathname, shopOn]);
+
   return (
     <nav className={styles.nav}>
-      <div className={styles.navLinks}>
+      <div ref={navLinksRef} className={styles.navLinks}>
+        <span
+          className={`${styles.navLinkIndicator} ${
+            activeIndicator.ready ? styles.navLinkIndicatorReady : ""
+          }`}
+          aria-hidden
+          style={{
+            transform: `translateX(${activeIndicator.offset}px)`,
+            width: activeIndicator.width,
+          }}
+        />
         {navLinks.map(({ href, label, active }) => (
           <Link
             key={href}
             href={href}
             className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
             aria-current={active ? "page" : undefined}
+            ref={active ? activeLinkRef : undefined}
           >
             {label}
           </Link>

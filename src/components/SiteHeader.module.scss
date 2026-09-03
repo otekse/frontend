@@ -33,6 +33,7 @@
 }
 
 .navLinks {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0;
@@ -41,7 +42,33 @@
   box-shadow: var(--shadow-pill);
 }
 
+.navLinkIndicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-cream-bright);
+  box-shadow: var(--shadow-pill);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navLinkIndicatorReady {
+  opacity: 1;
+  transition:
+    transform var(--duration-press-out) var(--ease-standard),
+    width var(--duration-press-out) var(--ease-standard);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
 .navLink {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   padding: 9px 18px;
@@ -65,10 +92,7 @@
 }
 
 .navLinkActive {
-  position: relative;
-  z-index: 1;
-  background: var(--color-cream-bright);
-  box-shadow: var(--shadow-pill);
+  color: var(--color-ink);
 }
 
 .cartPill {
