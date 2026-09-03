@@ -1,4 +1,7 @@
 import { Archivo_Black, Space_Mono } from "next/font/google";
+import { AppShell } from "@/components/AppShell";
+import { UmamiScript } from "@/components/UmamiScript";
+import { shopEnabled } from "@/lib/shop-server";
 import "./globals.css";
 
 const archivoBlack = Archivo_Black({
@@ -16,14 +19,23 @@ const spaceMono = Space_Mono({
 // This must remain above the locale segment. If `[locale]/layout.tsx` owns the
 // document shell, moving from `/et` to `/en` crosses a root-layout boundary
 // and Next.js has to perform a full document navigation.
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const shopOn = await shopEnabled();
+
   return (
     <html
       lang="en"
       className={`${archivoBlack.variable} ${spaceMono.variable}`}
       data-scroll-behavior="smooth"
     >
-      <body>{children}</body>
+      <body>
+        <AppShell shopOn={shopOn}>{children}</AppShell>
+        <UmamiScript />
+      </body>
     </html>
   );
 }
