@@ -18,28 +18,38 @@ export function SiteHeader() {
   const pathname = usePathname();
   const inStorefront = STOREFRONT.test(pathname);
   const shopOn = useShopEnabled();
-  const onConcerts = pathname === "/concerts";
-  const onAbout = pathname === "/about";
-  const onStandalonePage = onConcerts || onAbout;
+  const navLinks = [
+    { href: "/", label: t("home"), active: pathname === "/" },
+    {
+      href: "/concerts",
+      label: t("concerts"),
+      active: pathname === "/concerts",
+    },
+    { href: "/about", label: t("about"), active: pathname === "/about" },
+    ...(shopOn
+      ? [
+          {
+            href: "/shop",
+            label: t("shop"),
+            active: pathname === "/shop" || pathname.startsWith("/shop/"),
+          },
+        ]
+      : []),
+  ];
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.group}>
-        <Link
-          href={onStandalonePage ? "/" : "/concerts"}
-          className={`${styles.pill} ${styles.pillAccent}`}
-        >
-          {onStandalonePage ? t("home") : t("concerts")}
-        </Link>
-        <Link href={onAbout ? "/concerts" : "/about"} className={styles.pill}>
-          {onAbout ? t("concerts") : t("about")}
-        </Link>
-        {shopOn && (
-          <Link href="/shop" className={styles.pill}>
-            <span className={styles.dot} aria-hidden />
-            {t("shop")}
+      <div className={styles.navLinks}>
+        {navLinks.map(({ href, label, active }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
+            aria-current={active ? "page" : undefined}
+          >
+            {label}
           </Link>
-        )}
+        ))}
       </div>
       <div className={styles.group}>
         {inStorefront && (

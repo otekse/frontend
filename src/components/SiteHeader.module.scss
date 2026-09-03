@@ -32,31 +32,43 @@
   }
 }
 
-.pill {
-  @include pill(var(--color-cream-bright), var(--color-ink));
-  white-space: nowrap; // "E-pood" was breaking across two lines on phones
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--color-cream);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  @include focus-ring;
 
   @include until($bp-sm) {
     padding: 8px 10px;
-    gap: 5px;
   }
 
   &:hover {
-    background: white;
+    background: var(--color-cream-bright);
     color: var(--color-ink);
   }
 }
 
-// The concerts pill carries the gold underline accent from the design.
-.pillAccent {
-  border-bottom: 3px solid var(--color-gold);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-rust);
+.navLinkActive {
+  position: relative;
+  z-index: 1;
+  background: var(--color-cream-bright);
+  box-shadow: var(--shadow-pill);
 }
 
 .cartPill {
