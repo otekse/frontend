@@ -1,6 +1,5 @@
 "use client";
 
-import { ViewTransition } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { usePathname } from "next/navigation";
 import etMessages from "../../messages/et.json";
@@ -36,17 +35,7 @@ export function AppShell({
       <Providers>
         <ShopStateProvider enabled={shopOn}>
           <SiteHeader />
-          <main>
-            <ViewTransition
-              key={locale}
-              name="locale-content"
-              share="auto"
-              enter="auto"
-              default="none"
-            >
-              {children}
-            </ViewTransition>
-          </main>
+          <main>{children}</main>
           <SiteFooter />
         </ShopStateProvider>
       </Providers>
