@@ -24,7 +24,7 @@ export default async function HomePage({
   return (
     <>
       <Hero />
-      <AboutSection />
+      <AboutSection showMoreLink />
       <MembersSection />
       <ConcertsSection />
       {shopOn ? <ShopTeaser /> : <ShopClosed />}

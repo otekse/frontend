@@ -144,6 +144,16 @@
   color: var(--color-moss);
 }
 
+.moreLink {
+  @include pill(var(--color-ink), var(--color-cream-bright));
+  margin-top: 28px;
+
+  &:hover {
+    background: var(--color-moss);
+    color: var(--color-cream-bright);
+  }
+}
+
 .photoWrap {
   position: relative;
 }

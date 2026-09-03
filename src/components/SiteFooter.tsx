@@ -9,7 +9,7 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={styles.brand}>ÕTEKSE</div>
       <div className={styles.links}>
-        <Link href="/#meist">{t("about")}</Link>
+        <Link href="/about">{t("about")}</Link>
         <Link href="/concerts">{t("concerts")}</Link>
         <Link href="/privacy">{t("privacy")}</Link>
       </div>

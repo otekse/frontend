@@ -18,25 +18,21 @@ export function SiteHeader() {
   const pathname = usePathname();
   const inStorefront = STOREFRONT.test(pathname);
   const shopOn = useShopEnabled();
-  // On the concerts page that first pill would link to the page you are
-  // already reading, so it becomes the way back to the homepage instead. The
-  // header keeps its shape everywhere — this is one label and one href, not a
-  // different navigation (the design source mocks a back-button bar; we
-  // deliberately do not follow it).
-  //
-  // The pill goes to the concerts *page*, not to `/#kontserdid`. The homepage
-  // section is a teaser; the page is the full, date-filtered listing, and an
-  // anchor left visitors scrolled to a summary wondering where the rest was.
   const onConcerts = pathname === "/concerts";
+  const onAbout = pathname === "/about";
+  const onStandalonePage = onConcerts || onAbout;
 
   return (
     <nav className={styles.nav}>
       <div className={styles.group}>
         <Link
-          href={onConcerts ? "/" : "/concerts"}
+          href={onStandalonePage ? "/" : "/concerts"}
           className={`${styles.pill} ${styles.pillAccent}`}
         >
-          {onConcerts ? t("home") : t("concerts")}
+          {onStandalonePage ? t("home") : t("concerts")}
+        </Link>
+        <Link href={onAbout ? "/concerts" : "/about"} className={styles.pill}>
+          {onAbout ? t("concerts") : t("about")}
         </Link>
         {shopOn && (
           <Link href="/shop" className={styles.pill}>
