@@ -24,8 +24,9 @@ export function SiteHeader() {
   const [activeIndicator, setActiveIndicator] = useState({
     offset: 0,
     width: 0,
-    ready: false,
   });
+  const [indicatorVisible, setIndicatorVisible] = useState(false);
+  const [indicatorAnimated, setIndicatorAnimated] = useState(false);
   const navLinks = [
     { href: "/", label: t("home"), active: pathname === "/" },
     {
@@ -59,16 +60,22 @@ export function SiteHeader() {
       setActiveIndicator({
         offset: linkRect.left - containerRect.left,
         width: linkRect.width,
-        ready: true,
       });
+      setIndicatorVisible(true);
     };
 
     updateIndicator();
+    // Position the pill before the first paint; only later route changes may
+    // animate it. Otherwise the home-page pill visibly slides in on load.
+    const frame = requestAnimationFrame(() => setIndicatorAnimated(true));
     const observer = new ResizeObserver(updateIndicator);
     observer.observe(container);
     observer.observe(activeLink);
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [pathname, shopOn]);
 
   return (
@@ -76,8 +83,8 @@ export function SiteHeader() {
       <div ref={navLinksRef} className={styles.navLinks}>
         <span
           className={`${styles.navLinkIndicator} ${
-            activeIndicator.ready ? styles.navLinkIndicatorReady : ""
-          }`}
+            indicatorVisible ? styles.navLinkIndicatorVisible : ""
+          } ${indicatorAnimated ? styles.navLinkIndicatorAnimated : ""}`}
           aria-hidden
           style={{
             transform: `translateX(${activeIndicator.offset}px)`,

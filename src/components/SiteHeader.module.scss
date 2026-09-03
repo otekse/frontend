@@ -55,8 +55,11 @@
   pointer-events: none;
 }
 
-.navLinkIndicatorReady {
+.navLinkIndicatorVisible {
   opacity: 1;
+}
+
+.navLinkIndicatorAnimated {
   transition:
     transform var(--duration-press-out) var(--ease-standard),
     width var(--duration-press-out) var(--ease-standard);

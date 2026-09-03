@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { Archivo_Black, Space_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -81,13 +82,24 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${archivoBlack.variable} ${spaceMono.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body>
         <NextIntlClientProvider>
           <Providers>
             <ShopStateProvider enabled={shopOn}>
               <SiteHeader />
-              <main>{children}</main>
+              <main>
+                <ViewTransition
+                  key={locale}
+                  name="locale-content"
+                  share="auto"
+                  enter="auto"
+                  default="none"
+                >
+                  {children}
+                </ViewTransition>
+              </main>
               <SiteFooter />
             </ShopStateProvider>
           </Providers>
