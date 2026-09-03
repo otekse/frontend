@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ViewTransition } from "react";
-import { Archivo_Black, Space_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -9,21 +8,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { UmamiScript } from "@/components/UmamiScript";
 import { ShopStateProvider } from "@/components/ShopState";
+import { LocaleDocumentAttributes } from "@/components/LocaleDocumentAttributes";
 import { shopEnabled } from "@/lib/shop-server";
 import { Providers } from "./providers";
-import "../globals.css";
-
-const archivoBlack = Archivo_Black({
-  variable: "--font-archivo-black",
-  weight: "400",
-  subsets: ["latin", "latin-ext"],
-});
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-  subsets: ["latin", "latin-ext"],
-});
 
 export const SITE_URL = "https://xn--tekse-cua.ee";
 
@@ -79,33 +66,26 @@ export default async function LocaleLayout({
   const shopOn = await shopEnabled();
 
   return (
-    <html
-      lang={locale}
-      className={`${archivoBlack.variable} ${spaceMono.variable}`}
-      data-scroll-behavior="smooth"
-    >
-      <body>
-        <NextIntlClientProvider>
-          <Providers>
-            <ShopStateProvider enabled={shopOn}>
-              <SiteHeader />
-              <main>
-                <ViewTransition
-                  key={locale}
-                  name="locale-content"
-                  share="auto"
-                  enter="auto"
-                  default="none"
-                >
-                  {children}
-                </ViewTransition>
-              </main>
-              <SiteFooter />
-            </ShopStateProvider>
-          </Providers>
-        </NextIntlClientProvider>
-        <UmamiScript />
-      </body>
-    </html>
+    <NextIntlClientProvider>
+      <LocaleDocumentAttributes locale={locale} />
+      <Providers>
+        <ShopStateProvider enabled={shopOn}>
+          <SiteHeader />
+          <main>
+            <ViewTransition
+              key={locale}
+              name="locale-content"
+              share="auto"
+              enter="auto"
+              default="none"
+            >
+              {children}
+            </ViewTransition>
+          </main>
+          <SiteFooter />
+        </ShopStateProvider>
+      </Providers>
+      <UmamiScript />
+    </NextIntlClientProvider>
   );
 }
