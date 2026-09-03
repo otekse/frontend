@@ -57,7 +57,7 @@ export function LocaleSwitcher() {
     }
 
     setPendingLocale(null);
-    router.replace(pathname, { locale: pendingLocale });
+    router.replace(pathname, { locale: pendingLocale, scroll: false });
   };
 
   const changeLocale = () => {
@@ -72,7 +72,7 @@ export function LocaleSwitcher() {
     // a Next.js client navigation, but waiting for the transition to finish
     // means the selected language visibly slides into place first.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      router.replace(pathname, { locale: other });
+      router.replace(pathname, { locale: other, scroll: false });
       return;
     }
 
