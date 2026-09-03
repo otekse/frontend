@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from "@/i18n/locale-cookie";
@@ -37,27 +38,56 @@ export function LocaleSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const [displayLocale, setDisplayLocale] = useState(locale);
+  const [pendingLocale, setPendingLocale] = useState<string | null>(null);
 
-  const other = locale === "et" ? "en" : "et";
-  const isEt = locale === "et";
+  const other = displayLocale === "et" ? "en" : "et";
+  const isEt = displayLocale === "et";
+
+  const navigateToPendingLocale = () => {
+    if (!pendingLocale) return;
+
+    setPendingLocale(null);
+    router.replace(pathname, { locale: pendingLocale });
+  };
+
+  const changeLocale = () => {
+    if (pendingLocale) return;
+
+    // Persist the choice before navigation — the middleware reads this cookie
+    // before any geo lookup, and next-intl no longer writes it now that
+    // localeDetection is off.
+    document.cookie = `${LOCALE_COOKIE}=${other}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`;
+
+    // Move the local knob before changing the locale route. The route remains
+    // a Next.js client navigation, but waiting for the transition to finish
+    // means the selected language visibly slides into place first.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      router.replace(pathname, { locale: other });
+      return;
+    }
+
+    setDisplayLocale(other);
+    setPendingLocale(other);
+  };
 
   return (
     <button
       type="button"
       className={styles.switcher}
       aria-label={`${t("label")}: ${t(other)}`}
-      onClick={() => {
-        // Persist the choice ourselves — the middleware reads this cookie
-        // before any geo lookup, and next-intl no longer writes it now that
-        // localeDetection is off.
-        document.cookie = `${LOCALE_COOKIE}=${other}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`;
-        router.replace(pathname, { locale: other });
-      }}
+      onClick={changeLocale}
     >
       <GlobeIcon />
       {/* Decorative: the button's aria-label already names the action. */}
       <span className={styles.track} aria-hidden>
-        <span className={`${styles.knob} ${isEt ? "" : styles.knobEnd}`} />
+        <span
+          className={`${styles.knob} ${isEt ? "" : styles.knobEnd}`}
+          onTransitionEnd={(event) => {
+            if (event.propertyName === "transform") navigateToPendingLocale();
+          }}
+          onTransitionCancel={navigateToPendingLocale}
+        />
         <span className={`${styles.option} ${isEt ? styles.optionOn : ""}`}>
           EST
         </span>
