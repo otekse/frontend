@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { ABOUT_ENABLED } from "@/lib/about";
 import { useCart } from "@/lib/cart";
 import { LOCALE_NAV_WIDTH_KEY } from "@/lib/locale-nav-transition";
 import { useShopEnabled } from "./ShopState";
@@ -38,7 +39,9 @@ export function SiteHeader() {
       label: t("concerts"),
       active: pathname === "/concerts",
     },
-    { href: "/about", label: t("about"), active: pathname === "/about" },
+    ...(ABOUT_ENABLED
+      ? [{ href: "/about", label: t("about"), active: pathname === "/about" }]
+      : []),
     ...(shopOn
       ? [
           {

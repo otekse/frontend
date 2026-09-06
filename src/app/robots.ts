@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { ABOUT_ENABLED } from "@/lib/about";
 import { SHOP_ENABLED } from "@/lib/shop";
 
 const SITE_URL = "https://xn--tekse-cua.ee";
@@ -10,9 +11,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // /api/locale is a redirect hop with no content worth crawling.
-        disallow: SHOP_ENABLED
-          ? ["/api/"]
-          : ["/api/", "/shop", "/cart", "/checkout", "/order"],
+        disallow: [
+          "/api/",
+          ...(SHOP_ENABLED ? [] : ["/shop", "/cart", "/checkout", "/order"]),
+          ...(ABOUT_ENABLED ? [] : ["/about"]),
+        ],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

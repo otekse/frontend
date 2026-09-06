@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { ABOUT_ENABLED } from "@/lib/about";
 import styles from "./SiteFooter.module.scss";
 
 export function SiteFooter() {
@@ -9,7 +10,7 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={styles.brand}>ÕTEKSE</div>
       <div className={styles.links}>
-        <Link href="/about">{t("about")}</Link>
+        {ABOUT_ENABLED && <Link href="/about">{t("about")}</Link>}
         <Link href="/concerts">{t("concerts")}</Link>
         <Link href="/privacy">{t("privacy")}</Link>
       </div>
