@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AboutSection } from "@/components/home/AboutSection";
+import { ABOUT_ENABLED } from "@/lib/about";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "../layout";
 
@@ -37,6 +39,8 @@ export default async function AboutPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  if (!ABOUT_ENABLED) notFound();
+
   const { locale } = await params;
   setRequestLocale(locale);
 

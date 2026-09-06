@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { IMAGES } from "@/content/assets";
 import { SmartImage } from "@/components/SmartImage";
+import { ABOUT_ENABLED } from "@/lib/about";
 import { Disclosure, DisclosureGroup } from "@/components/ui/Disclosure";
 import styles from "./AboutSection.module.scss";
 
@@ -32,7 +33,7 @@ export function AboutSection({
               </Disclosure>
             ))}
           </DisclosureGroup>
-          {showMoreLink && (
+          {showMoreLink && ABOUT_ENABLED && (
             <Link href="/about" className={styles.moreLink}>
               {t("more")}
             </Link>
