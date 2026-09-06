@@ -1,0 +1,43 @@
+name: CI
+
+# main deploys to production the moment a PR merges, and until now nothing
+# checked a pull request at all — PRs were mergeable with zero checks. That
+# matters more here than in a normal repo: this is the one repo the runtime
+# orchestrator can open PRs against, so a client-approved change could reach
+# the live site without anything having compiled it.
+on:
+  pull_request:
+  push:
+    branches: [main, development]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Node 22 is what production runs (workspace AGENTS.md conventions).
+          node-version: 22
+          cache: npm
+
+      # ci, not install: installs the lockfile exactly and never rewrites it,
+      # so CI cannot quietly pass against different dependencies than production.
+      - run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      # Last, because it is the slowest and the least specific: if the build
+      # breaks, the failures above usually say why.
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_MOCKING: enabled

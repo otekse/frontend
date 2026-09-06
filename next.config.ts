@@ -4,6 +4,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Route changes are client-side already; this adds a native crossfade for
+    // the locale content so the language switch does not visibly flash.
+    viewTransition: true,
+  },
   // õtekse.ee is canonical; www redirects to it. Kept here rather than in
   // Coolify so the rule is version-controlled. Punycode because that is what
   // arrives in the Host header.

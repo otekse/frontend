@@ -1,6 +1,7 @@
 {
   "Nav": {
     "concerts": "Concerts",
+    "about": "About",
     "shop": "Shop",
     "cart": "Cart",
     "home": "Home"
@@ -30,6 +31,9 @@
     "s2Body": "Our journey has been marked by several notable achievements. In 2021 we won the Grand Prize at the Mooste Elohelü competition, and in the years that followed we picked up special awards at the same competition. Our arrangement of “Puraviku polka” was performed at the 13th Youth Dance Festival. We have appeared at festivals such as Hiiu Folk, the Viljandi Folk Music Festival, and the international Zemlika Festival. In spring 2026 we had the honour of performing at the Estonian Literary Museum during the Presidential Folk Poetry Awards ceremony. That same year we also took part in the TV show “Laul vs Tants” and were invited onto the “Õhtu” talk show.",
     "s3Title": "Our sound",
     "s3Body": "With our distinctive sound and sincere stage presence, we carry Estonian folk music traditions forward while giving them a fresh, contemporary voice.",
+    "more": "Read more about us",
+    "metaTitle": "About — Õtekse",
+    "metaDescription": "Meet Õtekse, a folk-music-inspired ensemble of three sisters.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters"
   },
@@ -56,8 +60,6 @@
     "title": "CONCERTS",
     "sub": "Upcoming performances — come see us live on stage!",
     "footnote": "More dates are added regularly — check back soon!",
-    "pastShow": "SEE PAST CONCERTS",
-    "pastHide": "HIDE PAST CONCERTS",
     "pastHeading": "Past performances",
     "photo1Alt": "Õtekse dancing in a meadow",
     "photo2Alt": "Õtekse on stage",
