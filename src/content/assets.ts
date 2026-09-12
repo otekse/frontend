@@ -7,9 +7,9 @@
 // script, and commit the optimized output.
 export const IMAGES = {
   /** Hero forest photo. */
-  forest: "/images/forest.jpg",
+  forest: "/images/forest-enhanced.webp",
   /** Repeating wheat texture strip (alpha top edge). */
-  wheat: "/images/wheat.webp",
+  wheat: "/images/wheat-enhanced.webp",
   /** Band photo for the About section. */
   band: "/images/band.jpg",
   /** Cutout of the three sisters running (hero foreground). */

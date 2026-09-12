@@ -1,0 +1,12 @@
+.reveal {
+  opacity: 1;
+}
+
+.reveal[data-reveal="pending"] {
+  opacity: 0;
+}
+
+.reveal[data-reveal="visible"] {
+  opacity: 1;
+  transition: opacity var(--duration-section-reveal) var(--ease-standard);
+}

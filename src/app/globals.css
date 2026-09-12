@@ -180,6 +180,8 @@ a {
      as mushy, and a slow press-in reads as lag. */
   --duration-press-in: 60ms;
   --duration-press-out: 180ms;
+  --duration-hero-reveal: 520ms;
+  --duration-section-reveal: 520ms;
   --scale-pressed: 0.96;
 
   /* Radial hole punched through the concert-hero photo scatter so the title

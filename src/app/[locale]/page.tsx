@@ -5,6 +5,7 @@ import { MembersSection } from "@/components/home/MembersSection";
 import { ConcertsSection } from "@/components/home/ConcertsSection";
 import { ShopTeaser } from "@/components/home/ShopTeaser";
 import { ShopClosed } from "@/components/home/ShopClosed";
+import { HomeReveal } from "@/components/home/HomeReveal";
 import { shopEnabled } from "@/lib/shop-server";
 
 // The band homepage, built from the Claude Design source (see AGENTS.md
@@ -24,10 +25,16 @@ export default async function HomePage({
   return (
     <>
       <Hero />
-      <AboutSection showMoreLink />
-      <MembersSection />
-      <ConcertsSection />
-      {shopOn ? <ShopTeaser /> : <ShopClosed />}
+      <HomeReveal>
+        <AboutSection showMoreLink />
+      </HomeReveal>
+      <HomeReveal>
+        <MembersSection />
+      </HomeReveal>
+      <HomeReveal>
+        <ConcertsSection />
+      </HomeReveal>
+      <HomeReveal>{shopOn ? <ShopTeaser /> : <ShopClosed />}</HomeReveal>
     </>
   );
 }
