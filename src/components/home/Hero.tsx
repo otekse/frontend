@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type CSSProperties } from "react";
+import { preload } from "react-dom";
 import { useTranslations } from "next-intl";
 import { IMAGES } from "@/content/assets";
 import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
@@ -13,6 +14,13 @@ import styles from "./Hero.module.scss";
 // not so much that the title looks like it is animating on its own.
 const TITLE_SCALE_LOSS = 0.07;
 const TITLE_FADE = 0.4;
+
+// The two wheat bands' drift factors. Named because the near one is shared:
+// the girls' cutout rides that band and must move at exactly its rate. The far
+// band has to stay above the near one and below the nearest forest (.layerB),
+// or the depth order inverts.
+const FAR_GRAIN_DRIFT = 0.28;
+const NEAR_GRAIN_DRIFT = 0.1;
 
 // One drift factor per layer, consumed by both paths: the CSS scroll timeline
 // reads `--parallax`, the JS fallback reads `data-parallax`. Emitting them from
@@ -44,6 +52,14 @@ export function Hero() {
 
   const forest = `url('${IMAGES.forest}')`;
   const wheat = `url('${IMAGES.wheat}')`;
+  // Held in a const rather than spread inline, so the base's drift factor is
+  // still written once even though this layer merges its own background in.
+  const baseDrift = drift(0.65);
+
+  // The base forest stopped being an `<img>` when it had to start tiling, which
+  // also took it out of reach of the preload scanner. This puts it back in the
+  // document head so discovery is not deferred until the CSS has parsed.
+  preload(IMAGES.forest, { as: "image", fetchPriority: "high" });
 
   return (
     // `data-css-parallax` tells useParallax to stand down where the browser can
@@ -60,8 +76,15 @@ export function Hero() {
         } as CSSProperties
       }
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={IMAGES.forest} alt="" {...drift(0.65)} className={styles.base} />
+      {/* The base forest is a background, not an `<img>`, because only a
+          background can tile — see the tree-scale note in the stylesheet. The
+          `preload` above restores the early discovery an `<img>` would have
+          given it for free. */}
+      <div
+        {...baseDrift}
+        className={styles.base}
+        style={{ ...baseDrift.style, backgroundImage: forest }}
+      />
 
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
         <defs>
@@ -80,13 +103,13 @@ export function Hero() {
         </defs>
       </svg>
 
-      <div {...drift(0.5)} className={`${styles.layer} ${styles.layerA}`}>
+      <div {...drift(0.56)} className={`${styles.layer} ${styles.layerA}`}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: forest, clipPath: "url(#hero-wave-a)" }}
         />
       </div>
-      <div {...drift(0.34)} className={`${styles.layer} ${styles.layerB}`}>
+      <div {...drift(0.4)} className={`${styles.layer} ${styles.layerB}`}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: forest, clipPath: "url(#hero-wave-b)" }}
@@ -98,22 +121,40 @@ export function Hero() {
         ÕTEKSE
       </h1>
 
-      <div {...drift(0.22)} className={styles.wheatFar}>
+      <div {...drift(FAR_GRAIN_DRIFT)} className={styles.wheatFar}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat)" }}
         />
       </div>
 
-      <div {...drift(0.06)} className={styles.wheatNear}>
+      {IMAGES.girlsCutout && (
+        // Pinned to the NEAR wheat: the wrapper carries `NEAR_GRAIN_DRIFT`, the
+        // same factor as .wheatNear below, so the group travels with that band
+        // and has no motion of its own.
+        //
+        // It is the near band and not the far one because that is the grain
+        // their feet are actually in — the group spans roughly 43–83% of the
+        // hero, so the feet sit below .wheatNear's top edge while .wheatFar's
+        // edge crosses their waists. Drifting at the far band's rate against
+        // ground that moves at the near band's makes them sink through it as
+        // you scroll.
+        //
+        // The drift has to sit on a wrapper rather than on the image, because
+        // both the CSS `hero-drift` keyframe and useParallax assign `transform`
+        // wholesale — on the image itself they would overwrite the centring and
+        // the design's tilt. Same split the wheat bands use (.layerFill).
+        <div {...drift(NEAR_GRAIN_DRIFT)} className={styles.cutoutLayer}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={IMAGES.girlsCutout} alt={t("heroAlt")} className={styles.cutout} />
+        </div>
+      )}
+
+      <div {...drift(NEAR_GRAIN_DRIFT)} className={styles.wheatNear}>
         <div
           className={styles.layerFill}
           style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat2)" }}
         />
-        {IMAGES.girlsCutout && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={IMAGES.girlsCutout} alt={t("heroAlt")} className={styles.cutout} />
-        )}
       </div>
 
       {/* On phones the player portals into here. Outside the parallax layers
