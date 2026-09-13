@@ -4,7 +4,7 @@
     "about": "Meist",
     "shop": "E-pood",
     "cart": "Ostukorv",
-    "home": "Koduleht"
+    "home": "Õtekse"
   },
   "LocaleSwitcher": {
     "label": "Keel",
@@ -83,13 +83,14 @@
     "tag": "VARSTI"
   },
   "Footer": {
+    "home": "Õtekse",
     "about": "Meist",
     "concerts": "Kontserdid",
     "privacy": "Privaatsus",
     "rights": "© {year} Õtekse"
   },
   "Meta": {
-    "title": "Õtekse — eesti pärimusmuusika",
+    "title": "Õtekse",
     "description": "Oleme Õtekse — eesti pärimusmuusika ansambel. Kuula meid, tule kontserdile ja vaata, kus me esineme."
   },
   "Privacy": {

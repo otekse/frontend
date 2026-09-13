@@ -4,7 +4,7 @@
     "about": "About",
     "shop": "Shop",
     "cart": "Cart",
-    "home": "Home"
+    "home": "Õtekse"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -83,13 +83,14 @@
     "tag": "SOON"
   },
   "Footer": {
+    "home": "Õtekse",
     "about": "About",
     "concerts": "Concerts",
     "privacy": "Privacy",
     "rights": "© {year} Õtekse"
   },
   "Meta": {
-    "title": "Õtekse — Estonian folk music",
+    "title": "Õtekse",
     "description": "We are Õtekse, an Estonian folk music group. Listen to us, come to a concert, and see where we are playing next."
   },
   "Privacy": {

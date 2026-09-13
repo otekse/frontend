@@ -15,7 +15,7 @@ import styles from "./page.module.scss";
 //
 // The design replaces the site header with a lone back button on this page.
 // We deliberately keep the standard header and swap only its first pill
-// (Kontserdid -> Koduleht) — see the spec in
+// (Kontserdid -> Õtekse) — see the spec in
 // workspace/docs/superpowers/specs/2026-07-29-concerts-page-design.md.
 //
 // Upcoming vs past is decided by today's date, so this route must stay

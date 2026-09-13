@@ -13,7 +13,8 @@
 
 .links {
   display: flex;
-  gap: 26px;
+  flex-wrap: wrap; // four links can outgrow a narrow phone
+  gap: 0 26px;
   justify-content: center;
   margin: 26px 0 34px;
 
