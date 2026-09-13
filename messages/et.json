@@ -35,7 +35,27 @@
     "metaTitle": "Meist — Õtekse",
     "metaDescription": "Tutvu Õteksega — kolme õe folkmuusikast inspireeritud ansambliga.",
     "photoTag": "KOLM ÕDE",
-    "photoAlt": "Õtekse — kolm õde"
+    "photoAlt": "Õtekse — kolm õde",
+    "timelineOverline": "AJATELG",
+    "timelineTitle": "Meie tegemised",
+    "timelinePhotoAlt": "{title} — foto {n}/{count}"
+  },
+  "Album": {
+    "overline": "ALBUM",
+    "title": "„RANNA­PIIGAD“",
+    "credit1": "Kert-Johan Sommer — cajon",
+    "credit2": "Loore Lumisalu — kontrabass",
+    "credit3": "Reine Niin — parmupill",
+    "credit4": "Master ja mix — Janek Kivi",
+    "kicker": "Sügisel ilmub Õtekse esimene album ja EP!",
+    "para1": "Oma esimese albumiga läheme tagasi oma juurte juurde – sinna, kust oleme pärit, ja selle juurde, kes me oleme. Meie juured ulatuvad Rannametsa Pärnumaal ning just sealt on saanud alguse ka albumi mereteemad.",
+    "para2": "Meie, kolm õde Rannametsast, oleme justkui rannapiigad – noored neiud, kes alles õpivad elu tundma, tahavad lustida, katsetada, avastada ja lihtsalt elu nautida. Need lood ongi sellest kõigest.",
+    "coverName": "RANNAPIIGAD",
+    "coverMeta": "EP · 30.10",
+    "coverAlt": "Pärimusansambel Õtekse — kolm õde",
+    "showsLabel": "KONTSERDID",
+    "footnote": "Hoidke silma peal, sest varsti jagame juba täpsemalt! Ja kui Hooandja kampaania tuleb, lisame siia ka Hooandja lingi.",
+    "releaseLine": "ÕTEKSE „RANNAPIIGAD“ — JUBA SEL SÜGISEL, 30.10"
   },
   "Members": {
     "overline": "ANSAMBEL",

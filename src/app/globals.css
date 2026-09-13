@@ -119,6 +119,26 @@ a {
 
   --color-gold-a75: rgba(217, 161, 59, 0.75); /* archive dates, receded */
 
+  /* -- Album scene ("Rannapiigad") --
+     The sky, sea and paper of the EP announcement, from the design's
+     standalone export. Grouped rather than filed by category because every
+     value here belongs to that one scene. */
+  --color-album-sky: #f2e3bd; /* pale sky above the sea */
+  --color-album-caption: #6d6553; /* cover caption on paper */
+  --color-sea-far: #0d2c22; /* farthest swell, boats and birds */
+  --color-sea-far-a68: rgba(13, 44, 34, 0.68); /* nearer birds, softened */
+  --color-sea-far-a42: rgba(13, 44, 34, 0.42); /* faintest bird */
+  --color-sea-mid: #164735;
+  --color-sea-near: #23654e;
+  --color-foam: #e9e0cb; /* nearest swell */
+  --color-foam-a72: rgba(233, 224, 203, 0.72); /* distant sail */
+  --color-ink-a28: rgba(22, 33, 26, 0.28); /* pill outlines and rules on gold */
+  --text-album-title: clamp(32px, 5.8vw, 84px);
+  --text-album-kicker: clamp(15px, 1.8vw, 20px);
+  --radius-paper: 6px; /* the cover's photo-print card */
+  --radius-photo: 12px; /* timeline thumbnails */
+  --shadow-album-cover: 0 30px 60px rgba(14, 32, 23, 0.34);
+
   /* Cream alpha steps (on dark surfaces) */
   --color-cream-a10: rgba(246, 242, 231, 0.1); /* archive dividers, fainter */
   --color-cream-a16: rgba(246, 242, 231, 0.16); /* hairline borders */

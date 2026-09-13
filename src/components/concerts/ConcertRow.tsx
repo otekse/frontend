@@ -8,8 +8,11 @@ const badgeClass: Record<ConcertBadge, string> = {
   soon: styles.badgeSoon,
 };
 
-const badgeKey: Record<ConcertBadge, "badgeFree" | "badgeTicketed" | "badgeSoon"> =
-  {
+// Exported so the album section's release-show tags read the same labels.
+export const badgeKey: Record<
+  ConcertBadge,
+  "badgeFree" | "badgeTicketed" | "badgeSoon"
+> = {
     free: "badgeFree",
     ticketed: "badgeTicketed",
     soon: "badgeSoon",

@@ -14,6 +14,12 @@ export const IMAGES = {
   band: "/images/band.jpg",
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
+  /**
+   * "Rannapiigad" EP cover. A stand-in for now: the band's black-and-white
+   * promo square, until the real cover exists. Replace assets-src/album-cover.png
+   * and update `Album.coverAlt` in messages/ to match.
+   */
+  albumCover: "/images/album/cover.webp",
   /** Live photos scattered across the concerts-page hero. */
   live: {
     one: "/images/concerts/live-1.webp",
@@ -28,3 +34,14 @@ export const IMAGES = {
     katlin: "/images/members/katlin.webp",
   },
 } as const;
+
+/**
+ * A timeline photo by the id timeline.json gives it: the `thumb` the grid
+ * shows, and the `full` photo it opens to.
+ */
+export function timelinePhoto(id: string) {
+  return {
+    thumb: `/images/timeline/thumb/${id}.webp`,
+    full: `/images/timeline/${id}.webp`,
+  };
+}

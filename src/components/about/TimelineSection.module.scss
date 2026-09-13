@@ -1,0 +1,137 @@
+@use "../../styles/mixins" as *;
+
+.section {
+  background: var(--color-forest);
+}
+
+.inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 90px var(--spacing-section-x) 110px;
+}
+
+.overline {
+  @include overline(var(--color-gold));
+}
+
+.title {
+  @include display-heading(var(--text-h2), var(--color-cream-bright));
+  margin-bottom: 40px;
+}
+
+.entries {
+  list-style: none;
+  padding: 4px 0 26px;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--color-cream-a10);
+
+  &:first-child {
+    border-top: none;
+  }
+
+  @include until($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+.when {
+  padding-top: 3px;
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-gold);
+
+  // An entry with no date leaves nothing to reserve on a phone.
+  @include until($bp-sm) {
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+.content {
+  min-width: 0;
+}
+
+.entryTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.3;
+  color: var(--color-cream-bright);
+}
+
+.body {
+  margin-top: 8px;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-cream-a65);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-flex;
+  // Padding rather than a height: a ~44px touch target, label unmoved.
+  padding: 12px 0;
+  font-size: var(--text-overline);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-cream);
+  }
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  padding: 0;
+  list-style: none;
+
+  @include until($bp-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.photoLink {
+  display: block;
+  border-radius: var(--radius-photo);
+  overflow: hidden;
+  @include focus-ring;
+}
+
+// Nested for specificity: SmartImage's own frame rule sets `height: 100%`.
+.photoLink .photo {
+  aspect-ratio: 4 / 3;
+  height: auto;
+  transition: transform 0.3s var(--ease-standard);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.photoLink:hover .photo {
+  transform: scale(1.03);
+
+  @include reduced-motion {
+    transform: none;
+  }
+}

@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/Hero";
+import { AlbumSection } from "@/components/home/AlbumSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { MembersSection } from "@/components/home/MembersSection";
 import { ConcertsSection } from "@/components/home/ConcertsSection";
@@ -8,7 +9,8 @@ import { ShopClosed } from "@/components/home/ShopClosed";
 import { shopEnabled } from "@/lib/shop-server";
 
 // The band homepage, built from the Claude Design source (see AGENTS.md
-// "Design source"): parallax hero, about, members, concerts, shop teaser.
+// "Design source"): parallax hero, the "Rannapiigad" album announcement,
+// about, members, concerts, shop teaser.
 //
 // The shop band has two designs, not one design with the links removed:
 // ShopTeaser when the storefront is open, ShopClosed when it isn't.
@@ -24,6 +26,7 @@ export default async function HomePage({
   return (
     <>
       <Hero />
+      <AlbumSection />
       <AboutSection showMoreLink />
       <MembersSection />
       <ConcertsSection />

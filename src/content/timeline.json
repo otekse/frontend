@@ -1,0 +1,336 @@
+{
+  "_help": "Õtekse ajatelg lehel Meist. Aastad võivad olla mis tahes järjekorras — sait näitab uusimat esimesena; aasta sees jäävad sissekanded kirjutatud järjekorda. \"when\" on kuupäev nii, nagu see lehel paistab. Fotod on failinimed kaustas public/images/timeline ilma laiendita (lisa originaal assets-src/timeline/ ja käivita npm run images:build). / Õtekse timeline on the About page. Years may be in any order — the site shows the newest first; entries within a year keep their written order. \"when\" is the date exactly as displayed. Photos are file names in public/images/timeline without the extension (add the original to assets-src/timeline/ and run npm run images:build).",
+  "years": [
+    {
+      "year": 2026,
+      "entries": [
+        {
+          "when": { "et": "22.01", "en": "22 Jan" },
+          "title": {
+            "et": "Esinemine Läänemaa kultuuriauhindade üleandmisel",
+            "en": "Performance at the Läänemaa Cultural Awards ceremony"
+          }
+        },
+        {
+          "when": { "et": "23.02", "en": "23 Feb" },
+          "title": {
+            "et": "„Sammud ajas“ — autorilooming",
+            "en": "“Sammud ajas” — original composition"
+          },
+          "links": ["https://www.youtube.com/watch?v=PF0a4P5m2Ik"]
+        },
+        {
+          "title": {
+            "et": "Rahvatantsuansambel Kajaka juubelikontserdi taustaansambel",
+            "en": "Backing ensemble for the Kajakas folk dance ensemble’s anniversary concert"
+          },
+          "body": {
+            "et": "Tegime rahvatantsuansambli juubeliks ka „Pausipolka“ loole uue seade.",
+            "en": "We also made a new arrangement of “Pausipolka” for the ensemble’s anniversary."
+          },
+          "links": ["https://www.youtube.com/watch?v=tEalWEnBnok&t=1831s"],
+          "photos": ["2026-kajakas-1"]
+        },
+        {
+          "when": { "et": "27.03", "en": "27 Mar" },
+          "title": {
+            "et": "Presidendi rahvaluulepreemiate üleandmine Eesti Kirjandusmuuseumis Tartus",
+            "en": "The President’s Folk Culture Awards ceremony at the Estonian Literary Museum in Tartu"
+          },
+          "links": ["https://www.kirmus.ee/sites/default/files/2026-04/13_6teksed_kontsert.mp4"],
+          "photos": [
+            "2026-rahvaluulepreemiad-1",
+            "2026-rahvaluulepreemiad-2",
+            "2026-rahvaluulepreemiad-3"
+          ]
+        },
+        {
+          "when": { "et": "kevad", "en": "Spring" },
+          "title": {
+            "et": "Osalemine telesaates „Laul vs Tants“, lisaks külaskäik saatesse „Õhtu“",
+            "en": "Taking part in the TV show “Laul vs Tants”, plus an appearance on “Õhtu”"
+          },
+          "links": [
+            "https://www.youtube.com/watch?v=sEiwoYrG4yw",
+            "https://www.youtube.com/watch?v=nygIpoEh1uc"
+          ],
+          "photos": [
+            "2026-laul-vs-tants-1",
+            "2026-laul-vs-tants-2",
+            "2026-laul-vs-tants-3",
+            "2026-laul-vs-tants-4",
+            "2026-laul-vs-tants-5",
+            "2026-laul-vs-tants-6",
+            "2026-laul-vs-tants-7",
+            "2026-laul-vs-tants-8",
+            "2026-laul-vs-tants-9",
+            "2026-laul-vs-tants-10"
+          ]
+        },
+        {
+          "when": { "et": "18.05", "en": "18 May" },
+          "title": {
+            "et": "Esinemine Pärnu Kolledži 30. sünnipäeva puhul",
+            "en": "Performance for Pärnu College’s 30th anniversary"
+          },
+          "photos": ["2026-parnu-kolledz-1"]
+        },
+        {
+          "when": { "et": "17.06", "en": "17 Jun" },
+          "title": {
+            "et": "Esinemine Maaülikooli lõpetamisel",
+            "en": "Performance at the Estonian University of Life Sciences graduation"
+          }
+        },
+        {
+          "when": { "et": "23.06", "en": "23 Jun" },
+          "title": {
+            "et": "Esinemine Tabivere jaanitulel",
+            "en": "Performance at the Tabivere Midsummer celebration"
+          },
+          "photos": ["2026-tabivere-1", "2026-tabivere-2"]
+        },
+        {
+          "when": { "et": "11.07", "en": "11 Jul" },
+          "title": {
+            "et": "Koduhoovi kontsert — Võru pärimustantsu festivali raames",
+            "en": "Courtyard concert — part of the Võru Traditional Dance Festival"
+          },
+          "photos": ["2026-voru-1"]
+        },
+        {
+          "when": { "et": "17.07", "en": "17 Jul" },
+          "title": {
+            "et": "Esinemine pärandkultuuri festivalil „Tõstamaa Õhetus“",
+            "en": "Performance at the heritage culture festival “Tõstamaa Õhetus”"
+          },
+          "photos": ["2026-tostamaa-1"]
+        },
+        {
+          "when": { "et": "22.07", "en": "22 Jul" },
+          "title": {
+            "et": "Pargikontsert Pärnu Lastepargis",
+            "en": "Park concert at Pärnu Children’s Park"
+          },
+          "photos": ["2026-lastepark-1", "2026-lastepark-2"]
+        },
+        {
+          "when": { "et": "23.–24.07", "en": "23–24 Jul" },
+          "title": {
+            "et": "Esinemine Viljandi pärimusmuusika festivali Rohelisel laval",
+            "en": "Performance on the Green Stage at the Viljandi Folk Music Festival"
+          }
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "entries": [
+        {
+          "when": { "et": "24.01", "en": "24 Jan" },
+          "title": {
+            "et": "„Kuningal oli kolm tütart“ — Siberi eestlaste laul",
+            "en": "“Kuningal oli kolm tütart” — a song of the Siberian Estonians"
+          },
+          "links": ["https://youtu.be/Qz6hJMIe2TY"]
+        },
+        {
+          "when": { "et": "21.02", "en": "21 Feb" },
+          "title": {
+            "et": "Esinemine Audrus Eesti Vabariigi aastapäeva puhul",
+            "en": "Performance in Audru for the anniversary of the Republic of Estonia"
+          }
+        },
+        {
+          "when": { "et": "04.05", "en": "4 May" },
+          "title": {
+            "et": "„Kodu“ — sõnad Helme kihelkonnast, viis autorilooming",
+            "en": "“Kodu” — lyrics from Helme Parish, melody by Õtekse"
+          },
+          "links": ["https://youtu.be/SEg4kG5QIr4"]
+        },
+        {
+          "when": { "et": "27.06", "en": "27 Jun" },
+          "title": {
+            "et": "„Äälekene“ — sõnad Kõpu khk. Puiatu v. ja Halliste khk. Kaarli v., viis autorilooming",
+            "en": "“Äälekene” — lyrics from Kõpu Parish, Puiatu, and Halliste Parish, Kaarli; melody by Õtekse"
+          }
+        },
+        {
+          "when": { "et": "10.07", "en": "10 Jul" },
+          "title": {
+            "et": "Esinemine Hiiu Folgi avakontserdil",
+            "en": "Performance at the opening concert of Hiiu Folk"
+          },
+          "photos": ["2025-hiiu-folk-1", "2025-hiiu-folk-2"]
+        },
+        {
+          "when": { "et": "18.07", "en": "18 Jul" },
+          "title": {
+            "et": "Külas Ring FM-is „Äälekese“ ilmumise puhul",
+            "en": "Guests on Ring FM for the release of “Äälekene”"
+          },
+          "photos": ["2025-ring-fm-1"]
+        },
+        {
+          "when": { "et": "26.07", "en": "26 Jul" },
+          "title": {
+            "et": "Esinemine Haapsalu Linnamäe kontsertide päeval",
+            "en": "Performance at the Haapsalu Linnamäe concert day"
+          },
+          "photos": ["2025-haapsalu-1", "2025-haapsalu-2"]
+        },
+        {
+          "when": { "et": "30.08", "en": "30 Aug" },
+          "title": {
+            "et": "Esinemine muinastulede ööl Pangodi järve ääres",
+            "en": "Performance at the Night of Ancient Bonfires on the shore of Lake Pangodi"
+          },
+          "photos": ["2025-pangodi-1", "2025-pangodi-2"]
+        },
+        {
+          "when": { "et": "26.09", "en": "26 Sep" },
+          "title": {
+            "et": "Pärnumaa tänuüritus laulu- ja tantsupeo osalistele ja juhendajatele",
+            "en": "Pärnu County’s thank-you event for Song and Dance Celebration participants and instructors"
+          },
+          "photos": ["2025-parnumaa-tanuuritus-1", "2025-parnumaa-tanuuritus-2"]
+        },
+        {
+          "when": { "et": "29.11", "en": "29 Nov" },
+          "title": {
+            "et": "„Mari ja Jüri polka“ — autorilooming",
+            "en": "“Mari ja Jüri polka” — original composition"
+          }
+        },
+        {
+          "title": {
+            "et": "1. advendi kontsert Lindi lasteaed-algkoolis",
+            "en": "First Advent concert at Lindi Kindergarten-Primary School"
+          }
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "entries": [
+        {
+          "when": { "et": "01.06", "en": "1 Jun" },
+          "title": {
+            "et": "„Lustila elada“ — Pärnu ja Ambla kihelkond",
+            "en": "“Lustila elada” — Pärnu and Ambla Parishes"
+          },
+          "links": ["https://youtu.be/zMNv3Iayot0"]
+        },
+        {
+          "when": { "et": "03.06", "en": "3 Jun" },
+          "title": {
+            "et": "„Ühes lendame“ — loodud tantsurühma Kajakas 70. juubeliks",
+            "en": "“Ühes lendame” — written for the 70th anniversary of the Kajakas dance group"
+          },
+          "links": ["https://www.youtube.com/watch?v=NAFmGOhqvQw"]
+        },
+        {
+          "when": { "et": "07.07", "en": "7 Jul" },
+          "title": {
+            "et": "Mooste Elohelü — preemia leidliku idee eest",
+            "en": "Mooste Elohelü — award for an inventive concept"
+          },
+          "body": {
+            "et": "Osalesime taas konkursil, kus andsime ka kontserdi. Žürii tõi esile põnevad ja ootamatud stiilimuutused ning esinemise terviklikkuse ja leidlikkuse.",
+            "en": "We took part in the competition again and gave a concert there too. The jury singled out the exciting, unexpected changes of style and the coherence and inventiveness of the performance."
+          },
+          "links": ["https://moostefolk.ee/"],
+          "photos": ["2024-mooste-1"]
+        },
+        {
+          "when": { "et": "29.07", "en": "29 Jul" },
+          "title": {
+            "et": "„Unt aja taga“ — Audru ja Tõstamaa kihelkond",
+            "en": "“Unt aja taga” — Audru and Tõstamaa Parishes"
+          },
+          "links": ["https://youtu.be/fS6f5KJFcwE"]
+        },
+        {
+          "when": { "et": "04.08", "en": "4 Aug" },
+          "title": {
+            "et": "Esinemine Sindi seltsimajas",
+            "en": "Performance at the Sindi Community Centre"
+          },
+          "links": ["https://www.facebook.com/photo/?fbid=1005693484675619&set=a.786836879894615"],
+          "photos": ["2024-sindi-1", "2024-sindi-2", "2024-sindi-3"]
+        },
+        {
+          "when": { "et": "31.08", "en": "31 Aug" },
+          "title": {
+            "et": "Lühifilm Vincent Mooniga",
+            "en": "A short film with Vincent Moon"
+          },
+          "body": {
+            "et": "Viljandi pärimusmuusika festivalil kohtusime filmitegija Vincent Mooniga, kes tegi meist lühifilmi.",
+            "en": "At the Viljandi Folk Music Festival we met filmmaker Vincent Moon, who made a short film about us."
+          },
+          "links": ["https://www.youtube.com/watch?v=WvDM-20G_8c"]
+        },
+        {
+          "when": { "et": "05.09", "en": "5 Sep" },
+          "title": {
+            "et": "Esinemine Pärnu kolledži avaaktusel",
+            "en": "Performance at Pärnu College’s opening ceremony"
+          },
+          "photos": ["2024-parnu-kolledz-1", "2024-parnu-kolledz-2"]
+        },
+        {
+          "when": { "et": "25.09", "en": "25 Sep" },
+          "title": {
+            "et": "„Armastuse rohi“ — Siberi eestlaste laul",
+            "en": "“Armastuse rohi” — a song of the Siberian Estonians"
+          },
+          "links": ["https://www.youtube.com/watch?v=z6EW1T-wjYk"]
+        },
+        {
+          "when": { "et": "10.10", "en": "10 Oct" },
+          "title": {
+            "et": "Külas raadios Ring FM",
+            "en": "Guests on Ring FM radio"
+          },
+          "links": [
+            "https://www.facebook.com/ringfm/videos/864526539152767",
+            "https://ringfm.treraadio.ee/kordus/14032/hommikuintervjuu-ansambel-otekse-intervjuu-ja-live"
+          ]
+        },
+        {
+          "when": { "et": "18.10", "en": "18 Oct" },
+          "title": {
+            "et": "Esinemine Läti festivalil Zemlika",
+            "en": "Performance at the Zemlika festival in Latvia"
+          },
+          "links": ["https://www.facebook.com/zemlika"],
+          "photos": ["2024-zemlika-1"]
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "entries": [
+        {
+          "when": { "et": "14.11", "en": "14 Nov" },
+          "title": {
+            "et": "Isadepäeva kontsert",
+            "en": "Father’s Day concert"
+          },
+          "links": ["https://youtu.be/uIsG6MU0hzk"]
+        },
+        {
+          "when": { "et": "14.08", "en": "14 Aug" },
+          "title": {
+            "et": "Mooste Elohelü konkursi peapreemia",
+            "en": "Grand Prize at the Mooste Elohelü competition"
+          },
+          "links": ["https://parnu.postimees.ee/7317288/kolm-ode-sindist-toid-rahvamuusikatootluste-festivalilt-peavoidu"],
+          "photos": ["2021-mooste-1", "2021-mooste-2"]
+        }
+      ]
+    }
+  ]
+}

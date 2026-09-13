@@ -35,7 +35,27 @@
     "metaTitle": "About — Õtekse",
     "metaDescription": "Meet Õtekse, a folk-music-inspired ensemble of three sisters.",
     "photoTag": "THREE SISTERS",
-    "photoAlt": "Õtekse — three sisters"
+    "photoAlt": "Õtekse — three sisters",
+    "timelineOverline": "TIMELINE",
+    "timelineTitle": "What we’ve been up to",
+    "timelinePhotoAlt": "{title} — photo {n} of {count}"
+  },
+  "Album": {
+    "overline": "ALBUM",
+    "title": "“RANNA­PIIGAD”",
+    "credit1": "Kert-Johan Sommer — cajon",
+    "credit2": "Loore Lumisalu — double bass",
+    "credit3": "Reine Niin — jaw harp",
+    "credit4": "Master & mix — Janek Kivi",
+    "kicker": "Õtekse’s first album and EP arrive this autumn.",
+    "para1": "With our first record we go back to our roots — to where we come from, and to who we are. Our roots reach to Rannametsa in Pärnu County, and that is where the album’s sea themes began.",
+    "para2": "The three of us, sisters from Rannametsa, are like rannapiigad — shore girls, young women still learning about life, wanting to have fun, to try things, to discover and simply enjoy living. These songs are about all of that.",
+    "coverName": "RANNAPIIGAD",
+    "coverMeta": "EP · 30.10",
+    "coverAlt": "Folk ensemble Õtekse — the three sisters",
+    "showsLabel": "RELEASE CONCERTS",
+    "footnote": "Keep an eye out — we will share the details soon. And once the Hooandja campaign opens, we will add the link here too.",
+    "releaseLine": "ÕTEKSE “RANNAPIIGAD” — OUT THIS AUTUMN, 30.10"
   },
   "Members": {
     "overline": "THE BAND",

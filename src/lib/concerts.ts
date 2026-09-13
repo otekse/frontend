@@ -28,6 +28,11 @@ export type Concert = {
    * keeps it a single word away from coming back.
    */
   hidden?: boolean;
+  /**
+   * A release concert for the "Rannapiigad" EP. It stays an ordinary concert
+   * everywhere else; the flag only puts it in the album section's list too.
+   */
+  albumRelease?: boolean;
   badge: ConcertBadge;
   url?: string;
   title: Localized;
@@ -126,11 +131,20 @@ function parseConcert(input: unknown, index: number): Concert {
       `${where}.hidden must be true or false without quotes (got ${JSON.stringify(c.hidden)})`,
     );
   }
+  // Same trap as `hidden`: a quoted "false" would still list the show.
+  if (c.albumRelease !== undefined && typeof c.albumRelease !== "boolean") {
+    throw new ConcertDataError(
+      `${where}.albumRelease must be true or false without quotes (got ${JSON.stringify(c.albumRelease)})`,
+    );
+  }
 
   return {
     start: c.start,
     ...(c.end !== undefined ? { end: c.end as string } : {}),
     ...(c.hidden !== undefined ? { hidden: c.hidden as boolean } : {}),
+    ...(c.albumRelease !== undefined
+      ? { albumRelease: c.albumRelease as boolean }
+      : {}),
     ...(c.displayDate !== undefined
       ? { displayDate: requireLocalized(c.displayDate, `${where}.displayDate`) }
       : {}),

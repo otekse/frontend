@@ -109,6 +109,19 @@ describe("parseConcerts", () => {
     );
   });
 
+  it("accepts an albumRelease flag", () => {
+    const out = parseConcerts({ concerts: [concert({ albumRelease: true })] });
+    assert.equal(out[0].albumRelease, true);
+    assert.equal(parseConcerts({ concerts: [concert()] })[0].albumRelease, undefined);
+  });
+
+  it("rejects a quoted albumRelease flag", () => {
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), albumRelease: "true" }] }),
+      /albumRelease must be true or false without quotes/,
+    );
+  });
+
   it("rejects a non-https url", () => {
     assert.throws(
       () =>

@@ -9,16 +9,22 @@ import styles from "./SmartImage.module.scss";
 //  - missing src or failed load: sand surface with a quiet wheat mark
 // Use this for any content image (products, photos); decorative CSS
 // backgrounds (hero layers, wheat waves) don't need it.
+//
+// `loading="lazy"` is for long image lists (the About timeline): the browser
+// then fetches nothing until the image nears the viewport, and nothing at all
+// inside a closed <details>.
 export function SmartImage({
   src,
   alt,
   className,
   objectPosition,
+  loading,
 }: {
   src: string | null | undefined;
   alt: string;
   className?: string;
   objectPosition?: string;
+  loading?: "lazy" | "eager";
 }) {
   const [state, setState] = useState<"loading" | "loaded" | "error">(
     src ? "loading" : "error",
@@ -44,6 +50,7 @@ export function SmartImage({
           ref={imgRef}
           src={src}
           alt={alt}
+          loading={loading}
           className={`${styles.img} ${state === "loaded" ? styles.imgLoaded : ""}`}
           style={objectPosition ? { objectPosition } : undefined}
           onLoad={() => setState("loaded")}

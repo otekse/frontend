@@ -66,6 +66,45 @@
       }
     },
     {
+      "start": "2026-11-06",
+      "badge": "free",
+      "albumRelease": true,
+      "title": {
+        "et": "Pärnu Keskraamatukogu",
+        "en": "Pärnu Central Library"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Details coming soon."
+      }
+    },
+    {
+      "start": "2026-11-07",
+      "badge": "ticketed",
+      "albumRelease": true,
+      "title": {
+        "et": "Tallinn, Philly Joe’s",
+        "en": "Tallinn, Philly Joe’s"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Piletid ja täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Tickets and details coming soon."
+      }
+    },
+    {
+      "start": "2026-11-08",
+      "badge": "free",
+      "albumRelease": true,
+      "title": {
+        "et": "Tartu, Eesti Kirjandusmuuseum",
+        "en": "Tartu, Estonian Literary Museum"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Details coming soon."
+      }
+    },
+    {
       "start": "2026-08-23",
       "badge": "soon",
       "title": {
