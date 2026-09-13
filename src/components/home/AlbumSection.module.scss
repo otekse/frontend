@@ -2,30 +2,26 @@
 
 // The album scene's colours are the "Album scene" tokens in globals.css.
 
+// The section's own ground is the sky: the strip holding the overline and the
+// sky below it read as one continuous cream, down to the sea. The gold panel
+// starts under the scene.
 .section {
-  background: var(--color-forest);
-  padding-bottom: 90px;
+  background: var(--color-album-sky);
   // The swell strips are twice the viewport wide; `clip` hides the overhang
   // without turning the section into a scroll container.
   overflow-x: clip;
 }
 
-.defs {
-  position: absolute;
-}
-
-.head,
-.releaseLine {
+.head {
   max-width: var(--container-content);
   margin: 0 auto;
-}
-
-.head {
   padding: 74px var(--spacing-section-x) 22px;
 }
 
+// Rust rather than the export's gold: gold on this cream is too faint to
+// read, and rust is the site's overline colour on every light section.
 .overline {
-  @include overline(var(--color-gold));
+  @include overline(var(--color-rust));
   margin-bottom: 0;
 }
 
@@ -34,24 +30,19 @@
 .panel {
   position: relative;
   background: var(--color-gold);
-  clip-path: url(#album-wave);
   padding-bottom: clamp(120px, 16vw, 210px);
 }
 
 // On a phone the title spans the full width and its four credit pills stack
 // one per row, so the scene needs far more sky than the desktop layout's
-// 36%. Three things change together there: the scene grows, the sea sinks to
-// the lower 44%, and the title starts below the wave cut. That cut is sized
-// against the whole panel (objectBoundingBox), which is ~1900px tall on a
-// phone, so its left edge dips roughly 105px into the scene — hence a px top
-// for the title rather than a percentage of the scene.
+// 36%: it grows, and the sea sinks to the lower 44%.
 .scape {
   position: relative;
   height: clamp(340px, 47vw, 600px);
   overflow: hidden;
 
   @include until($bp-sm) {
-    height: 640px;
+    height: 540px;
   }
 }
 
@@ -97,7 +88,7 @@
   @include until($bp-sm) {
     left: var(--spacing-section-x);
     right: var(--spacing-section-x);
-    top: 124px;
+    top: 4%;
   }
 }
 
@@ -461,11 +452,4 @@
   line-height: var(--leading-small);
   color: var(--color-ink);
   opacity: 0.66;
-}
-
-.releaseLine {
-  padding: 34px var(--spacing-section-x) 0;
-  font-size: var(--text-badge);
-  letter-spacing: var(--tracking-badge);
-  color: var(--color-cream-a45);
 }

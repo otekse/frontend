@@ -105,7 +105,7 @@ API client workflow (see "API client" above):
 - **Concerts are data, not code.** They live in `src/content/concerts.json` — inert, so an orchestrator edit can never introduce executable code into the build. The rules that check that file live in `src/lib/concerts.ts`, deliberately *outside* the AI-editable directory: the data is editable, the validation is not. `parseConcerts()` runs at import time, so bad data fails `next build` rather than shipping; its messages name the exact field because the orchestrator reads build output to fix its own edit.
   - There is no "past concerts" list. Every entry carries an ISO `start` and `splitConcerts()` files it by today's date (in `Europe/Tallinn` — the server runs UTC and Estonia is UTC+2/+3, so a UTC comparison retires concerts early). **Never sort or move entries by hand.**
   - `hidden: true` takes an entry off the site without deleting it; `displayDate` overrides the rendered date for historical entries whose exact day is unknown.
-  - Because the split depends on today, `/[locale]/concerts` must stay server-rendered per request (`ƒ` in the build output). If it is ever prerendered, "today" freezes at build time.
+  - Because the split depends on today, no render may live long. The pages are prerendered, and the root layout's `export const revalidate = 3600` (`src/app/layout.tsx`) re-renders them at most an hour after they go stale — that is what retires concerts, and ends the album promotion (`src/lib/album.ts`), without a deploy. The lowest `revalidate` in a route wins, so it covers every page. Remove it and "today" freezes at build time.
 
 ## Styling (design system)
 

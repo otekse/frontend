@@ -36,8 +36,8 @@
     "metaDescription": "Tutvu Õteksega — kolme õe folkmuusikast inspireeritud ansambliga.",
     "photoTag": "KOLM ÕDE",
     "photoAlt": "Õtekse — kolm õde",
-    "timelineOverline": "AJATELG",
-    "timelineTitle": "Meie tegemised",
+    "timelineTitle": "AJATELG",
+    "timelineCount": "{count, plural, one {# sündmus} other {# sündmust}}",
     "timelinePhotoAlt": "{title} — foto {n}/{count}"
   },
   "Album": {
@@ -55,7 +55,7 @@
     "coverAlt": "Pärimusansambel Õtekse — kolm õde",
     "showsLabel": "KONTSERDID",
     "footnote": "Hoidke silma peal, sest varsti jagame juba täpsemalt! Ja kui Hooandja kampaania tuleb, lisame siia ka Hooandja lingi.",
-    "releaseLine": "ÕTEKSE „RANNAPIIGAD“ — JUBA SEL SÜGISEL, 30.10"
+    "navButton": "Uus album!"
   },
   "Members": {
     "overline": "ANSAMBEL",

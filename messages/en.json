@@ -36,8 +36,8 @@
     "metaDescription": "Meet Õtekse, a folk-music-inspired ensemble of three sisters.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters",
-    "timelineOverline": "TIMELINE",
-    "timelineTitle": "What we’ve been up to",
+    "timelineTitle": "TIMELINE",
+    "timelineCount": "{count, plural, one {# entry} other {# entries}}",
     "timelinePhotoAlt": "{title} — photo {n} of {count}"
   },
   "Album": {
@@ -55,7 +55,7 @@
     "coverAlt": "Folk ensemble Õtekse — the three sisters",
     "showsLabel": "RELEASE CONCERTS",
     "footnote": "Keep an eye out — we will share the details soon. And once the Hooandja campaign opens, we will add the link here too.",
-    "releaseLine": "ÕTEKSE “RANNAPIIGAD” — OUT THIS AUTUMN, 30.10"
+    "navButton": "New album!"
   },
   "Members": {
     "overline": "THE BAND",

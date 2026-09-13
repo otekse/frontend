@@ -1,24 +1,27 @@
-// Timeline types and validation for the About page's "what we have been up to".
+// Timeline types and validation for the About page's "AJATELG".
 //
 // Same split as concerts (see lib/concerts.ts): the data lives in
 // `src/content/timeline.json`, which the runtime orchestrator may edit, and the
 // rules that check it live here, outside that directory. Pure and
 // dependency-free, so the tests drive it directly.
+//
+// The shape follows the Claude Design export (`Otekse - Meist`): each entry is
+// a date as shown, one text, labelled links and photos.
 
 type Localized = { et: string; en: string };
 
+export type TimelineLink = { url: string; label: string };
+
 export type TimelineEntry = {
   /**
-   * The date as shown, per locale ("22.01" / "22 Jan"). Free text rather than
-   * ISO because the band's own record is often vaguer than a day ("kevad").
-   * Optional: some entries only have their year.
+   * The date exactly as displayed ("22.01.2026", "Kevad 2026"). Free text
+   * because the band's own record is often vaguer than a day. In the file it
+   * may be one string for both languages, or `{ "et", "en" }` when they differ.
    */
-  when?: Localized;
-  title: Localized;
-  /** A sentence or two more, for entries the title alone does not carry. */
-  body?: Localized;
-  /** Recordings, videos and articles. https only. */
-  links: string[];
+  date?: Localized;
+  text: Localized;
+  /** Recordings, videos and articles, each with its pill label. https only. */
+  links: TimelineLink[];
   /** Photo ids: file names under public/images/timeline/, without extension. */
   photos: string[];
 };
@@ -36,33 +39,60 @@ export class TimelineDataError extends Error {
 // spaces, no diacritics, and nothing that could climb out of the directory.
 const PHOTO_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+const nonEmpty = (v: unknown): v is string =>
+  typeof v === "string" && v.trim() !== "";
+
 function requireLocalized(value: unknown, where: string): Localized {
   if (!value || typeof value !== "object") {
     throw new TimelineDataError(`${where} must be an object with "et" and "en"`);
   }
   const v = value as Record<string, unknown>;
   for (const loc of ["et", "en"] as const) {
-    if (typeof v[loc] !== "string" || (v[loc] as string).trim() === "") {
+    if (!nonEmpty(v[loc])) {
       throw new TimelineDataError(`${where}.${loc} must be a non-empty string`);
     }
   }
   return { et: v.et as string, en: v.en as string };
 }
 
-function optionalStrings(
-  value: unknown,
-  where: string,
-  check: (s: string) => boolean,
-  rule: string,
-): string[] {
+function parseDate(value: unknown, where: string): Localized {
+  if (typeof value === "string") {
+    if (!nonEmpty(value)) {
+      throw new TimelineDataError(`${where} must not be empty`);
+    }
+    return { et: value, en: value };
+  }
+  return requireLocalized(value, where);
+}
+
+function parseLinks(value: unknown, where: string): TimelineLink[] {
   if (value === undefined) return [];
   if (!Array.isArray(value)) {
     throw new TimelineDataError(`${where} must be a list`);
   }
   return value.map((item, i) => {
-    if (typeof item !== "string" || !check(item)) {
+    const l = (item ?? {}) as Record<string, unknown>;
+    if (typeof l.url !== "string" || !l.url.startsWith("https://")) {
       throw new TimelineDataError(
-        `${where}[${i}] ${rule} (got ${JSON.stringify(item)})`,
+        `${where}[${i}].url must start with https:// (got ${JSON.stringify(l.url)})`,
+      );
+    }
+    if (!nonEmpty(l.label)) {
+      throw new TimelineDataError(`${where}[${i}].label must be a non-empty string`);
+    }
+    return { url: l.url, label: l.label };
+  });
+}
+
+function parsePhotos(value: unknown, where: string): string[] {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) {
+    throw new TimelineDataError(`${where} must be a list`);
+  }
+  return value.map((item, i) => {
+    if (typeof item !== "string" || !PHOTO_ID.test(item)) {
+      throw new TimelineDataError(
+        `${where}[${i}] must be lowercase letters, digits and hyphens, without a file extension (got ${JSON.stringify(item)})`,
       );
     }
     return item;
@@ -76,25 +106,10 @@ function parseEntry(input: unknown, where: string): TimelineEntry {
   const e = input as Record<string, unknown>;
 
   return {
-    ...(e.when !== undefined
-      ? { when: requireLocalized(e.when, `${where}.when`) }
-      : {}),
-    title: requireLocalized(e.title, `${where}.title`),
-    ...(e.body !== undefined
-      ? { body: requireLocalized(e.body, `${where}.body`) }
-      : {}),
-    links: optionalStrings(
-      e.links,
-      `${where}.links`,
-      (s) => s.startsWith("https://"),
-      "must start with https://",
-    ),
-    photos: optionalStrings(
-      e.photos,
-      `${where}.photos`,
-      (s) => PHOTO_ID.test(s),
-      "must be lowercase letters, digits and hyphens, without a file extension",
-    ),
+    ...(e.date !== undefined ? { date: parseDate(e.date, `${where}.date`) } : {}),
+    text: requireLocalized(e.text, `${where}.text`),
+    links: parseLinks(e.links, `${where}.links`),
+    photos: parsePhotos(e.photos, `${where}.photos`),
   };
 }
 
@@ -158,13 +173,4 @@ export function parseTimeline(input: unknown): TimelineYear[] {
 /** Every photo id the timeline uses, in order. */
 export function timelinePhotoIds(years: TimelineYear[]): string[] {
   return years.flatMap((y) => y.entries.flatMap((e) => e.photos));
-}
-
-/**
- * A short label for an outbound link: the site it goes to. Readers want to
- * know "this opens YouTube", and a hostname needs no translation.
- */
-export function linkLabel(url: string): string {
-  const host = new URL(url).hostname.replace(/^(www|m)\./, "");
-  return host === "youtu.be" ? "youtube.com" : host;
 }

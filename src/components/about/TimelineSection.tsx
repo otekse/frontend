@@ -1,97 +1,113 @@
 import { useLocale, useTranslations } from "next-intl";
 import { timeline } from "@/content/timeline";
 import { timelinePhoto } from "@/content/assets";
-import { linkLabel } from "@/lib/timeline";
 import { SmartImage } from "@/components/SmartImage";
-import { Disclosure, DisclosureGroup } from "@/components/ui/Disclosure";
+import { TimelineRise } from "./TimelineRise";
 import styles from "./TimelineSection.module.scss";
 
-// The band's own record of what they have done, year by year, on the About
-// page. The entries and their photos come from timeline.json (the band's
-// "Õtekse's doings" document); see lib/timeline.ts for the rules it follows.
+// The band's own record, year by year, built from the Claude Design export
+// `Otekse - Meist (standalone).html` ("AJATELG"): a sticky year with its entry
+// count beside a hairline, a gold dot per entry, the date, the text, link
+// pills, and the photos as tilted paper prints. Every year is open — nothing
+// collapses.
 //
-// One collapsible bar per year, the newest open. That keeps a long record to
-// a glance, and because the photos are lazy the browser downloads nothing for
-// a year until it is opened.
+// Where it departs from the export:
+//  - The export is a whole About page. Only its timeline is used here; the
+//    band's introduction is AboutSection, directly above.
+//  - Its "LIIKUMINE" switcher is a design-review control for trying three
+//    scroll animations. The page ships the default, "Tõus", in TimelineRise.
+//  - The photos are the band's real ones — all of them, where the export
+//    showed placeholder counts — and each opens full size in its own tab.
+
+// Alternating tilts, as in the export: the first print leans left.
+const TILTS = ["tiltLeft", "tiltRight"] as const;
+
 export function TimelineSection() {
   const t = useTranslations("About");
   const locale = useLocale() as "et" | "en";
 
   return (
     <section id="ajatelg" className={styles.section}>
-      <div className={styles.inner}>
-        <div className={styles.overline}>— {t("timelineOverline")}</div>
+      <div className={styles.head}>
+        <div className={styles.overline}>— {t("overline")}</div>
         <h2 className={styles.title}>{t("timelineTitle")}</h2>
+      </div>
 
-        <DisclosureGroup tone="cream">
-          {timeline.map(({ year, entries }, i) => (
-            <Disclosure key={year} summary={<h3>{year}</h3>} defaultOpen={i === 0}>
-              <ol className={styles.entries}>
-                {entries.map((e, j) => {
-                  const title = e.title[locale];
-                  return (
-                    <li key={j} className={styles.entry}>
-                      <div className={styles.when}>{e.when?.[locale]}</div>
-                      <div className={styles.content}>
-                        <h4 className={styles.entryTitle}>{title}</h4>
-                        {e.body && <p className={styles.body}>{e.body[locale]}</p>}
+      <TimelineRise className={styles.years}>
+        {timeline.map(({ year, entries }) => (
+          <div key={year} className={styles.year}>
+            <div className={styles.yearLabel}>
+              <h3 className={styles.yearNumber}>{year}</h3>
+              <div className={styles.yearCount}>
+                {t("timelineCount", { count: entries.length })}
+              </div>
+            </div>
 
-                        {e.links.length > 0 && (
-                          <ul className={styles.links}>
-                            {e.links.map((url) => (
-                              <li key={url}>
+            <ol className={styles.entries}>
+              {entries.map((e, i) => {
+                const text = e.text[locale];
+                return (
+                  <li key={i} data-entry className={styles.entry}>
+                    <div data-rise className={styles.rise}>
+                      <span className={styles.dot} aria-hidden />
+                      {e.date && <div className={styles.date}>{e.date[locale]}</div>}
+                      <p className={styles.text}>{text}</p>
+
+                      {e.links.length > 0 && (
+                        <ul className={styles.links}>
+                          {e.links.map((l) => (
+                            <li key={l.url}>
+                              <a
+                                href={l.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={styles.link}
+                              >
+                                ↗ {l.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {e.photos.length > 0 && (
+                        <ul className={styles.photos}>
+                          {e.photos.map((id, n) => {
+                            const photo = timelinePhoto(id);
+                            return (
+                              // The rise writes `transform` on the figure, so
+                              // the tilt lives on the print inside it.
+                              <li key={id} data-fig className={styles.figure}>
                                 <a
-                                  href={url}
+                                  href={photo.full}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className={styles.link}
+                                  className={`${styles.print} ${styles[TILTS[n % 2]]}`}
                                 >
-                                  {linkLabel(url)} ↗
+                                  <SmartImage
+                                    src={photo.thumb}
+                                    alt={t("timelinePhotoAlt", {
+                                      title: text,
+                                      n: n + 1,
+                                      count: e.photos.length,
+                                    })}
+                                    className={styles.photo}
+                                    loading="lazy"
+                                  />
                                 </a>
                               </li>
-                            ))}
-                          </ul>
-                        )}
-
-                        {e.photos.length > 0 && (
-                          <ul className={styles.photos}>
-                            {e.photos.map((id, n) => {
-                              const photo = timelinePhoto(id);
-                              return (
-                                <li key={id}>
-                                  {/* Opens the full photo: the grid crops
-                                      every shot to one shape. */}
-                                  <a
-                                    href={photo.full}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className={styles.photoLink}
-                                  >
-                                    <SmartImage
-                                      src={photo.thumb}
-                                      alt={t("timelinePhotoAlt", {
-                                        title,
-                                        n: n + 1,
-                                        count: e.photos.length,
-                                      })}
-                                      className={styles.photo}
-                                      loading="lazy"
-                                    />
-                                  </a>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
-            </Disclosure>
-          ))}
-        </DisclosureGroup>
-      </div>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        ))}
+      </TimelineRise>
     </section>
   );
 }

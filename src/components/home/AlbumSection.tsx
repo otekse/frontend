@@ -8,11 +8,15 @@ import { badgeKey } from "@/components/concerts/ConcertRow";
 import styles from "./AlbumSection.module.scss";
 
 // The "Rannapiigad" EP announcement, built from the Claude Design export
-// `Otekse - Rannapiigad (standalone).html`: a gold panel with a wave-cut top
-// edge, a sky-and-sea scene with a sun, sailing boats and birds, then the
-// cover, the story and the release concerts.
+// `Otekse - Rannapiigad (standalone).html`: a sky-and-sea scene with a sun,
+// sailing boats and birds over a gold panel holding the cover, the story and
+// the release concerts. The header's "Uus album!" button links here, and both
+// come down at the end of the promotion (lib/album.ts).
 //
-// Where it departs from the export, on purpose:
+// Where it departs from the export, on the owner's direction or on purpose:
+//  - The strip above the scene is the sky's cream, not forest, so the section
+//    opens as one continuous sky. That made the export's wave-cut top edge
+//    invisible, so it is gone; so is the closing "juba sel sügisel" strip.
 //  - No language button in the section. The site header's switcher owns the
 //    locale; a second one here would disagree with it.
 //  - The release shows are not copy. They are entries in concerts.json flagged
@@ -52,14 +56,6 @@ export function AlbumSection() {
 
   return (
     <section id="album" className={styles.section}>
-      <svg width="0" height="0" className={styles.defs} aria-hidden>
-        <defs>
-          <clipPath id="album-wave" clipPathUnits="objectBoundingBox">
-            <path d="M0,0.055 C0.14,0.012 0.3,0.004 0.46,0.026 C0.62,0.048 0.76,0.018 0.88,0.022 C0.94,0.024 0.97,0.03 1,0.036 L1,1 L0,1 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
       <div className={styles.head}>
         <div className={styles.overline}>— {t("overline")}</div>
       </div>
@@ -183,8 +179,6 @@ export function AlbumSection() {
           </div>
         </div>
       </ScrollDrift>
-
-      <div className={styles.releaseLine}>{t("releaseLine")}</div>
     </section>
   );
 }

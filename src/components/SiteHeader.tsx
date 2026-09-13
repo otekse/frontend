@@ -15,8 +15,12 @@ import styles from "./SiteHeader.module.scss";
 // cart, checkout, order — not the band homepage.
 const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
 
-export function SiteHeader() {
+// `albumPromo` shows the "Uus album!" button, which links to the album section
+// on the homepage. It is decided on the server (lib/album.ts) and passed down
+// rather than checked here, so the prerendered page and the hydrated one agree.
+export function SiteHeader({ albumPromo }: { albumPromo: boolean }) {
   const t = useTranslations("Nav");
+  const tAlbum = useTranslations("Album");
   const locale = useLocale();
   const { count } = useCart();
   const pathname = usePathname();
@@ -143,6 +147,18 @@ export function SiteHeader() {
           </Link>
         ))}
       </div>
+      {albumPromo && (
+        // The slot does the centring and the pill does the press animation:
+        // both are written as `transform`, so they cannot share an element.
+        <div className={styles.albumSlot}>
+          <Link
+            href={{ pathname: "/", hash: "album" }}
+            className={styles.albumPill}
+          >
+            {tAlbum("navButton")}
+          </Link>
+        </div>
+      )}
       <div className={styles.group}>
         {inStorefront && (
           <Link href="/cart" className={styles.cartPill} aria-label={t("cart")}>

@@ -9,6 +9,9 @@
 // ---- Breakpoints (design is desktop-first; we define the collapses) ----
 $bp-sm: 640px;
 $bp-md: 900px;
+// Wide enough for the header to hold its links, player and language switcher
+// with a centred button between them (see SiteHeader).
+$bp-lg: 1100px;
 
 @mixin from($bp) {
   @media (min-width: $bp) {

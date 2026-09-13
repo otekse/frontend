@@ -135,9 +135,14 @@ a {
   --color-ink-a28: rgba(22, 33, 26, 0.28); /* pill outlines and rules on gold */
   --text-album-title: clamp(32px, 5.8vw, 84px);
   --text-album-kicker: clamp(15px, 1.8vw, 20px);
-  --radius-paper: 6px; /* the cover's photo-print card */
-  --radius-photo: 12px; /* timeline thumbnails */
+  --radius-paper: 6px; /* photo-print cards: the album cover, timeline photos */
   --shadow-album-cover: 0 30px 60px rgba(14, 32, 23, 0.34);
+
+  /* -- Timeline (About page) -- from the design's `Otekse - Meist` export. */
+  --text-timeline-title: clamp(52px, 11vw, 132px);
+  --text-timeline-year: clamp(28px, 5.4vw, 66px);
+  --color-gold-a42: rgba(217, 161, 59, 0.42); /* link-pill outline */
+  --shadow-photo-print: 0 16px 34px rgba(0, 0, 0, 0.42); /* prints on forest */
 
   /* Cream alpha steps (on dark surfaces) */
   --color-cream-a10: rgba(246, 242, 231, 0.1); /* archive dividers, fainter */

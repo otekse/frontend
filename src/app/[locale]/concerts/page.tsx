@@ -18,10 +18,11 @@ import styles from "./page.module.scss";
 // (Kontserdid -> Õtekse) — see the spec in
 // workspace/docs/superpowers/specs/2026-07-29-concerts-page-design.md.
 //
-// Upcoming vs past is decided by today's date, so this route must stay
-// server-rendered per request (`ƒ` in the build output). If it were ever
-// prerendered as static, "today" would freeze at build time and concerts
-// would stop retiring — add `revalidate` if that changes.
+// Upcoming vs past is decided by today's date, so a render of this page must
+// never live long. It is prerendered, and the root layout's `revalidate`
+// (src/app/layout.tsx, hourly) re-renders it — that is how concerts retire
+// into the archive without a deploy. Without it, "today" would freeze at
+// build time.
 
 export async function generateMetadata({
   params,
@@ -59,8 +60,7 @@ export default async function ConcertsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("ConcertsPage");
-  // Split per request, not at build time — see the note above about staying
-  // dynamically rendered.
+  // Split at render time — see the note above about how often that happens.
   const { upcoming, past } = splitConcerts(concerts);
 
   return (
