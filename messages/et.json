@@ -41,7 +41,7 @@
     "timelinePhotoAlt": "{title} — foto {n}/{count}"
   },
   "Album": {
-    "overline": "ALBUM",
+    "overline": "UUS ALBUM",
     "title": "„RANNA­PIIGAD“",
     "credit1": "Kert-Johan Sommer — cajon",
     "credit2": "Loore Lumisalu — kontrabass",
@@ -138,8 +138,8 @@
     "error": "Toodete laadimine ebaõnnestus.",
     "outOfStock": "LÄBI MÜÜDUD",
     "addToCart": "Lisa korvi",
-    "noteTitle": "Tellimused avatakse peagi!",
-    "noteSub": "Soovid ette tellida? Kirjuta meile:"
+    "noteTitle": "Kuidas tellida?",
+    "noteSub": "Lisa tooted ostukorvi ja saada tellimus meile e-kirjaga. Küsimuste korral kirjuta:"
   },
   "Product": {
     "backToShop": "Tagasi poodi",
@@ -154,20 +154,17 @@
     "quantity": "Kogus",
     "remove": "Eemalda",
     "total": "Kokku",
-    "checkout": "Vormista ost",
+    "sendOrder": "Saada tellimus e-kirjaga",
+    "howTitle": "Tellimine käib e-kirja teel",
+    "howBody": "Nupp avab sinu e-postiprogrammi valmis tellimusega. Lisa oma nimi, telefon ja see, kuidas soovid tooted kätte saada, ning saada kiri. Vastame ja lepime kokku makse ning kättesaamise.",
+    "noMailApp": "Kui nupp ei ava e-posti, kirjuta meile ja loetle, mida soovid:",
+    "emailSubject": "Tellimus — Õtekse e-pood",
+    "emailIntro": "Tere! Soovin tellida:",
+    "emailTotal": "Kokku",
+    "emailName": "Nimi",
+    "emailPhone": "Telefon",
+    "emailDelivery": "Kättesaamine (aadress või pakiautomaat)",
+    "emailNotes": "Lisainfo",
     "continueShopping": "Jätka ostlemist"
-  },
-  "Checkout": {
-    "title": "Vormista ost",
-    "redirecting": "Suuname sind turvalisse makselehele…",
-    "failed": "Maksesessiooni loomine ebaõnnestus. Palun proovi uuesti.",
-    "pending": "Maksete lõpp-punkt (Stripe) pole veel ühendatud — see samm on veel arendamisel.",
-    "backToCart": "Tagasi ostukorvi"
-  },
-  "OrderConfirmation": {
-    "title": "Aitäh tellimuse eest!",
-    "body": "Saatsime kinnituse sinu e-postile. Sinu tellimust töödeldakse.",
-    "note": "Makse õnnestumist kinnitab alati meie server, mitte see leht.",
-    "backHome": "Tagasi avalehele"
   }
 }

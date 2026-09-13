@@ -6,9 +6,9 @@ for full system context; this file covers what's specific to this repo.
 
 ## What this repo is
 
-Homepage, marketing pages, product listing/detail pages, cart, checkout
-redirect, order confirmation page. Talks to `backend` only over HTTP
-(`GET /products`, `POST /checkout`, etc.) via a typed client generated with
+Homepage, marketing pages, product listing/detail pages, and a cart that
+sends the order by email — the shop takes no payment (see "Conventions"). Talks
+to `backend` only over HTTP (`GET /products`, etc.) via a typed client generated with
 **Orval** from the backend's OpenAPI spec, using **React Query**.
 
 ## Design source
@@ -73,7 +73,7 @@ and fails on any diff.
 ## CI
 
 - Typecheck, lint, build, tests.
-- Smoke check: homepage renders, checkout redirect is exercised **against the
+- Smoke check: homepage and storefront render **against the
   MSW mocks, never the real backend**.
 - Orval no-diff check: regenerate the client from the committed spec snapshot
   and fail if anything changes (catches hand-edited generated code).
@@ -98,7 +98,7 @@ API client workflow (see "API client" above):
 
 - **Routes live under `src/app/[locale]/`.** Use the locale-aware `Link`/`useRouter` from `@/i18n/navigation`, never bare `next/link` / `next/navigation`, so the active locale is preserved. All user-facing strings come from `messages/{et,en}.json` via `next-intl` — never hardcoded.
 - **Data fetching is client-side** through the generated React Query hooks (`useProductsController…`). This is deliberate: it lets MSW intercept in `client-preview`, so the preview renders mock data and never hits the real backend (`PROJECT_BRIEF.md` §10). Don't fetch store data in server components.
-- **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. Never trust these client-side prices for payment — the backend re-validates at checkout.
+- **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. The shop takes orders by email, not payment (owner decision, 2026-09-13): the cart writes the items into an email to the band (`@/lib/order-email`, sent to `CONTACT_EMAIL` in `@/lib/contact`), and the band confirms the amount and arranges payment and delivery in their reply. There is no checkout page.
 - **Cart is client-only** (`@/lib/cart`, localStorage). No server cart.
 - `src/api/generated/**` is generated and git-ignored by ESLint — never hand-edit it.
 - **Editable content collections** (concerts, members, teaser items, asset paths) live in `src/content/` as typed modules with `{et, en}` fields — the allowlist-friendly directory the runtime orchestrator is scoped to (`PROJECT_BRIEF.md` §10). UI strings stay in `messages/`.

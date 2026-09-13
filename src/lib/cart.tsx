@@ -11,8 +11,9 @@ import {
 import { SHOP_ENABLED } from "./shop";
 
 // Client-side only cart (localStorage). No server-side cart table — v1 keeps
-// the cart entirely in the browser (PROJECT_BRIEF.md §4). Prices here are for
-// display only; the server always re-validates at checkout.
+// the cart entirely in the browser (PROJECT_BRIEF.md §4). There is no payment:
+// the cart page turns the items into an order email (lib/order-email.ts), and
+// the band confirms the final amount when they reply.
 export type CartItem = {
   id: string;
   name: string;

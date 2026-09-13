@@ -42,3 +42,12 @@
 .totalText {
   font-size: 1.125rem;
 }
+
+// How ordering works, under the order button: the shop takes orders by email.
+.orderNote {
+  margin-top: 32px;
+}
+
+.orderFallback {
+  margin-top: 10px;
+}

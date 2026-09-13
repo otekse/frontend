@@ -22,8 +22,8 @@ import styles from "./AlbumButton.module.scss";
 
 const START_DELAY_MS = 700; // after the hero's own entrance
 const OPEN_MS = 450; // keep equal to --duration-album-card in globals.css
-const HOLD_MS = 1700; // fully open
-const PREVIEW_RATIO = 1600 / 706; // the still's aspect ratio (scripts/optimize-images.mjs)
+const HOLD_MS = 2400; // fully open
+const PREVIEW_RATIO = 1307 / 687; // the still's aspect ratio (scripts/optimize-images.mjs)
 const MAX_CARD_W = 420;
 const EDGE_GAP = 16; // clearance from the viewport edge and the neighbouring controls
 const INSET = 8; // the still's inset inside the card; matches .preview in the stylesheet

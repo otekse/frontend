@@ -2,6 +2,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { concerts } from "@/content/concerts";
 import { IMAGES } from "@/content/assets";
 import { formatConcertDate, splitConcerts } from "@/lib/concerts";
+import { swellPath } from "@/lib/swell";
 import { SmartImage } from "@/components/SmartImage";
 import { ScrollDrift } from "@/components/ui/ScrollDrift";
 import { badgeKey } from "@/components/concerts/ConcertRow";
@@ -10,8 +11,8 @@ import styles from "./AlbumSection.module.scss";
 // The "Rannapiigad" EP announcement, built from the Claude Design export
 // `Otekse - Rannapiigad (standalone).html`: a sky-and-sea scene with a sun,
 // sailing boats and birds over a gold panel holding the cover, the story and
-// the release concerts. The header's "Uus album!" button links here, and both
-// come down at the end of the promotion (lib/album.ts).
+// the release concerts. The header's "Uus album!" button links here; both are
+// hidden from visitors, not deleted, once the promotion ends (lib/album.ts).
 //
 // Where it departs from the export, on the owner's direction or on purpose:
 //  - The strip above the scene is the sky's cream, not forest, so the section
@@ -39,13 +40,13 @@ const DRIFT = {
 const CREDITS = [1, 2, 3, 4] as const;
 const PARAS = [1, 2] as const;
 
-// One seamless swell per layer. Each path spans two periods of a 2400-wide
-// strip drawn at 200% width, so sliding it left by half loops without a seam.
+// Far to near: [period, midline, depth, phase]. Midlines and rises keep the
+// export's swell heights; lib/swell makes each path loop without a seam.
 const SWELLS = [
-  "M0,26 C260,2 460,2 700,26 C940,50 1120,50 1360,26 C1600,2 1800,2 2040,26 C2180,40 2300,44 2400,30 L2400,220 L0,220 Z",
-  "M0,60 C200,20 420,20 660,62 C900,104 1100,104 1340,62 C1580,20 1800,20 2040,62 C2190,88 2300,92 2400,70 L2400,220 L0,220 Z",
-  "M0,90 C220,44 420,44 680,92 C940,140 1100,140 1340,92 C1580,44 1800,44 2040,92 C2190,120 2300,124 2400,100 L2400,220 L0,220 Z",
-  "M0,120 C240,70 430,70 690,120 C950,170 1110,170 1350,120 C1590,70 1800,70 2050,120 C2200,148 2300,150 2400,130 L2400,220 L0,220 Z",
+  swellPath(1200, 26, 32, 0),
+  swellPath(1200, 62, 56, 420),
+  swellPath(1200, 92, 64, 780),
+  swellPath(600, 120, 66, 170),
 ];
 
 export function AlbumSection() {

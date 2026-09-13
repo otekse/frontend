@@ -41,7 +41,7 @@
     "timelinePhotoAlt": "{title} — photo {n} of {count}"
   },
   "Album": {
-    "overline": "ALBUM",
+    "overline": "NEW ALBUM",
     "title": "“RANNA­PIIGAD”",
     "credit1": "Kert-Johan Sommer — cajon",
     "credit2": "Loore Lumisalu — double bass",
@@ -138,8 +138,8 @@
     "error": "Failed to load products.",
     "outOfStock": "SOLD OUT",
     "addToCart": "Add to cart",
-    "noteTitle": "Ordering opens soon!",
-    "noteSub": "Want to pre-order? Write to us:"
+    "noteTitle": "How to order",
+    "noteSub": "Add what you’d like to your cart and send us the order by email. Questions? Write to us:"
   },
   "Product": {
     "backToShop": "Back to shop",
@@ -154,20 +154,17 @@
     "quantity": "Quantity",
     "remove": "Remove",
     "total": "Total",
-    "checkout": "Check out",
+    "sendOrder": "Send order by email",
+    "howTitle": "Orders are placed by email",
+    "howBody": "The button opens your email app with the order filled in. Add your name, phone and how you’d like to receive it, then send. We’ll reply to arrange payment and delivery.",
+    "noMailApp": "If the button doesn’t open your email, write to us and list what you’d like:",
+    "emailSubject": "Order — Õtekse shop",
+    "emailIntro": "Hello! I would like to order:",
+    "emailTotal": "Total",
+    "emailName": "Name",
+    "emailPhone": "Phone",
+    "emailDelivery": "Delivery (address or parcel locker)",
+    "emailNotes": "Notes",
     "continueShopping": "Continue shopping"
-  },
-  "Checkout": {
-    "title": "Checkout",
-    "redirecting": "Redirecting you to secure checkout…",
-    "failed": "Could not start the checkout session. Please try again.",
-    "pending": "The payment endpoint (Stripe) is not connected yet — this step is still being built.",
-    "backToCart": "Back to cart"
-  },
-  "OrderConfirmation": {
-    "title": "Thank you for your order!",
-    "body": "We've sent a confirmation to your email. Your order is being processed.",
-    "note": "Payment success is always confirmed by our server, never by this page.",
-    "backHome": "Back home"
   }
 }

@@ -54,9 +54,10 @@ const jobs = [
 
 // Stills of the album section that the header's "Uus album!" button opens
 // into on page load (AlbumButton), one per language because the title quotes
-// and credits differ. Screenshots of the section at 1600x706 with the header
-// hidden; retake them when the section changes. The card is at most 420px
-// wide, so 840px covers 2x displays. AlbumButton's PREVIEW_RATIO is 1600/706.
+// and credits differ. Screenshots of the section's scene in the owner's crop:
+// 1307x687 from a 1905px-wide page, from the top of the scene, header hidden.
+// Retake them when the section changes. The card is at most 420px wide, so
+// 840px covers 2x displays. AlbumButton's PREVIEW_RATIO is 1307/687.
 for (const locale of ["et", "en"]) {
   jobs.push(
     sharp(join(SRC, `album-preview-${locale}.png`))

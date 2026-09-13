@@ -11,11 +11,12 @@ import { todayInTallinn } from "@/lib/concerts";
 import { shopEnabled } from "@/lib/shop-server";
 
 // The band homepage, built from the Claude Design source (see AGENTS.md
-// "Design source"): parallax hero, about, members, concerts, the
-// "Rannapiigad" album announcement, shop teaser.
+// "Design source"): parallax hero, about, members, concerts, shop teaser,
+// then the "Rannapiigad" album announcement.
 //
-// The album section comes down on its own at the end of the promotion (see
-// lib/album.ts), together with the header button that links to it.
+// When the promotion ends (lib/album.ts) the album section and the header
+// button that links to it are hidden from visitors — not deleted: both stay in
+// the code, and moving the end date shows them again.
 //
 // The shop band has two designs, not one design with the links removed:
 // ShopTeaser when the storefront is open, ShopClosed when it isn't.
@@ -35,8 +36,8 @@ export default async function HomePage({
       <AboutSection showMoreLink />
       <MembersSection />
       <ConcertsSection />
-      {albumOn && <AlbumSection />}
       {shopOn ? <ShopTeaser /> : <ShopClosed />}
+      {albumOn && <AlbumSection />}
     </>
   );
 }

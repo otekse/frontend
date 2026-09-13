@@ -7,7 +7,7 @@ import { SHOP_COOKIE, resolveShopEnabled } from "./lib/shop";
 const intlMiddleware = createMiddleware(routing);
 
 // Storefront surfaces, matched after the locale prefix is stripped.
-const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
+const STOREFRONT = /^\/(shop|cart)(\/|$)/;
 
 // Crawlers get a stable, geo-independent locale — indexing must not depend on
 // which country a bot happens to crawl from.

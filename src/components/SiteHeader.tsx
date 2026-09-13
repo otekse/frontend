@@ -13,8 +13,8 @@ import { AlbumButton } from "./AlbumButton";
 import styles from "./SiteHeader.module.scss";
 
 // The cart pill only belongs on the storefront surfaces — shop, product,
-// cart, checkout, order — not the band homepage.
-const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
+// cart — not the band homepage.
+const STOREFRONT = /^\/(shop|cart)(\/|$)/;
 
 // `albumPromo` shows the "Uus album!" button, which links to the album section
 // on the homepage. It is decided on the server (lib/album.ts) and passed down

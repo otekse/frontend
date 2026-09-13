@@ -21,7 +21,7 @@ const spaceMono = Space_Mono({
 // Re-render every page at most an hour after it goes stale.
 //
 // The pages are prerendered, and several of them depend on today's date: the
-// album promotion comes down on 1 January 2027 (lib/album.ts), and concerts
+// album promotion is hidden from 1 January 2027 (lib/album.ts), and concerts
 // retire into the archive the day after they happen (lib/concerts.ts). A page
 // rendered once at build time would freeze "today" until the next deploy.
 // Set here, on the root layout, because the lowest `revalidate` in a route

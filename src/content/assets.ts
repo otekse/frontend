@@ -23,7 +23,7 @@ export const IMAGES = {
   /**
    * Stills of the album section that the header's "Uus album!" button opens
    * into on page load (AlbumButton), one per language. They are screenshots:
-   * retake assets-src/album-preview-{et,en}.png (1600x706, header hidden)
+   * retake assets-src/album-preview-{et,en}.png (the scene cropped to 1307x687, header hidden)
    * whenever the section changes, then rerun images:build.
    */
   albumPreview: {

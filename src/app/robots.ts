@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
         // /api/locale is a redirect hop with no content worth crawling.
         disallow: [
           "/api/",
-          ...(SHOP_ENABLED ? [] : ["/shop", "/cart", "/checkout", "/order"]),
+          ...(SHOP_ENABLED ? [] : ["/shop", "/cart"]),
           ...(ABOUT_ENABLED ? [] : ["/about"]),
         ],
       },
