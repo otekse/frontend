@@ -102,33 +102,11 @@
   color: var(--color-ink);
 }
 
-.cartPill,
-.albumPill {
+.cartPill {
   @include pill(var(--color-gold), var(--color-ink));
   border-bottom: 3px solid var(--color-ink);
 
   &:hover {
     background: var(--color-gold-soft);
-  }
-}
-
-.albumPill {
-  white-space: nowrap;
-}
-
-// "Uus album!" sits dead centre of the bar where there is room for it between
-// the links and the player. Below that it takes a centred row of its own
-// under them, rather than squeezing either side or overlapping them.
-.albumSlot {
-  display: flex;
-  justify-content: center;
-  flex: 0 0 100%;
-  order: 3;
-
-  @include from($bp-lg) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 }

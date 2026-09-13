@@ -9,6 +9,7 @@ import { LOCALE_NAV_WIDTH_KEY } from "@/lib/locale-nav-transition";
 import { useShopEnabled } from "./ShopState";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MusicPlayer } from "./MusicPlayer";
+import { AlbumButton } from "./AlbumButton";
 import styles from "./SiteHeader.module.scss";
 
 // The cart pill only belongs on the storefront surfaces — shop, product,
@@ -20,7 +21,6 @@ const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
 // rather than checked here, so the prerendered page and the hydrated one agree.
 export function SiteHeader({ albumPromo }: { albumPromo: boolean }) {
   const t = useTranslations("Nav");
-  const tAlbum = useTranslations("Album");
   const locale = useLocale();
   const { count } = useCart();
   const pathname = usePathname();
@@ -147,18 +147,7 @@ export function SiteHeader({ albumPromo }: { albumPromo: boolean }) {
           </Link>
         ))}
       </div>
-      {albumPromo && (
-        // The slot does the centring and the pill does the press animation:
-        // both are written as `transform`, so they cannot share an element.
-        <div className={styles.albumSlot}>
-          <Link
-            href={{ pathname: "/", hash: "album" }}
-            className={styles.albumPill}
-          >
-            {tAlbum("navButton")}
-          </Link>
-        </div>
-      )}
+      {albumPromo && <AlbumButton />}
       <div className={styles.group}>
         {inStorefront && (
           <Link href="/cart" className={styles.cartPill} aria-label={t("cart")}>

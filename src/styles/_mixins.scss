@@ -10,7 +10,7 @@
 $bp-sm: 640px;
 $bp-md: 900px;
 // Wide enough for the header to hold its links, player and language switcher
-// with a centred button between them (see SiteHeader).
+// with a centred button between them (see AlbumButton).
 $bp-lg: 1100px;
 
 @mixin from($bp) {

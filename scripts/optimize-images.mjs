@@ -52,6 +52,20 @@ const jobs = [
     .toFile(join(OUT, "album", "cover.webp")),
 ];
 
+// Stills of the album section that the header's "Uus album!" button opens
+// into on page load (AlbumButton), one per language because the title quotes
+// and credits differ. Screenshots of the section at 1600x706 with the header
+// hidden; retake them when the section changes. The card is at most 420px
+// wide, so 840px covers 2x displays. AlbumButton's PREVIEW_RATIO is 1600/706.
+for (const locale of ["et", "en"]) {
+  jobs.push(
+    sharp(join(SRC, `album-preview-${locale}.png`))
+      .resize({ width: 840 })
+      .webp({ quality: 80 })
+      .toFile(join(OUT, "album", `preview-${locale}.webp`)),
+  );
+}
+
 // Member avatars: square, face-focused crops from the hi-res originals
 // (assets-src/<file>, 2400x3600). Each region is hand-tuned so the sister's
 // face sits in a consistent head-and-torso framing before the 600px downscale.

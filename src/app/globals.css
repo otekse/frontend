@@ -206,6 +206,8 @@ a {
   --duration-press-in: 60ms;
   --duration-press-out: 180ms;
   --duration-hero-reveal: 520ms;
+  /* The "Uus album!" card opening and closing; AlbumButton's OPEN_MS matches. */
+  --duration-album-card: 450ms;
   --scale-pressed: 0.96;
 
   /* Radial hole punched through the concert-hero photo scatter so the title

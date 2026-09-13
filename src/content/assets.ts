@@ -20,6 +20,16 @@ export const IMAGES = {
    * and update `Album.coverAlt` in messages/ to match.
    */
   albumCover: "/images/album/cover.webp",
+  /**
+   * Stills of the album section that the header's "Uus album!" button opens
+   * into on page load (AlbumButton), one per language. They are screenshots:
+   * retake assets-src/album-preview-{et,en}.png (1600x706, header hidden)
+   * whenever the section changes, then rerun images:build.
+   */
+  albumPreview: {
+    et: "/images/album/preview-et.webp",
+    en: "/images/album/preview-en.webp",
+  },
   /** Live photos scattered across the concerts-page hero. */
   live: {
     one: "/images/concerts/live-1.webp",
