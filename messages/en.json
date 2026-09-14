@@ -124,6 +124,8 @@
   },
   "Privacy": {
     "title": "Privacy policy",
+    "metaTitle": "Privacy policy — Õtekse",
+    "metaDescription": "How the Õtekse website collects visitor statistics, which cookies it uses, and what your rights are.",
     "controllerTitle": "Data controller",
     "controllerBody": "This website is run by us, Õtekse. For any questions, write to {email}.",
     "analyticsTitle": "Visitor statistics",

@@ -48,6 +48,18 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "public, max-age=604800" },
         ],
       },
+      // The page language, for crawlers that read the HTML without running
+      // scripts. `<html lang>` cannot carry it: the document shell sits above
+      // the [locale] segment (src/app/layout.tsx), so the server-rendered
+      // attribute is the same in both language trees.
+      {
+        source: "/et/:path*",
+        headers: [{ key: "Content-Language", value: "et" }],
+      },
+      {
+        source: "/en/:path*",
+        headers: [{ key: "Content-Language", value: "en" }],
+      },
     ];
   },
 };

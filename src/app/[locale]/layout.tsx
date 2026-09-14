@@ -3,9 +3,12 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { SHARE_IMAGE, SITE_NAME } from "@/lib/site";
 
-export const SITE_URL = "https://xn--tekse-cua.ee";
-
+// Fallbacks only, for a page that sets no metadata of its own. Canonical,
+// hreflang and og:url are deliberately NOT set here — every page sets them
+// through localizedPageMetadata (lib/metadata.ts); inherited from a layout,
+// they would name the wrong page.
 export async function generateMetadata({
   params,
 }: {
@@ -15,26 +18,13 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Meta" });
 
   return {
-    metadataBase: new URL(SITE_URL),
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        et: "/et",
-        en: "/en",
-        // x-default is the URL that performs the language negotiation — the
-        // unprefixed root — not an alias for the English tree.
-        "x-default": "/",
-      },
-    },
     openGraph: {
       type: "website",
-      siteName: "Õtekse",
+      siteName: SITE_NAME,
       locale: locale === "et" ? "et_EE" : "en_GB",
-      title: t("title"),
-      description: t("description"),
-      url: `${SITE_URL}/${locale}`,
+      images: [SHARE_IMAGE],
     },
   };
 }

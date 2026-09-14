@@ -1,10 +1,28 @@
+import type { Metadata } from "next";
 import { Archivo_Black, Space_Mono } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
 import { UmamiScript } from "@/components/UmamiScript";
 import { albumPromoActive } from "@/lib/album";
 import { todayInTallinn } from "@/lib/concerts";
 import { shopEnabled } from "@/lib/shop-server";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+// Every relative URL in the metadata of every page (canonical, hreflang)
+// resolves against the canonical origin.
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+};
+
+// Runs before first paint. `lang` cannot come from the route in this layout,
+// which sits above [locale] (see below), so the server always sends Estonian —
+// the default locale — and this corrects it on English pages before a screen
+// reader or translation prompt reads it. Same rule as AppShell's getLocale;
+// LocaleDocumentAttributes keeps it right across client-side navigations.
+// Crawlers that do not run scripts get the language from the Content-Language
+// header instead (next.config.ts).
+const DOCUMENT_LANG_SCRIPT =
+  'document.documentElement.lang=location.pathname.startsWith("/et")?"et":"en"';
 
 const archivoBlack = Archivo_Black({
   variable: "--font-archivo-black",
@@ -41,10 +59,15 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="et"
+      // The script below may change `lang` before hydration, by design.
+      suppressHydrationWarning
       className={`${archivoBlack.variable} ${spaceMono.variable}`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: DOCUMENT_LANG_SCRIPT }} />
+      </head>
       <body>
         <AppShell shopOn={shopOn} albumPromo={albumPromo}>
           {children}

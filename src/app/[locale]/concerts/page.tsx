@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { concerts } from "@/content/concerts";
 import { splitConcerts } from "@/lib/concerts";
+import { localizedPageMetadata } from "@/lib/metadata";
+import { concertsJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/JsonLd";
 import { ConcertRow } from "@/components/concerts/ConcertRow";
 import { ConcertsHero } from "@/components/concerts/ConcertsHero";
 import { PastConcerts } from "@/components/concerts/PastConcerts";
-import { routing } from "@/i18n/routing";
-import { SITE_URL } from "../layout";
 import styles from "./page.module.scss";
 
 // The full concerts listing, built from the Claude Design source
@@ -32,24 +33,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "ConcertsPage" });
 
-  return {
+  return localizedPageMetadata({
+    locale,
+    path: "/concerts",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: `/${locale}/concerts`,
-      languages: Object.fromEntries(
-        routing.locales.map((l) => [l, `/${l}/concerts`]),
-      ),
-    },
-    openGraph: {
-      type: "website",
-      siteName: "Õtekse",
-      locale: locale === "et" ? "et_EE" : "en_GB",
-      title: t("metaTitle"),
-      description: t("metaDescription"),
-      url: `${SITE_URL}/${locale}/concerts`,
-    },
-  };
+  });
 }
 
 export default async function ConcertsPage({
@@ -62,9 +51,12 @@ export default async function ConcertsPage({
   const t = await getTranslations("ConcertsPage");
   // Split at render time — see the note above about how often that happens.
   const { upcoming, past } = splitConcerts(concerts);
+  // Upcoming only: a finished event has no business in event search.
+  const events = concertsJsonLd(upcoming, locale === "et" ? "et" : "en");
 
   return (
     <>
+      {events && <JsonLd data={events} />}
       <ConcertsHero />
 
       <section id="kontserdid" className={styles.section}>

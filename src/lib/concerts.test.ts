@@ -132,6 +132,41 @@ describe("parseConcerts", () => {
     );
   });
 
+  it("accepts a venue, with or without a country", () => {
+    const [local] = parseConcerts({
+      concerts: [concert({ venue: { name: "Philly Joe’s", locality: "Tallinn" } })],
+    });
+    assert.deepEqual(local.venue, { name: "Philly Joe’s", locality: "Tallinn" });
+
+    const [abroad] = parseConcerts({
+      concerts: [concert({ venue: { name: "Esplanāde", locality: "Riga", country: "LV" } })],
+    });
+    assert.equal(abroad.venue?.country, "LV");
+  });
+
+  it("rejects a venue without its town", () => {
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), venue: { name: "Klubi" } }] }),
+      /venue\.locality must be a non-empty string/,
+    );
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), venue: "Tallinn" }] }),
+      /venue must be an object/,
+    );
+  });
+
+  it("rejects a country that is not a two-letter code", () => {
+    assert.throws(
+      () =>
+        parseConcerts({
+          concerts: [
+            { ...concert(), venue: { name: "Klubi", locality: "Riga", country: "Latvia" } },
+          ],
+        }),
+      /venue\.country must be a two-letter country code/,
+    );
+  });
+
   it("names the offending entry by index", () => {
     assert.throws(
       () =>

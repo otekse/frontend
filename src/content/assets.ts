@@ -12,6 +12,8 @@ export const IMAGES = {
   wheat: "/images/wheat-enhanced.webp",
   /** Band photo for the About section. */
   band: "/images/band.jpg",
+  /** Share image for social media and chat apps, 1200x630 (lib/metadata.ts). */
+  share: "/images/share.jpg",
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
   /**

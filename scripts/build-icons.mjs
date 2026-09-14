@@ -17,8 +17,10 @@
 //   src/app/apple-icon.png  — iOS home-screen icon
 //   public/icon-192.png     — PWA / manifest sizes
 //   public/icon-512.png
+//   src/app/favicon.ico     — 16/32/48px, for everything that asks for
+//                             /favicon.ico by name instead of reading <link>
 import sharp from "sharp";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -78,6 +80,34 @@ await Promise.all([
     join(ROOT, "public", "icon-512.png"),
   ),
 ]);
+
+// Browsers, feed readers and some crawlers request /favicon.ico whatever the
+// page's <link> tags say; without the file each of those is a 404. An ICO can
+// hold PNG frames as they are, so this is just a directory header in front of
+// three plain RGBA PNGs — no BMP encoding needed.
+const ICO_SIZES = [16, 32, 48];
+const frames = await Promise.all(
+  ICO_SIZES.map((s) => sharp(rounded).resize(s, s).png().toBuffer()),
+);
+const header = Buffer.alloc(6);
+header.writeUInt16LE(1, 2); // type: icon
+header.writeUInt16LE(frames.length, 4);
+const directory = Buffer.alloc(16 * frames.length);
+let offset = header.length + directory.length;
+frames.forEach((frame, i) => {
+  const at = 16 * i;
+  directory.writeUInt8(ICO_SIZES[i], at); // width
+  directory.writeUInt8(ICO_SIZES[i], at + 1); // height
+  directory.writeUInt16LE(1, at + 4); // colour planes
+  directory.writeUInt16LE(32, at + 6); // bits per pixel
+  directory.writeUInt32LE(frame.length, at + 8);
+  directory.writeUInt32LE(offset, at + 12);
+  offset += frame.length;
+});
+writeFileSync(
+  join(ROOT, "src", "app", "favicon.ico"),
+  Buffer.concat([header, directory, ...frames]),
+);
 
 console.log(
   `icons written from a ${side}x${side} crop: src/app/icon.png, src/app/apple-icon.png, public/icon-{192,512}.png`,

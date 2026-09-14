@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
@@ -6,6 +7,23 @@ import styles from "./page.module.scss";
 // transparency applies because Umami processes IP addresses server-side, even
 // though the site sets no analytics cookie and needs no consent banner.
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { localizedPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Privacy" });
+
+  return localizedPageMetadata({
+    locale,
+    path: "/privacy",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 const SECTIONS = [
   ["controllerTitle", "controllerBody"],

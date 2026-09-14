@@ -124,6 +124,8 @@
   },
   "Privacy": {
     "title": "Privaatsuspoliitika",
+    "metaTitle": "Privaatsuspoliitika — Õtekse",
+    "metaDescription": "Kuidas Õtekse veebileht kogub külastusstatistikat, milliseid küpsiseid see kasutab ja millised on sinu õigused.",
     "controllerTitle": "Vastutav töötleja",
     "controllerBody": "Selle veebilehe eest vastutame meie, Õtekse. Küsimuste korral kirjuta {email}.",
     "analyticsTitle": "Külastusstatistika",

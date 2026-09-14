@@ -52,6 +52,17 @@ const jobs = [
     .resize({ width: 640, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(join(OUT, "album", "video-poster.webp")),
+
+  // Share image for links posted to social media and chat apps (Open Graph /
+  // X), set on every page by lib/metadata.ts. The beach photo — all three
+  // sisters with their instruments — at the 1200x630 the platforms expect:
+  // scaled to 1200x900, then cropped from just below the top of the sky to the
+  // knees.
+  sharp(join(SRC, "live-3.jpg"))
+    .resize({ width: 1200 })
+    .extract({ left: 0, top: 90, width: 1200, height: 630 })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toFile(join(OUT, "share.jpg")),
 ];
 
 // Stills of the album section that the header's "Uus album!" button opens

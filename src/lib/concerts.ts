@@ -11,6 +11,15 @@ export type ConcertBadge = "free" | "ticketed" | "soon";
 
 type Localized = { et: string; en: string };
 
+export type Venue = {
+  /** The place's own name, as it is known locally: "Eesti Kirjandusmuuseum". */
+  name: string;
+  /** Town or city. */
+  locality: string;
+  /** ISO 3166-1 alpha-2 code; Estonia ("EE") when left out. */
+  country?: string;
+};
+
 export type Concert = {
   /** ISO YYYY-MM-DD. Decides both sort order and upcoming vs past. */
   start: string;
@@ -33,6 +42,12 @@ export type Concert = {
    * everywhere else; the flag only puts it in the album section's list too.
    */
   albumRelease?: boolean;
+  /**
+   * Where it happens, for search engines. Optional: the page never shows it,
+   * but only a concert with a venue is marked up as an event
+   * (lib/structured-data.ts), because Google lists events only with a location.
+   */
+  venue?: Venue;
   badge: ConcertBadge;
   url?: string;
   title: Localized;
@@ -44,6 +59,7 @@ export const TEASER_COUNT = 3;
 
 const BADGES: readonly ConcertBadge[] = ["free", "ticketed", "soon"];
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const COUNTRY_CODE = /^[A-Z]{2}$/;
 
 export class ConcertDataError extends Error {
   constructor(message: string) {
@@ -77,6 +93,33 @@ function requireLocalized(value: unknown, where: string): Localized {
     }
   }
   return { et: v.et as string, en: v.en as string };
+}
+
+function requireVenue(value: unknown, where: string): Venue {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new ConcertDataError(
+      `${where} must be an object with "name" and "locality"`,
+    );
+  }
+  const v = value as Record<string, unknown>;
+  for (const key of ["name", "locality"] as const) {
+    if (typeof v[key] !== "string" || (v[key] as string).trim() === "") {
+      throw new ConcertDataError(`${where}.${key} must be a non-empty string`);
+    }
+  }
+  if (
+    v.country !== undefined &&
+    (typeof v.country !== "string" || !COUNTRY_CODE.test(v.country))
+  ) {
+    throw new ConcertDataError(
+      `${where}.country must be a two-letter country code such as "EE" or "LV" (got ${JSON.stringify(v.country)})`,
+    );
+  }
+  return {
+    name: v.name as string,
+    locality: v.locality as string,
+    ...(v.country !== undefined ? { country: v.country as string } : {}),
+  };
 }
 
 /**
@@ -147,6 +190,9 @@ function parseConcert(input: unknown, index: number): Concert {
       : {}),
     ...(c.displayDate !== undefined
       ? { displayDate: requireLocalized(c.displayDate, `${where}.displayDate`) }
+      : {}),
+    ...(c.venue !== undefined
+      ? { venue: requireVenue(c.venue, `${where}.venue`) }
       : {}),
     badge: c.badge as ConcertBadge,
     ...(c.url !== undefined ? { url: c.url as string } : {}),
