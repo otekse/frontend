@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { IMAGES } from "@/content/assets";
 import styles from "./AlbumButton.module.scss";
 
@@ -32,6 +32,7 @@ const CARD_RADIUS = 18;
 export function AlbumButton() {
   const t = useTranslations("Album");
   const locale = useLocale() as "et" | "en";
+  const pathname = usePathname();
   const ref = useRef<HTMLAnchorElement>(null);
   const preview = IMAGES.albumPreview[locale];
   // The trailer plays once, in the language the page loaded in; a later
@@ -132,6 +133,17 @@ export function AlbumButton() {
         ref={ref}
         href={{ pathname: "/", hash: "album" }}
         className={styles.pill}
+        onClick={(event) => {
+          // Already on the homepage: scroll there directly. A link to the hash
+          // the page is already on would not move at all. scrollIntoView honours
+          // the section's scroll-margin (0), so its cream top edge meets the top
+          // of the viewport. From other pages the link navigates as usual.
+          const section = document.getElementById("album");
+          if (pathname !== "/" || !section) return;
+          event.preventDefault();
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          section.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+        }}
       >
         <span className={styles.label}>{t("navButton")}</span>
         <span className={styles.preview} aria-hidden>

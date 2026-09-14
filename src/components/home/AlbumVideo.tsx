@@ -13,9 +13,10 @@ import styles from "./AlbumVideo.module.scss";
 // The frame is 8:9. The file is 16:9 and mixes upright phone clips, whose
 // black bars are baked into the picture, with wide landscape shots. At the
 // owner's call there are no bars: the video is drawn at the size where an
-// upright clip's own footage spans the frame's width, centred, and pinned to
-// the bottom, so the part that does not fit is cut off at the top. Wide clips
-// show their middle third.
+// upright clip's own footage spans the frame's width, centred, and set a tenth
+// of the frame's height below its bottom edge, so most of what does not fit is
+// cut off at the top and a little at the bottom. Wide clips show their middle
+// third.
 //
 // That video box is about three times wider than the frame, so the browser's
 // own controls — laid out across the box — would sit outside the frame, cut

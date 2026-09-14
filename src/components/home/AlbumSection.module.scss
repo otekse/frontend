@@ -7,6 +7,10 @@
 // starts under the scene.
 .section {
   background: var(--color-album-sky);
+  // The "Uus album!" button lands with this section's cream top edge exactly
+  // at the top of the viewport, rather than a nav's height above it like other
+  // anchors (globals.css); the fixed nav then floats over the cream strip.
+  scroll-margin-top: 0;
   // The swell strips are twice the viewport wide; `clip` hides the overhang
   // without turning the section into a scroll container.
   overflow-x: clip;
@@ -16,6 +20,13 @@
   max-width: var(--container-content);
   margin: 0 auto;
   padding: 74px var(--spacing-section-x) 22px;
+
+  // The "Uus album!" button scrolls this section's top edge to the top of the
+  // viewport, under the fixed nav. Below $bp-lg the nav gains a row for that
+  // button, so the overline needs more room to clear it.
+  @include until($bp-lg) {
+    padding-top: calc(var(--nav-offset) + 44px);
+  }
 }
 
 // Rust rather than the export's gold: gold on this cream is too faint to
