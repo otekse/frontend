@@ -1,52 +1,21 @@
 @use "../../styles/mixins" as *;
 
-// The card's upright 9:16 space. It never changes size, so nothing around it
-// moves; only the picture box inside does (see AlbumVideo).
+// 16:9, the video file's own shape: wide clips fill it, and the upright clips
+// show the black bars baked into them (see AlbumVideo).
 .frame {
   position: relative;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--color-ink);
-  transition: background-color var(--duration-album-card) var(--ease-standard);
-
-  // Wide clips sit on the card's paper, not on black.
-  &[data-wide] {
-    background: var(--color-cream);
-  }
 }
 
-// The picture box. Upright clips fill the frame; wide clips get a centred box
-// of their own 16:9 shape. In a 9:16 frame a full-width 16:9 box is
-// (9/16) / (16/9) = 81/256 = 31.64% of the height, centred at 34.18% from the top.
-.screen {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  overflow: hidden;
-  transition:
-    top var(--duration-album-card) var(--ease-standard),
-    height var(--duration-album-card) var(--ease-standard);
-
-  [data-wide] > & {
-    top: 34.18%;
-    height: 31.64%;
-  }
-
-  @include reduced-motion {
-    transition: none;
-  }
-}
-
-// `cover` does the cropping: in the upright box it trims exactly the bars baked
-// into an upright clip; in the 16:9 box the shapes match and nothing is cut.
 .video {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
 }
 
 // Covers the poster until the first press; after that the native controls
