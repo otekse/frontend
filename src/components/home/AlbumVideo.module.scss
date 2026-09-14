@@ -1,27 +1,29 @@
 @use "../../styles/mixins" as *;
 
-// 8:9: the card's width, twice the height of a 16:9 frame.
+// 80:99: the card's width, and twice the height of a 16:9 frame plus a tenth
+// (owner's sizing).
 .frame {
   position: relative;
-  aspect-ratio: 8 / 9;
+  aspect-ratio: 80 / 99;
   overflow: hidden;
   background: var(--color-ink);
 }
 
 // The whole 16:9 file, at the size where an upright clip's footage (the middle
 // 303.75 of its 960 px, 31.64%) spans the frame's width: 316.05% of the frame's
-// width, and 16:9 of that, which is 158.03% of an 8:9 frame's height. Centred
-// sideways and set 40% of the frame's height below its bottom edge (the
-// owner's framing), so of the 58% that does not fit, about 18% is cut off at
-// the top and 40% at the bottom (see AlbumVideo). `max-width: none` undoes the
-// reset's 100% cap.
+// width, and 16:9 of that, which is 143.66% of this 80:99 frame's height.
+// Centred sideways and set 30% of the frame's height below its bottom edge
+// (the owner's framing), so of the 43.66% that does not fit, about 14% is cut
+// off at the top and 30% at the bottom (see AlbumVideo). Keep the offset under
+// that 43.66%, or a gap opens at the top. `max-width: none` undoes the reset's
+// 100% cap.
 .video {
   position: absolute;
   left: 50%;
-  bottom: -40%;
+  bottom: -30%;
   display: block;
   width: 316.05%;
-  height: 158.03%;
+  height: 143.66%;
   max-width: none;
   transform: translateX(-50%);
   object-fit: cover;

@@ -10,10 +10,10 @@ import styles from "./AlbumVideo.module.scss";
 // Served from our own server, so playing it contacts no third party: no
 // consent question, and nothing extra for the privacy policy.
 //
-// The frame is 8:9. The file is 16:9 and mixes upright phone clips, whose
+// The frame is 80:99. The file is 16:9 and mixes upright phone clips, whose
 // black bars are baked into the picture, with wide landscape shots. At the
 // owner's call there are no bars: the video is drawn at the size where an
-// upright clip's own footage spans the frame's width, centred, and set 40% of
+// upright clip's own footage spans the frame's width, centred, and set 30% of
 // the frame's height below its bottom edge, so of what does not fit a little
 // is cut off at the top and most at the bottom. Wide clips show their middle
 // third.
