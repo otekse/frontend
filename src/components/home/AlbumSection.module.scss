@@ -346,8 +346,9 @@
   transform: rotate(-1.8deg);
   transition: transform 0.3s var(--ease-standard);
 
-  // Straightens once the video plays: a tilted player reads as a mistake.
-  &:has(video[controls]) {
+  // Straightens once the video has been started: a tilted player reads as a
+  // mistake.
+  &:has([data-started]) {
     transform: none;
   }
 

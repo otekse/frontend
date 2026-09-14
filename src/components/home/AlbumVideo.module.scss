@@ -1,6 +1,6 @@
 @use "../../styles/mixins" as *;
 
-// 8:9: the card's width, twice the height of a 16:9 frame (owner request).
+// 8:9: the card's width, twice the height of a 16:9 frame.
 .frame {
   position: relative;
   aspect-ratio: 8 / 9;
@@ -8,22 +8,35 @@
   background: var(--color-ink);
 }
 
+// The whole 16:9 file, at the size where an upright clip's footage (the middle
+// 303.75 of its 960 px, 31.64%) spans the frame's width: 316.05% of the frame's
+// width, and 16:9 of that, which is 158.03% of an 8:9 frame's height. Centred
+// sideways and pinned to the bottom, so the part that does not fit is cut off
+// at the top (see AlbumVideo). `max-width: none` undoes the reset's 100% cap.
 .video {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  bottom: 0;
   display: block;
-  width: 100%;
-  height: 100%;
-  // Scales the 16:9 picture to the frame's height and crops the sides: the
-  // upright clips show at twice their 16:9 size with their baked-in bars
-  // narrowed to slim strips (the frame is still wider than the footage), and
-  // wide clips show their middle half.
+  width: 316.05%;
+  height: 158.03%;
+  max-width: none;
+  transform: translateX(-50%);
   object-fit: cover;
 }
 
-// Covers the poster until the first press; after that the native controls
-// take over.
+// Covers the poster until the first press.
 .start {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  @include focus-ring;
+}
+
+// After the first press: the picture itself plays and pauses.
+.toggle {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -68,4 +81,50 @@
   @include reduced-motion {
     transform: none;
   }
+}
+
+// The frame's own control bar, over a scrim at the bottom of the picture.
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 8px 6px;
+  background: linear-gradient(transparent, var(--color-forest-a60));
+  color: var(--color-cream-bright);
+}
+
+.ctrl {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  @include focus-ring;
+
+  &:hover {
+    background: var(--color-cream-a16);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.seek {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+}
+
+.time {
+  flex: none;
+  font-size: var(--text-badge);
+  font-variant-numeric: tabular-nums;
 }
