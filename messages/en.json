@@ -65,6 +65,7 @@
     "supportLabel": "HOOANDJA",
     "supportLead": "We’re raising money on Hooandja, an Estonian crowdfunding site, to record the album and print the CDs. Every pledge helps!",
     "supportCollected": "{amount} raised",
+    "supportProgress": "Raised towards the Hooandja campaign goal",
     "supportGoal": "goal {amount}",
     "supportMainGoal": "main goal {amount}",
     "supportBackers": "{count, plural, one {# backer} other {# backers}}",

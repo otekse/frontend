@@ -191,6 +191,7 @@ export function AlbumSection({
                   <div
                     className={styles.progressTrack}
                     role="progressbar"
+                    aria-label={t("supportProgress")}
                     aria-valuemin={0}
                     aria-valuemax={progress.goalEur}
                     aria-valuenow={progress.collectedEur}

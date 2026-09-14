@@ -65,6 +65,7 @@
     "supportLabel": "HOOANDJA",
     "supportLead": "Kogume Hooandjas raha albumi salvestamiseks ja CD-de trükiks. Iga toetus annab hoogu!",
     "supportCollected": "{amount} kogutud",
+    "supportProgress": "Hooandja kampaania eesmärgist kogutud",
     "supportGoal": "eesmärk {amount}",
     "supportMainGoal": "põhieesmärk {amount}",
     "supportBackers": "{count, plural, one {# hooandja} other {# hooandjat}}",
