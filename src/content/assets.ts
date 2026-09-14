@@ -15,11 +15,10 @@ export const IMAGES = {
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
   /**
-   * "Rannapiigad" EP cover. A stand-in for now: the band's black-and-white
-   * promo square, until the real cover exists. Replace assets-src/album-cover.png
-   * and update `Album.coverAlt` in messages/ to match.
+   * Poster for the Hooandja campaign video in the album section, shown until a
+   * visitor presses play (AlbumVideo). Vimeo's own thumbnail, served by us.
    */
-  albumCover: "/images/album/cover.webp",
+  albumVideoPoster: "/images/album/video-poster.webp",
   /**
    * Stills of the album section that the header's "Uus album!" button opens
    * into on page load (AlbumButton), one per language. They are screenshots:

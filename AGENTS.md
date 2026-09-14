@@ -164,6 +164,7 @@ required, so do not add them without telling the owner first:**
 - Google Analytics or any third-party analytics script
 - advertising or retargeting pixels (Meta, Google Ads, …)
 - YouTube, Vimeo, or Spotify embeds
+  - The album section's Hooandja video (`AlbumVideo`) is Vimeo, and is allowed only because it is click-to-play: nothing loads from Vimeo until a visitor presses play, and the player then runs with `dnt=1`. Keep it that way — a player that loads with the page trips this rule. The privacy page says so.
 - session replay (Hotjar and similar)
 - any external script or iframe that sets a cookie
 

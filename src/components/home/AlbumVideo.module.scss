@@ -1,0 +1,66 @@
+@use "../../styles/mixins" as *;
+
+// A 16:9 frame (the video is 1280x720) holding either the poster button or,
+// once pressed, the Vimeo player.
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  @include focus-ring;
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+// An ink disc with a cream triangle, in the style of the site's play controls.
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  box-shadow: var(--shadow-pill);
+  transition: transform var(--duration-press-out) var(--ease-standard);
+
+  // Nudged right of centre: a triangle's visual centre sits left of its box's.
+  &::after {
+    content: "";
+    position: absolute;
+    left: 26px;
+    top: 20px;
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent var(--color-cream-bright);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.poster:hover .play,
+.poster:focus-visible .play {
+  transform: scale(1.08);
+
+  @include reduced-motion {
+    transform: none;
+  }
+}

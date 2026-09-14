@@ -308,8 +308,10 @@
   position: relative;
   z-index: 3;
   margin-top: clamp(-230px, -16vw, -110px);
-  flex: 0 1 clamp(230px, 27%, 340px);
-  min-width: 230px;
+  // Wide enough for the 16:9 video to be watchable; the square cover it
+  // replaced needed far less width for the same presence.
+  flex: 0 1 clamp(280px, 44%, 500px);
+  min-width: min(280px, 100%);
   will-change: transform;
 
   @include until($bp-sm) {
@@ -324,12 +326,16 @@
   border-radius: var(--radius-paper);
   box-shadow: var(--shadow-album-cover);
   transform: rotate(-1.8deg);
-}
+  transition: transform 0.3s var(--ease-standard);
 
-// Nested for specificity: SmartImage's own frame rule sets `height: 100%`.
-.coverCard .cover {
-  aspect-ratio: 1;
-  height: auto;
+  // Straightens once the video plays: a tilted player reads as a mistake.
+  &:has(iframe) {
+    transform: none;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
 }
 
 .coverCaption {
@@ -452,4 +458,100 @@
   line-height: var(--leading-small);
   color: var(--color-ink);
   opacity: 0.66;
+}
+
+// ---- Hooandja: the crowdfunding campaign -----------------------------------
+
+.support {
+  margin-top: 38px;
+  border-top: 1px solid var(--color-ink-a28);
+  padding-top: 16px;
+}
+
+.supportLead {
+  margin-top: 8px;
+  max-width: 62ch;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-ink);
+  opacity: 0.86;
+}
+
+.progress {
+  margin-top: 18px;
+}
+
+.progressFigures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.progressCollected {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--color-ink);
+}
+
+.progressGoal {
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  opacity: 0.7;
+}
+
+.progressTrack {
+  position: relative;
+  height: 10px;
+  margin-top: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink-a15);
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+}
+
+// Gold-ringed, so it stays visible over both the empty track and the fill.
+.progressMarker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--color-ink);
+  box-shadow: 0 0 0 2px var(--color-gold);
+}
+
+.progressMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 10px;
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  opacity: 0.86;
+}
+
+.progressLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  @include focus-ring;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.supportCta {
+  @include pill(var(--color-ink), var(--color-cream-bright));
+  margin-top: 20px;
+
+  &:hover {
+    background: var(--color-moss);
+  }
 }

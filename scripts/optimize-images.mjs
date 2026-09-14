@@ -44,12 +44,14 @@ const jobs = [
     .webp({ quality: 85, alphaQuality: 92 })
     .toFile(join(OUT, "girls-cutout.webp")),
 
-  // "Rannapiigad" cover in the album section's paper card, which is at most
-  // 340px wide — 800px covers 2x displays. Square-cropped because the card is.
-  sharp(join(SRC, "album-cover.png"))
-    .resize({ width: 800, height: 800, fit: "cover" })
-    .webp({ quality: 84 })
-    .toFile(join(OUT, "album", "cover.webp")),
+  // Poster for the Hooandja campaign video in the album section's
+  // click-to-play frame (AlbumVideo): Vimeo's own 1280x720 thumbnail for it,
+  // stored and served by us so the page contacts Vimeo only once a visitor
+  // presses play. The frame is at most 500px wide, so 1000px covers 2x.
+  sharp(join(SRC, "album-video-poster.jpg"))
+    .resize({ width: 1000, withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toFile(join(OUT, "album", "video-poster.webp")),
 ];
 
 // Stills of the album section that the header's "Uus album!" button opens

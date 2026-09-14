@@ -1,11 +1,15 @@
 import { useLocale, useTranslations } from "next-intl";
 import { concerts } from "@/content/concerts";
-import { IMAGES } from "@/content/assets";
 import { formatConcertDate, splitConcerts } from "@/lib/concerts";
 import { swellPath } from "@/lib/swell";
-import { SmartImage } from "@/components/SmartImage";
+import {
+  HOOANDJA_CAMPAIGN_URL,
+  HOOANDJA_SUPPORTERS_URL,
+  type CampaignProgress,
+} from "@/lib/hooandja";
 import { ScrollDrift } from "@/components/ui/ScrollDrift";
 import { badgeKey } from "@/components/concerts/ConcertRow";
+import { AlbumVideo } from "./AlbumVideo";
 import styles from "./AlbumSection.module.scss";
 
 // The "Rannapiigad" EP announcement, built from the Claude Design export
@@ -25,6 +29,12 @@ import styles from "./AlbumSection.module.scss";
 //    list the day after they happen, like every other date.
 //  - The scroll drift runs through ScrollDrift, which only listens while the
 //    section is on screen, instead of a page-long scroll handler.
+//  - The Hooandja campaign video stands where the export had the album cover,
+//    click-to-play so nothing loads from Vimeo until pressed (AlbumVideo).
+//  - The Hooandja block is not in the export (owner request): the campaign's
+//    progress, read from its public page on our server (lib/hooandja-server.ts)
+//    and passed in, so a visitor's browser never contacts Hooandja. Without
+//    figures (Hooandja down or redesigned) it still shows the button.
 
 // Travel in px across the section's whole pass through the viewport — the
 // export's values. Positive drifts down as you scroll, negative drifts up.
@@ -49,11 +59,20 @@ const SWELLS = [
   swellPath(600, 120, 66, 170),
 ];
 
-export function AlbumSection() {
+export function AlbumSection({
+  progress,
+}: {
+  progress: CampaignProgress | null;
+}) {
   const t = useTranslations("Album");
   const tc = useTranslations("Concerts");
   const locale = useLocale() as "et" | "en";
   const shows = splitConcerts(concerts).upcoming.filter((c) => c.albumRelease);
+  const euros = new Intl.NumberFormat(locale === "et" ? "et-EE" : "en-GB", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  });
 
   return (
     <section id="album" className={styles.section}>
@@ -129,11 +148,7 @@ export function AlbumSection() {
               ScrollDrift writes `transform` wholesale. */}
           <div data-drift={DRIFT.cover} className={styles.coverWrap}>
             <figure className={styles.coverCard}>
-              <SmartImage
-                src={IMAGES.albumCover}
-                alt={t("coverAlt")}
-                className={styles.cover}
-              />
+              <AlbumVideo />
               <figcaption className={styles.coverCaption}>
                 <span className={styles.coverName}>{t("coverName")}</span>
                 <span className={styles.coverMeta}>{t("coverMeta")}</span>
@@ -150,6 +165,89 @@ export function AlbumSection() {
                   {t(`para${n}`)}
                 </p>
               ))}
+            </div>
+
+            <div className={styles.support}>
+              <h3 className={styles.showsLabel}>{t("supportLabel")}</h3>
+              <p className={styles.supportLead}>{t("supportLead")}</p>
+
+              {progress && (
+                <div className={styles.progress}>
+                  <div className={styles.progressFigures}>
+                    <span className={styles.progressCollected}>
+                      {t("supportCollected", {
+                        amount: euros.format(progress.collectedEur),
+                      })}
+                    </span>
+                    <span className={styles.progressGoal}>
+                      {t("supportGoal", { amount: euros.format(progress.goalEur) })}
+                    </span>
+                  </div>
+
+                  {/* The track spans every goal together; the tick marks the
+                      main goal, the amount that decides whether Hooandja funds
+                      the project at all. */}
+                  <div
+                    className={styles.progressTrack}
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={progress.goalEur}
+                    aria-valuenow={progress.collectedEur}
+                    aria-valuetext={t("supportCollected", {
+                      amount: euros.format(progress.collectedEur),
+                    })}
+                  >
+                    <div
+                      className={styles.progressFill}
+                      style={{
+                        width: `${Math.min(100, (progress.collectedEur / progress.goalEur) * 100)}%`,
+                      }}
+                    />
+                    {progress.mainGoalEur !== undefined &&
+                      progress.mainGoalEur < progress.goalEur && (
+                        <span
+                          className={styles.progressMarker}
+                          style={{
+                            left: `${(progress.mainGoalEur / progress.goalEur) * 100}%`,
+                          }}
+                          aria-hidden
+                        />
+                      )}
+                  </div>
+
+                  <div className={styles.progressMeta}>
+                    {progress.backers !== undefined && (
+                      <a
+                        href={HOOANDJA_SUPPORTERS_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.progressLink}
+                      >
+                        {t("supportBackers", { count: progress.backers })}
+                      </a>
+                    )}
+                    {progress.daysLeft !== undefined && (
+                      <span>{t("supportDaysLeft", { count: progress.daysLeft })}</span>
+                    )}
+                    {progress.mainGoalEur !== undefined && (
+                      <span>
+                        {t("supportMainGoal", {
+                          amount: euros.format(progress.mainGoalEur),
+                        })}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <a
+                href={HOOANDJA_CAMPAIGN_URL}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.supportCta}
+              >
+                {t("supportCta")} ↗
+              </a>
             </div>
 
             <div className={styles.shows}>
