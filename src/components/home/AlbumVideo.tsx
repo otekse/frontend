@@ -10,11 +10,14 @@ import styles from "./AlbumVideo.module.scss";
 // Served from our own server, so playing it contacts no third party: no
 // consent question, and nothing extra for the privacy policy.
 //
-// The frame is 16:9, the file's own shape. The video mixes wide landscape
-// shots, which fill it, with upright phone clips that carry black bars baked
-// in either side, which show as they are. A card that changed shape with each
-// clip was tried and dropped at the owner's call: the card resizing mid-video
-// looked worse than the bars.
+// The frame is 8:9, one fixed shape: the column's width and twice the height
+// of a 16:9 frame. The file is 16:9 and mixes upright phone clips, with black
+// bars baked in either side, and wide landscape shots. With `object-fit:
+// cover` the picture fills the frame by height, so the upright clips show at
+// twice their 16:9 size with only slim bars left, and the wide clips show their
+// middle half. Both
+// the owner's calls: a card that changed shape per clip looked worse, and a
+// taller card that kept the whole picture left the upright clips just as small.
 //
 // Until pressed it shows our poster (a frame of the video) and a play button,
 // with `preload="none"`: loading the page never downloads the ~6 MB file, only

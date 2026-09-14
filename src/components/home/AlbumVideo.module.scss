@@ -1,10 +1,9 @@
 @use "../../styles/mixins" as *;
 
-// 16:9, the video file's own shape: wide clips fill it, and the upright clips
-// show the black bars baked into them (see AlbumVideo).
+// 8:9: the card's width, twice the height of a 16:9 frame (owner request).
 .frame {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 8 / 9;
   overflow: hidden;
   background: var(--color-ink);
 }
@@ -15,7 +14,11 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  // Scales the 16:9 picture to the frame's height and crops the sides: the
+  // upright clips show at twice their 16:9 size with their baked-in bars
+  // narrowed to slim strips (the frame is still wider than the footage), and
+  // wide clips show their middle half.
+  object-fit: cover;
 }
 
 // Covers the poster until the first press; after that the native controls

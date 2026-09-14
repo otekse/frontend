@@ -44,12 +44,12 @@ const jobs = [
     .webp({ quality: 85, alphaQuality: 92 })
     .toFile(join(OUT, "girls-cutout.webp")),
 
-  // Poster for the Hooandja campaign video (AlbumVideo): a frame of the
-  // footage, cropped to its upright picture, shown until a visitor presses
-  // play. The upright footage itself is only ~304x540, so there is nothing to
-  // gain past its own size.
+  // Poster for the Hooandja campaign video (AlbumVideo): a full 960x540 frame
+  // of the video, shown until a visitor presses play. Kept at full size: the
+  // 8:9 frame crops it to its middle, so it is drawn about twice as large as
+  // the frame is wide.
   sharp(join(SRC, "album-video-poster.png"))
-    .resize({ width: 640, withoutEnlargement: true })
+    .resize({ width: 960, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(join(OUT, "album", "video-poster.webp")),
 
