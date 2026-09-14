@@ -11,14 +11,14 @@
 // The whole 16:9 file, at the size where an upright clip's footage (the middle
 // 303.75 of its 960 px, 31.64%) spans the frame's width: 316.05% of the frame's
 // width, and 16:9 of that, which is 158.03% of an 8:9 frame's height. Centred
-// sideways and set 10% of the frame's height below its bottom edge (the
-// owner's framing), so of the 58% that does not fit, about 48% is cut off at
-// the top and 10% at the bottom (see AlbumVideo). `max-width: none` undoes the
+// sideways and set 40% of the frame's height below its bottom edge (the
+// owner's framing), so of the 58% that does not fit, about 18% is cut off at
+// the top and 40% at the bottom (see AlbumVideo). `max-width: none` undoes the
 // reset's 100% cap.
 .video {
   position: absolute;
   left: 50%;
-  bottom: -10%;
+  bottom: -40%;
   display: block;
   width: 316.05%;
   height: 158.03%;

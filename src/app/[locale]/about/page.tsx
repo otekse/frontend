@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { AboutSection } from "@/components/home/AboutSection";
 import { TimelineSection } from "@/components/about/TimelineSection";
 import { ABOUT_ENABLED } from "@/lib/about";
 import { localizedPageMetadata } from "@/lib/metadata";
@@ -32,10 +31,5 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return (
-    <>
-      <AboutSection asPage />
-      <TimelineSection />
-    </>
-  );
+  return <TimelineSection />;
 }

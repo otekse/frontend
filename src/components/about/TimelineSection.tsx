@@ -11,9 +11,12 @@ import styles from "./TimelineSection.module.scss";
 // pills, and the photos as tilted paper prints. Every year is open — nothing
 // collapses.
 //
+// It is the whole About page (the owner dropped the introduction that used to
+// sit above it), so its title is the page's h1 and each year an h2.
+//
 // Where it departs from the export:
-//  - The export is a whole About page. Only its timeline is used here; the
-//    band's introduction is AboutSection, directly above.
+//  - The export's header also carries an introduction and the line-up; the
+//    page shows only the timeline.
 //  - Its "LIIKUMINE" switcher is a design-review control for trying three
 //    scroll animations. The page ships the default, "Tõus", in TimelineRise.
 //  - The photos are the band's real ones — all of them, where the export
@@ -30,14 +33,14 @@ export function TimelineSection() {
     <section id="ajatelg" className={styles.section}>
       <div className={styles.head}>
         <div className={styles.overline}>— {t("overline")}</div>
-        <h2 className={styles.title}>{t("timelineTitle")}</h2>
+        <h1 className={styles.title}>{t("timelineTitle")}</h1>
       </div>
 
       <TimelineRise className={styles.years}>
         {timeline.map(({ year, entries }) => (
           <div key={year} className={styles.year}>
             <div className={styles.yearLabel}>
-              <h3 className={styles.yearNumber}>{year}</h3>
+              <h2 className={styles.yearNumber}>{year}</h2>
               <div className={styles.yearCount}>
                 {t("timelineCount", { count: entries.length })}
               </div>
