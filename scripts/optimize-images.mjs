@@ -44,13 +44,13 @@ const jobs = [
     .webp({ quality: 85, alphaQuality: 92 })
     .toFile(join(OUT, "girls-cutout.webp")),
 
-  // Poster for the Hooandja campaign video in the album section's
-  // click-to-play frame (AlbumVideo): Vimeo's own 1280x720 thumbnail for it,
-  // stored and served by us so the page contacts Vimeo only once a visitor
-  // presses play. The frame is at most 500px wide, so 1000px covers 2x.
-  sharp(join(SRC, "album-video-poster.jpg"))
-    .resize({ width: 1000, withoutEnlargement: true })
-    .webp({ quality: 80 })
+  // Poster for the Hooandja campaign video (AlbumVideo): a frame of the
+  // footage, cropped to its upright picture, shown until a visitor presses
+  // play. The upright footage itself is only ~304x540, so there is nothing to
+  // gain past its own size.
+  sharp(join(SRC, "album-video-poster.png"))
+    .resize({ width: 640, withoutEnlargement: true })
+    .webp({ quality: 82 })
     .toFile(join(OUT, "album", "video-poster.webp")),
 ];
 

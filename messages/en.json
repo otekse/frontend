@@ -131,7 +131,7 @@
     "cookiesTitle": "Cookies",
     "cookiesBody": "We use exactly one cookie — NEXT_LOCALE — which remembers the language you chose. It is strictly necessary for the site to work and so needs no separate consent. We use no advertising or tracking cookies.",
     "thirdPartiesTitle": "Third parties",
-    "thirdPartiesBody": "This site loads no content from third-party servers on its own: fonts and images are served from our own server. The one exception is the album video, hosted on Vimeo — it loads from Vimeo only when you press play, after which Vimeo’s privacy policy applies. Our server reads the Hooandja campaign figures itself; your browser does not contact Hooandja.",
+    "thirdPartiesBody": "This site loads no content from third-party servers: fonts, images and video are served from our own server. Our server reads the Hooandja campaign figures itself; your browser does not contact Hooandja.",
     "rightsTitle": "Your rights",
     "rightsBody": "The statistics we collect are not linked to an identifiable person, so we cannot look up, correct or delete your data — we have no way to identify you from it (GDPR Art. 11). Because we process it on the basis of our legitimate interest, you have the right to object at any time — write to {email}. You also have the right to lodge a complaint with the Estonian Data Protection Inspectorate (aki.ee).",
     "contactTitle": "Contact",

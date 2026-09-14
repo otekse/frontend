@@ -292,15 +292,33 @@
 
 // ---- Cover and copy -------------------------------------------------------
 
+// Two columns: the upright video card with the concerts under it on the left,
+// the story and the Hooandja block on the right. The copy spans both rows and
+// the second row takes any spare height, so the concerts sit right under the
+// card however long the copy runs. Narrower, it stacks: video, story, concerts.
 .body {
   position: relative;
   max-width: var(--container-content);
   margin: clamp(10px, 1.6vw, 24px) auto 0;
   padding: 0 var(--spacing-section-x);
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(30px, 4.5vw, 60px);
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: clamp(260px, 32%, 340px) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "media copy"
+    "shows copy";
+  column-gap: clamp(30px, 4.5vw, 60px);
+  align-items: start;
+
+  @include until($bp-md) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: 32px; // side by side the column gap separates them; stacked, this does
+    grid-template-areas:
+      "media"
+      "copy"
+      "shows";
+  }
 }
 
 // Pulled up into the sea, and above the boats sailing there.
@@ -308,14 +326,14 @@
   position: relative;
   z-index: 3;
   margin-top: clamp(-230px, -16vw, -110px);
-  // Wide enough for the 16:9 video to be watchable; the square cover it
-  // replaced needed far less width for the same presence.
-  flex: 0 1 clamp(280px, 44%, 500px);
-  min-width: min(280px, 100%);
+  grid-area: media;
   will-change: transform;
 
-  @include until($bp-sm) {
-    margin-inline: auto;
+  // Stacked, the upright card keeps a phone-like width rather than the full
+  // column, which would make it taller than the screen.
+  @include until($bp-md) {
+    justify-self: center;
+    width: min(320px, 100%);
   }
 }
 
@@ -329,7 +347,7 @@
   transition: transform 0.3s var(--ease-standard);
 
   // Straightens once the video plays: a tilted player reads as a mistake.
-  &:has(iframe) {
+  &:has(video[controls]) {
     transform: none;
   }
 
@@ -360,7 +378,7 @@
 }
 
 .copy {
-  flex: 1 1 340px;
+  grid-area: copy;
   min-width: 0;
   margin-top: clamp(6px, 1vw, 16px);
 }
@@ -391,6 +409,7 @@
 }
 
 .shows {
+  grid-area: shows;
   margin-top: 38px;
   border-top: 1px solid var(--color-ink-a28);
   padding-top: 16px;

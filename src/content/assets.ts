@@ -16,7 +16,8 @@ export const IMAGES = {
   girlsCutout: "/images/girls-cutout.webp" as string | null,
   /**
    * Poster for the Hooandja campaign video in the album section, shown until a
-   * visitor presses play (AlbumVideo). Vimeo's own thumbnail, served by us.
+   * visitor presses play (AlbumVideo): a frame of the footage, cropped to its
+   * upright picture.
    */
   albumVideoPoster: "/images/album/video-poster.webp",
   /**
@@ -54,3 +55,14 @@ export function timelinePhoto(id: string) {
     full: `/images/timeline/${id}.webp`,
   };
 }
+
+/**
+ * Self-hosted video, served straight from public/videos/. The file is already
+ * a web encode (H.264/AAC, 960x540, ~6 MB), so it has no build step. Replace it
+ * with another web-ready MP4 of the same framing: 16:9 with the upright footage
+ * centred, which AlbumVideo crops to 9:16.
+ */
+export const VIDEOS = {
+  /** The Hooandja campaign video for "Rannapiigad", in the album section. */
+  hooandja: "/videos/hooandja-campaign.mp4",
+} as const;

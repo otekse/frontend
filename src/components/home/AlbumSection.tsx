@@ -29,8 +29,9 @@ import styles from "./AlbumSection.module.scss";
 //    list the day after they happen, like every other date.
 //  - The scroll drift runs through ScrollDrift, which only listens while the
 //    section is on screen, instead of a page-long scroll handler.
-//  - The Hooandja campaign video stands where the export had the album cover,
-//    click-to-play so nothing loads from Vimeo until pressed (AlbumVideo).
+//  - The Hooandja campaign video, served from our own server, stands where the
+//    export had the album cover (AlbumVideo), and the release concerts sit
+//    under it in the left column instead of below the story (owner request).
 //  - The Hooandja block is not in the export (owner request): the campaign's
 //    progress, read from its public page on our server (lib/hooandja-server.ts)
 //    and passed in, so a visitor's browser never contacts Hooandja. Without
@@ -249,32 +250,32 @@ export function AlbumSection({
                 {t("supportCta")} ↗
               </a>
             </div>
+          </div>
 
-            <div className={styles.shows}>
-              {shows.length > 0 && (
-                <>
-                  <h3 className={styles.showsLabel}>{t("showsLabel")}</h3>
-                  <ul className={styles.showList}>
-                    {shows.map((c) => (
-                      <li key={c.start} className={styles.show}>
-                        <span className={styles.showDate}>
-                          {formatConcertDate(c, locale, "upcoming")}
-                        </span>
-                        <span className={styles.showPlace}>{c.title[locale]}</span>
-                        <span
-                          className={`${styles.showTag} ${
-                            c.badge === "free" ? styles.showTagFree : ""
-                          }`}
-                        >
-                          {tc(badgeKey[c.badge])}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-              <p className={styles.footnote}>{t("footnote")}</p>
-            </div>
+          <div className={styles.shows}>
+            {shows.length > 0 && (
+              <>
+                <h3 className={styles.showsLabel}>{t("showsLabel")}</h3>
+                <ul className={styles.showList}>
+                  {shows.map((c) => (
+                    <li key={c.start} className={styles.show}>
+                      <span className={styles.showDate}>
+                        {formatConcertDate(c, locale, "upcoming")}
+                      </span>
+                      <span className={styles.showPlace}>{c.title[locale]}</span>
+                      <span
+                        className={`${styles.showTag} ${
+                          c.badge === "free" ? styles.showTagFree : ""
+                        }`}
+                      >
+                        {tc(badgeKey[c.badge])}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <p className={styles.footnote}>{t("footnote")}</p>
           </div>
         </div>
       </ScrollDrift>

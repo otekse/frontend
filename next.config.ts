@@ -41,6 +41,13 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "public, max-age=604800" },
         ],
       },
+      {
+        // The Hooandja campaign video (~6 MB): same reasoning as the tracks.
+        source: "/videos/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800" },
+        ],
+      },
     ];
   },
 };
