@@ -42,6 +42,23 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // Images change by being rebuilt from assets-src and committed, not by
+        // being edited in place, and a stale one is a week old at worst. A week
+        // of caching saves a revalidation round-trip per image per visit; NOT
+        // `immutable`, because the filenames carry no content hash.
+        source: "/images/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800" },
+        ],
+      },
+      {
+        // Same for the icons, which every page load asks for.
+        source: "/:file(favicon.ico|icon.png|apple-icon.png|icon-192.png|icon-512.png)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800" },
+        ],
+      },
+      {
         // The Hooandja campaign video (~6 MB): same reasoning as the tracks.
         source: "/videos/:path*",
         headers: [
