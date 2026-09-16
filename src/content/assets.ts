@@ -28,7 +28,7 @@ export const IMAGES = {
    * Poster for the Hooandja campaign video in the album section, shown until a
    * visitor presses play (AlbumVideo): a 16:9 frame of the video itself.
    */
-  albumVideoPoster: "/images/album/video-poster.webp",
+  albumVideoPoster: "/images/album/video-poster-v2.webp",
   /**
    * Stills of the album section that the header's "Uus album!" button opens
    * into on page load (AlbumButton), one per language. They are screenshots:
@@ -117,14 +117,18 @@ export function photoVars(name: string, webp: string, avif: string) {
  *   ffmpeg -i master.mp4 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset slow
  *     -crf 24 -maxrate 3500k -bufsize 7000k -pix_fmt yuv420p -profile:v high
  *     -level 4.1 -g 60 -keyint_min 30 -c:a aac -b:a 128k -ar 48000
- *     -movflags +faststart -map_metadata -1 hooandja-campaign.mp4
+ *     -movflags +faststart -map_metadata -1 hooandja-campaign-v2.mp4
  *
  * CRF 24 because it could not be told from the master at 1:1, where CRF 22
  * cost 36 MB. Full HD rather than smaller because AlbumVideo magnifies the
  * picture about 3x to fill its upright frame. `+faststart` puts the index
  * first, so playback starts before the whole file has arrived.
+ *
+ * Replacing it means a new filename (bump the -vN), and the same for its
+ * poster: both are cached for a week by name, so a file swapped in place keeps
+ * playing the old copy for anyone who has already seen it.
  */
 export const VIDEOS = {
   /** The Hooandja campaign video for "Rannapiigad", in the album section. */
-  hooandja: "/videos/hooandja-campaign.mp4",
+  hooandja: "/videos/hooandja-campaign-v2.mp4",
 } as const;

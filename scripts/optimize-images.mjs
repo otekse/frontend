@@ -99,7 +99,7 @@ const jobs = [
   sharp(join(SRC, "album-video-poster.png"))
     .resize({ width: 1440, withoutEnlargement: true })
     .webp({ quality: 82 })
-    .toFile(join(OUT, "album", "video-poster.webp")),
+    .toFile(join(OUT, "album", "video-poster-v2.webp")),
 
   // Share image for links posted to social media and chat apps (Open Graph /
   // X), set on every page by lib/metadata.ts. The beach photo — all three

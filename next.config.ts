@@ -42,10 +42,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Images change by being rebuilt from assets-src and committed, not by
-        // being edited in place, and a stale one is a week old at worst. A week
-        // of caching saves a revalidation round-trip per image per visit; NOT
-        // `immutable`, because the filenames carry no content hash.
+        // A week of caching saves a revalidation round-trip per image per
+        // visit; NOT `immutable`, because the filenames carry no content hash.
+        // The cost: an image rebuilt under the same name can show its old
+        // version to a returning visitor for up to a week. One that must change
+        // at once gets a new name instead (as the video poster did).
         source: "/images/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=604800" },
@@ -59,7 +60,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // The Hooandja campaign video (~6 MB): same reasoning as the tracks.
+        // The Hooandja campaign video (~26 MB): same reasoning, and the same
+        // rule as the tracks — a replaced video needs a new filename, or anyone
+        // who has already played the old one keeps getting it for a week. That
+        // happened once: the Full HD encode first went in under the old name,
+        // and the browser that had played the old file kept playing it.
         source: "/videos/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=604800" },
