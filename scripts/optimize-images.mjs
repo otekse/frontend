@@ -48,9 +48,10 @@ const jobs = [
   // The two enhanced hero photos. Unlike everything else here they arrived
   // already retouched and have no raw original — assets-src holds the version
   // the owner supplied, and this only re-compresses it. q70 rather than the q80
-  // they came at: 220KB lighter across the two, with nothing to show for it
-  // even side by side at full size (PSNR 33.4 dB). They are the heaviest files
-  // the homepage loads, so this is the single biggest saving here.
+  // they came at: 506KB -> 364KB and 532KB -> 378KB, so 295KB saved across the
+  // two, with nothing to show for it even side by side at full size (PSNR
+  // 33.4 dB). They are the heaviest files the homepage loads, so this is the
+  // single biggest saving here.
   sharp(join(SRC, "forest-enhanced.webp"))
     .webp({ quality: 70 })
     .toFile(join(OUT, "forest-enhanced.webp")),
