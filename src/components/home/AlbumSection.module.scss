@@ -301,6 +301,18 @@
   }
 }
 
+// Sailing and swelling off screen still costs a frame's work. ScrollDrift marks
+// the panel while it is near the viewport; away from it, everything holds.
+// Before hydration the mark is absent, which is correct: the section starts far
+// below the fold.
+.panel:not([data-on-screen]) {
+  .bird,
+  .ship,
+  .swell {
+    animation-play-state: paused;
+  }
+}
+
 // ---- Cover and copy -------------------------------------------------------
 
 // Two columns: the upright video card with the concerts under it on the left,

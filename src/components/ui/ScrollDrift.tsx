@@ -62,6 +62,9 @@ export function ScrollDrift({
     const io = new IntersectionObserver(
       ([entry]) => {
         listen(entry.isIntersecting);
+        // Also tells CSS whether the section is worth animating at all: the
+        // stylesheet pauses its own animations while this is absent.
+        root.toggleAttribute("data-on-screen", entry.isIntersecting);
         if (entry.isIntersecting) request();
       },
       { rootMargin: "120px" },
@@ -72,6 +75,7 @@ export function ScrollDrift({
     return () => {
       io.disconnect();
       listen(false);
+      root.removeAttribute("data-on-screen");
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
