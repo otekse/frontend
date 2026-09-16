@@ -14,6 +14,8 @@
 //
 // Outputs (committed):
 //   src/app/icon.png        — Next App Router picks this up automatically
+//                             (192px: browsers fetch it on every page load,
+//                             and at 512 the photo cost 156KB of that)
 //   src/app/apple-icon.png  — iOS home-screen icon
 //   public/icon-192.png     — PWA / manifest sizes
 //   public/icon-512.png
@@ -67,7 +69,9 @@ const rounded = await encode(
 mkdirSync(join(ROOT, "public"), { recursive: true });
 
 await Promise.all([
-  encode(sharp(rounded)).toFile(join(ROOT, "src", "app", "icon.png")),
+  encode(sharp(rounded).resize(192, 192)).toFile(
+    join(ROOT, "src", "app", "icon.png"),
+  ),
   // iOS applies its own mask, so this one stays a full square — a pre-rounded
   // icon gets rounded twice and shows dark wedges in the corners.
   encode(sharp(square).resize(180, 180)).toFile(
