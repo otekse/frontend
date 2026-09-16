@@ -108,8 +108,8 @@ a {
   --color-rust: #ad3f24; /* secondary accent, prices, overlines */
   --color-rust-light: #e07a5f; /* "ticketed" badge */
   --color-live: #7fb069; /* live/playing indicator dot */
-  --color-bronze: #7a4a12; /* overline on gold */
-  --color-bronze-deep: #5a3c10; /* sub text on gold */
+  --color-bronze: #5a3408; /* overline on gold: 4.7:1, was #7a4a12 at 3.2 */
+  --color-bronze-deep: #4f3510; /* sub text on gold: 4.9:1, was #5a3c10 at 4.4 */
   --color-bronze-label: #8a4413; /* label on gold */
   --color-olive-ink: #4a3a14; /* quote on gold */
 
@@ -179,6 +179,7 @@ a {
   --radius-pill: 999px;
   --radius-card: 20px;
   --radius-card-lg: 24px;
+  --radius-album-card: 18px; /* the header's "Uus album!" trailer card */
   --radius-panel: 32px;
   --radius-arch: 400px 400px 20px 20px;
   --border-card: 2px;

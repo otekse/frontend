@@ -15,7 +15,8 @@
   margin-top: 60px;
   text-align: center;
   font-size: var(--text-small);
-  color: var(--color-cream-a45);
+  // a60, not a45: small text at 45% only reaches 4.1:1 on the forest ground.
+  color: var(--color-cream-a60);
 }
 
 // Shown instead of the list once every announced date has passed.

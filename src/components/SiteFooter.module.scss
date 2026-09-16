@@ -37,5 +37,6 @@
 
 .rights {
   font-size: var(--text-overline);
-  color: var(--color-cream-a45);
+  // a60, not a45: small text at 45% only reaches 4.1:1 on the footer's ink.
+  color: var(--color-cream-a60);
 }
