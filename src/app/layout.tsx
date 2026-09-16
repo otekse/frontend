@@ -29,10 +29,12 @@ const archivoBlack = Archivo_Black({
   weight: "400",
   subsets: ["latin", "latin-ext"],
 });
+// No italic face: the one italic on the site (a member quote) is left to the
+// browser's own slant, which saves preloading two more font files on first
+// paint — the bar already preloads one file per weight and subset.
 const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   weight: ["400", "700"],
-  style: ["normal", "italic"],
   subsets: ["latin", "latin-ext"],
 });
 
