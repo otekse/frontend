@@ -58,6 +58,7 @@ const jobs = [
   sharp(join(SRC, "wheat-enhanced.webp"))
     .webp({ quality: 70, alphaQuality: 90 })
     .toFile(join(OUT, "wheat-enhanced.webp")),
+
   // And both again as AVIF, for the browsers that can choose it (the
   // photo-background mixin): 365KB -> 250KB and 378KB -> 213KB. q55 because
   // q50 started smoothing the wheat's grain at 2x zoom; q55 held it as well as
@@ -90,12 +91,13 @@ const jobs = [
       .webp({ quality: 85, alphaQuality: 92 }),
   ),
 
-  // Poster for the Hooandja campaign video (AlbumVideo): a full 960x540 frame
-  // of the video, shown until a visitor presses play. Kept at full size: the
-  // 8:9 frame crops it to its middle, so it is drawn about twice as large as
-  // the frame is wide.
+  // Poster for the Hooandja campaign video (AlbumVideo): the frame at 2s of
+  // the Full HD master, shown until a visitor presses play. 1440px because
+  // the frame shows only the middle third of the picture, about 3x magnified,
+  // so the 960px poster looked soft next to the HD video it stands in for.
+  // AlbumVideo only sets it once the video is near the viewport.
   sharp(join(SRC, "album-video-poster.png"))
-    .resize({ width: 960, withoutEnlargement: true })
+    .resize({ width: 1440, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(join(OUT, "album", "video-poster.webp")),
 

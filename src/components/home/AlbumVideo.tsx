@@ -25,8 +25,11 @@ import styles from "./AlbumVideo.module.scss";
 // browser shows the whole picture with its native controls.
 //
 // Until pressed it shows our poster (a frame of the video) and a play button,
-// with `preload="none"`: loading the page never downloads the ~6 MB file, only
-// pressing play does.
+// with `preload="none"`: loading the page never downloads the ~26 MB file, only
+// pressing play does. The poster itself is only set once the frame nears the
+// viewport — a <video> fetches its poster the moment it has one, which put it
+// in the homepage's first load, competing with the hero, for a section
+// thousands of pixels down.
 
 function formatTime(seconds: number) {
   const s = Math.max(0, Math.floor(seconds));
@@ -42,6 +45,24 @@ export function AlbumVideo() {
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const frame = useRef<HTMLDivElement>(null);
+  const [nearby, setNearby] = useState(false);
+
+  useEffect(() => {
+    const el = frame.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setNearby(true);
+        io.disconnect();
+      },
+      // A screen or so ahead, so the poster is there before the frame is.
+      { rootMargin: "1000px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = video.current;
@@ -89,12 +110,12 @@ export function AlbumVideo() {
   };
 
   return (
-    <div className={styles.frame} data-started={started ? "" : undefined}>
+    <div ref={frame} className={styles.frame} data-started={started ? "" : undefined}>
       <video
         ref={video}
         className={styles.video}
         src={VIDEOS.hooandja}
-        poster={IMAGES.albumVideoPoster}
+        poster={nearby ? IMAGES.albumVideoPoster : undefined}
         preload="none"
         playsInline
         // Native controls only in full screen, where the whole picture shows.

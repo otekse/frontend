@@ -109,9 +109,20 @@ export function photoVars(name: string, webp: string, avif: string) {
 }
 
 /**
- * Self-hosted video, served straight from public/videos/. The file is already
- * a web encode (H.264/AAC, 960x540, ~6 MB), so it has no build step. Replace it
- * with another web-ready 16:9 MP4; AlbumVideo shows it whole.
+ * Self-hosted video, served straight from public/videos/. There is no build
+ * step: the file is encoded by hand from the owner's master (1920x1080 at
+ * 59.94fps, ~150 MB; kept outside the repo) and committed as the result —
+ * H.264 High at the same size and frame rate, ~26 MB:
+ *
+ *   ffmpeg -i master.mp4 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset slow
+ *     -crf 24 -maxrate 3500k -bufsize 7000k -pix_fmt yuv420p -profile:v high
+ *     -level 4.1 -g 60 -keyint_min 30 -c:a aac -b:a 128k -ar 48000
+ *     -movflags +faststart -map_metadata -1 hooandja-campaign.mp4
+ *
+ * CRF 24 because it could not be told from the master at 1:1, where CRF 22
+ * cost 36 MB. Full HD rather than smaller because AlbumVideo magnifies the
+ * picture about 3x to fill its upright frame. `+faststart` puts the index
+ * first, so playback starts before the whole file has arrived.
  */
 export const VIDEOS = {
   /** The Hooandja campaign video for "Rannapiigad", in the album section. */
