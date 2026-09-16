@@ -3,7 +3,7 @@
 import { useRef, type CSSProperties } from "react";
 import { preload } from "react-dom";
 import { useTranslations } from "next-intl";
-import { IMAGES, srcSetFor } from "@/content/assets";
+import { IMAGES, photoVars, srcSetFor } from "@/content/assets";
 import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
 import { useParallax } from "@/lib/use-parallax";
 import styles from "./Hero.module.scss";
@@ -50,16 +50,17 @@ export function Hero() {
     el.style.opacity = (1 - progress * TITLE_FADE).toFixed(3);
   });
 
-  const forest = `url('${IMAGES.forest}')`;
-  const wheat = `url('${IMAGES.wheat}')`;
-  // Held in a const rather than spread inline, so the base's drift factor is
-  // still written once even though this layer merges its own background in.
-  const baseDrift = drift(0.65);
-
   // The base forest stopped being an `<img>` when it had to start tiling, which
-  // also took it out of reach of the preload scanner. This puts it back in the
-  // document head so discovery is not deferred until the CSS has parsed.
-  preload(IMAGES.forest, { as: "image", fetchPriority: "high" });
+  // also took it out of reach of the preload scanner. These put both photos
+  // back in the document head, so their downloads start with the HTML rather
+  // than once the stylesheet is parsed and the layers laid out — on a
+  // throttled phone the wheat was otherwise only discovered ~700ms in.
+  //
+  // Only the AVIFs are hinted. `type` makes a browser that cannot decode AVIF
+  // skip the hint instead of fetching a file it will not use; that browser
+  // still gets the WebP, through the stylesheet (see photo-background).
+  preload(IMAGES.forestAvif, { as: "image", type: "image/avif", fetchPriority: "high" });
+  preload(IMAGES.wheatAvif, { as: "image", type: "image/avif" });
 
   return (
     // `data-css-parallax` tells useParallax to stand down where the browser can
@@ -73,6 +74,10 @@ export function Hero() {
         {
           "--title-scale-end": 1 - TITLE_SCALE_LOSS,
           "--title-opacity-end": 1 - TITLE_FADE,
+          // Both photos, in both formats, for every layer below; the
+          // stylesheet decides which format each browser gets.
+          ...photoVars("forest", IMAGES.forest, IMAGES.forestAvif),
+          ...photoVars("wheat", IMAGES.wheat, IMAGES.wheatAvif),
         } as CSSProperties
       }
     >
@@ -80,11 +85,7 @@ export function Hero() {
           background can tile — see the tree-scale note in the stylesheet. The
           `preload` above restores the early discovery an `<img>` would have
           given it for free. */}
-      <div
-        {...baseDrift}
-        className={styles.base}
-        style={{ ...baseDrift.style, backgroundImage: forest }}
-      />
+      <div {...drift(0.65)} className={styles.base} />
 
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
         <defs>
@@ -106,13 +107,13 @@ export function Hero() {
       <div {...drift(0.56)} className={`${styles.layer} ${styles.layerA}`}>
         <div
           className={styles.layerFill}
-          style={{ backgroundImage: forest, clipPath: "url(#hero-wave-a)" }}
+          style={{ clipPath: "url(#hero-wave-a)" }}
         />
       </div>
       <div {...drift(0.4)} className={`${styles.layer} ${styles.layerB}`}>
         <div
           className={styles.layerFill}
-          style={{ backgroundImage: forest, clipPath: "url(#hero-wave-b)" }}
+          style={{ clipPath: "url(#hero-wave-b)" }}
         />
       </div>
       <div className={styles.vignette} />
@@ -124,7 +125,7 @@ export function Hero() {
       <div {...drift(FAR_GRAIN_DRIFT)} className={styles.wheatFar}>
         <div
           className={styles.layerFill}
-          style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat)" }}
+          style={{ clipPath: "url(#hero-wave-wheat)" }}
         />
       </div>
 
@@ -159,7 +160,7 @@ export function Hero() {
       <div {...drift(NEAR_GRAIN_DRIFT)} className={styles.wheatNear}>
         <div
           className={styles.layerFill}
-          style={{ backgroundImage: wheat, clipPath: "url(#hero-wave-wheat2)" }}
+          style={{ clipPath: "url(#hero-wave-wheat2)" }}
         />
       </div>
 

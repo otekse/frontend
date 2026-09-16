@@ -1,5 +1,5 @@
-import { useId } from "react";
-import { IMAGES } from "@/content/assets";
+import { useId, type CSSProperties } from "react";
+import { IMAGES, photoVars } from "@/content/assets";
 import styles from "./WheatWave.module.scss";
 
 // Wheat-textured section divider from the design. Two shapes:
@@ -31,10 +31,12 @@ export function WheatWave({
       )}
       <div
         className={styles.fill}
-        style={{
-          backgroundImage: `url('${IMAGES.wheat}')`,
-          ...(variant === "wave" ? { clipPath: `url(#${clipId})` } : {}),
-        }}
+        style={
+          {
+            ...photoVars("wheat", IMAGES.wheat, IMAGES.wheatAvif),
+            ...(variant === "wave" ? { clipPath: `url(#${clipId})` } : {}),
+          } as CSSProperties
+        }
       />
     </div>
   );

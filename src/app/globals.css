@@ -112,6 +112,7 @@ a {
   --color-bronze-deep: #4f3510; /* sub text on gold: 4.9:1, was #5a3c10 at 4.4 */
   --color-bronze-label: #8a4413; /* label on gold */
   --color-olive-ink: #4a3a14; /* quote on gold */
+  --color-wheat: #b17719; /* the wheat photo's average: its bands before it arrives */
 
   --color-ink-a08: rgba(22, 33, 26, 0.08); /* inset track on light surfaces */
   --color-ink-a15: rgba(22, 33, 26, 0.15); /* hairline dividers on light */

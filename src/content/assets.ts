@@ -10,6 +10,14 @@ export const IMAGES = {
   forest: "/images/forest-enhanced.webp",
   /** Repeating wheat texture strip (alpha top edge). */
   wheat: "/images/wheat-enhanced.webp",
+  /**
+   * The same two photos as AVIF — together about 280KB lighter than the WebPs,
+   * which on a phone is most of what the hero waits for. Browsers that can
+   * choose by type get these (the photo-background mixin); the rest keep the
+   * WebPs above.
+   */
+  forestAvif: "/images/forest-enhanced.avif",
+  wheatAvif: "/images/wheat-enhanced.avif",
   /** Band photo for the About section. */
   band: "/images/band.webp",
   /** Share image for social media and chat apps, 1200x630 (lib/metadata.ts). */
@@ -87,6 +95,17 @@ export function srcSetFor(src: string | null | undefined): string | undefined {
   return widths
     .map((w) => `${w === max ? src : src.replace(/\.webp$/, `-${w}.webp`)} ${w}w`)
     .join(", ");
+}
+
+/**
+ * The inline custom properties the `photo-background` SCSS mixin reads: one
+ * photo's WebP as `--<name>` and its AVIF as `--<name>-avif`.
+ */
+export function photoVars(name: string, webp: string, avif: string) {
+  return {
+    [`--${name}`]: `url('${webp}')`,
+    [`--${name}-avif`]: `url('${avif}')`,
+  };
 }
 
 /**

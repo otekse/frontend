@@ -58,6 +58,16 @@ const jobs = [
   sharp(join(SRC, "wheat-enhanced.webp"))
     .webp({ quality: 70, alphaQuality: 90 })
     .toFile(join(OUT, "wheat-enhanced.webp")),
+  // And both again as AVIF, for the browsers that can choose it (the
+  // photo-background mixin): 365KB -> 250KB and 378KB -> 213KB. q55 because
+  // q50 started smoothing the wheat's grain at 2x zoom; q55 held it as well as
+  // the WebP does.
+  sharp(join(SRC, "forest-enhanced.webp"))
+    .avif({ quality: 55, effort: 6 })
+    .toFile(join(OUT, "forest-enhanced.avif")),
+  sharp(join(SRC, "wheat-enhanced.webp"))
+    .avif({ quality: 55, effort: 6 })
+    .toFile(join(OUT, "wheat-enhanced.avif")),
 
   // About-section band photo — a grainy, detailed picture, so it encodes
   // expensively and the usual defaults go the wrong way: at q80 WebP came out
