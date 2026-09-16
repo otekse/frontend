@@ -10,10 +10,17 @@ import styles from "./AlbumButton.module.scss";
 // showing a still of the album section, holds, and closes back to the pill —
 // a trailer for the section it links to.
 //
-// The opening is imperative, written as px sizes on the element, because the
-// pill's natural size is `auto` and a CSS transition cannot run from or to
-// `auto`. It measures the pill, pins that size, animates to the card size and
-// back, then clears every inline style so the pill returns to plain layout.
+// The card is a separate overlay on top of the pill, revealed by animating its
+// `clip-path` outwards from the pill's own outline. The pill itself never
+// changes size, which is the point: growing it moved its edges on every frame
+// and counted as layout shift — 0.076 on a phone, nearly all of the homepage's
+// CLS.
+//
+// The still is drawn into a <canvas> rather than shown in an <img>, because an
+// <img> that size became the page's Largest Contentful Paint: a decoration that
+// opens a second after hydration was deciding when the homepage counted as
+// loaded (11.4s on a throttled phone). A canvas is not an LCP candidate, so the
+// measurement follows the hero again.
 //
 // It waits for the still to decode, so a card never opens onto an empty frame;
 // it never runs under prefers-reduced-motion; and it plays once per page load —
@@ -26,24 +33,25 @@ const HOLD_MS = 2400; // fully open
 const PREVIEW_RATIO = 1307 / 687; // the still's aspect ratio (scripts/optimize-images.mjs)
 const MAX_CARD_W = 420;
 const EDGE_GAP = 16; // clearance from the viewport edge and the neighbouring controls
-const INSET = 8; // the still's inset inside the card; matches .preview in the stylesheet
-const CARD_RADIUS = 18;
+const INSET = 8; // the still's inset inside the card; matches .still in the stylesheet
+const MAX_DPR = 2; // drawing a phone's 3x in full costs more than it shows
 
 export function AlbumButton() {
   const t = useTranslations("Album");
   const locale = useLocale() as "et" | "en";
   const pathname = usePathname();
-  const ref = useRef<HTMLAnchorElement>(null);
-  const preview = IMAGES.albumPreview[locale];
+  const pillRef = useRef<HTMLAnchorElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   // The trailer plays once, in the language the page loaded in; a later
   // language switch changes the still for next time but must not replay it.
-  const firstPreview = useRef(preview);
+  const firstPreview = useRef(IMAGES.albumPreview[locale]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const pill = ref.current;
+    const pill = pillRef.current;
+    const canvas = canvasRef.current;
     const slot = pill?.parentElement;
-    if (!pill || !slot) return;
+    if (!pill || !canvas || !slot) return;
 
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
@@ -73,40 +81,60 @@ export function AlbumButton() {
       return Math.min(MAX_CARD_W, room);
     };
 
-    const setSize = (w: number, h: number, radius: number) => {
-      pill.style.width = `${w}px`;
-      pill.style.height = `${h}px`;
-      pill.style.borderRadius = `${radius}px`;
+    // The still, drawn at device resolution and cropped like `object-fit:
+    // cover` — the canvas has no such property of its own.
+    const paintStill = (image: HTMLImageElement, w: number, h: number) => {
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return false;
+      const scale = Math.max(
+        canvas.width / image.naturalWidth,
+        canvas.height / image.naturalHeight,
+      );
+      const drawW = image.naturalWidth * scale;
+      const drawH = image.naturalHeight * scale;
+      ctx.drawImage(
+        image,
+        (canvas.width - drawW) / 2,
+        (canvas.height - drawH) / 2,
+        drawW,
+        drawH,
+      );
+      return true;
     };
 
     const clear = () => {
-      pill.removeAttribute("data-open");
-      for (const p of ["width", "height", "border-radius", "--label-h"]) {
+      pill.removeAttribute("data-trailer");
+      for (const p of ["--pill-h", "--card-w", "--card-h"]) {
         pill.style.removeProperty(p);
       }
-      slot.style.removeProperty("height");
     };
 
-    const open = () => {
-      const { width: w0, height: h0 } = pill.getBoundingClientRect();
-      const w = cardWidth();
-      if (w <= w0) return; // no room to open into: stay a button
-      const h = h0 + (w - INSET * 2) / PREVIEW_RATIO + INSET;
+    const open = (image: HTMLImageElement) => {
+      const { width: pillW, height: pillH } = pill.getBoundingClientRect();
+      const cardW = cardWidth();
+      if (cardW <= pillW) return; // no room to open into: stay a button
+      const stillW = cardW - INSET * 2;
+      const stillH = stillW / PREVIEW_RATIO;
+      if (!paintStill(image, stillW, stillH)) return;
 
-      // The slot keeps the pill's height, so the card grows down out of the
-      // bar rather than pushing the nav open or growing up past the top edge.
-      slot.style.height = `${h0}px`;
-      pill.style.setProperty("--label-h", `${h0}px`);
-      // Pin the current size so the transition has a starting point, commit
-      // it with a reflow, then set the target.
-      setSize(w0, h0, h0 / 2);
+      // The stylesheet builds both clip shapes out of these: the card is
+      // centred on the pill, so only the pill's height is needed to place the
+      // closed outline.
+      pill.style.setProperty("--pill-h", `${pillH}px`);
+      pill.style.setProperty("--card-w", `${cardW}px`);
+      pill.style.setProperty("--card-h", `${pillH + stillH + INSET}px`);
+
+      // Show the card clipped to the pill's own outline, commit that with a
+      // reflow, then let it grow.
+      pill.dataset.trailer = "closed";
       void pill.offsetWidth;
-      pill.setAttribute("data-open", "");
-      setSize(w, h, CARD_RADIUS);
+      pill.dataset.trailer = "open";
 
       later(() => {
-        pill.removeAttribute("data-open");
-        setSize(w0, h0, h0 / 2);
+        pill.dataset.trailer = "closed";
         later(clear, OPEN_MS);
       }, OPEN_MS + HOLD_MS);
     };
@@ -115,7 +143,7 @@ export function AlbumButton() {
     still.src = firstPreview.current;
     still.decode().then(
       () => {
-        if (!cancelled) later(open, START_DELAY_MS);
+        if (!cancelled) later(() => open(still), START_DELAY_MS);
       },
       () => {}, // the still will not load: no trailer, the button stays a button
     );
@@ -130,7 +158,7 @@ export function AlbumButton() {
   return (
     <div className={styles.slot}>
       <Link
-        ref={ref}
+        ref={pillRef}
         href={{ pathname: "/", hash: "album" }}
         className={styles.pill}
         onClick={(event) => {
@@ -146,9 +174,13 @@ export function AlbumButton() {
         }}
       >
         <span className={styles.label}>{t("navButton")}</span>
-        <span className={styles.preview} aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt="" decoding="async" />
+
+        {/* The trailer. Hidden until the script sizes it, and a copy of the
+            pill's own face while closed, so the reveal starts from what is
+            already on screen. */}
+        <span className={styles.card} aria-hidden>
+          <span className={styles.cardLabel}>{t("navButton")}</span>
+          <canvas ref={canvasRef} className={styles.still} />
         </span>
       </Link>
     </div>
