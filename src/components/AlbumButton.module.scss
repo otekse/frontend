@@ -3,10 +3,13 @@
 // "Uus album!" sits dead centre of the bar where there is room for it between
 // the links and the player. Below that it takes a centred row of its own under
 // them, rather than squeezing either side or overlapping them.
+//
+// `align-items: flex-start`: while the trailer plays, AlbumButton pins this
+// slot at the pill's height and the card overflows it downwards.
 .slot {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex: 0 0 100%;
   order: 3;
 
@@ -21,98 +24,58 @@
 .pill {
   @include pill(var(--color-gold), var(--color-ink));
   position: relative;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   border-bottom: 3px solid var(--color-ink);
+  overflow: hidden;
   white-space: nowrap;
-  // Press feedback only: the trailer animates the card on top, never the pill,
-  // so the pill's own box stays exactly where the layout put it.
-  transition: transform var(--duration-press-out) var(--ease-standard);
+  // The press feedback's transform keeps its own timing; the card's size,
+  // shape and shadow share one duration with the script (OPEN_MS).
+  transition:
+    width var(--duration-album-card) var(--ease-standard),
+    height var(--duration-album-card) var(--ease-standard),
+    border-radius var(--duration-album-card) var(--ease-standard),
+    box-shadow var(--duration-album-card) var(--ease-standard),
+    transform var(--duration-press-out) var(--ease-standard);
 
   &:hover {
     background: var(--color-gold-soft);
   }
-}
 
-// The trailer card: the same gold face as the pill, grown downwards out of it.
-// Absolutely placed and revealed by `clip-path`, so opening it neither resizes
-// the pill nor moves anything else on the page.
-//
-// `--card-w`/`--card-h`/`--pill-h` come from AlbumButton; at rest they are 0
-// and the card is inert and invisible.
-.card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: var(--card-w, 0px);
-  height: var(--card-h, 0px);
-  transform: translateX(-50%);
-  visibility: hidden;
-  background: var(--color-gold);
-  border-radius: var(--radius-album-card);
-  // Closed: clipped to the pill's outline, down to its rounded ends.
-  clip-path: inset(
-    0 calc((var(--card-w, 0px) - 100%) / -2 + 0px)
-      calc(var(--card-h, 0px) - var(--pill-h, 0px)) 0 round var(--radius-pill)
-  );
-  transition:
-    clip-path var(--duration-album-card) var(--ease-standard),
-    border-radius var(--duration-album-card) var(--ease-standard);
-}
-
-// The pill's ink underline, carried by the card so it tracks the opening edge
-// instead of jumping to the bottom of the card at the first frame.
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: var(--color-ink);
-  transform: translateY(calc(var(--pill-h, 0px) - 3px));
-  transition: transform var(--duration-album-card) var(--ease-standard);
-}
-
-// The pill's own label, repeated on the card that covers it. The height is the
-// pill's box minus its underline, which is the pill's content box — so the two
-// labels sit on exactly the same baseline and the swap is invisible.
-.cardLabel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(var(--pill-h, 0px) - 3px);
-}
-
-// The still, inset in the card below the label. 8px matches INSET.
-.still {
-  position: absolute;
-  top: var(--pill-h, 0px);
-  left: 8px;
-  width: calc(100% - 16px);
-  height: calc(var(--card-h, 0px) - var(--pill-h, 0px) - 8px);
-  border-radius: var(--radius-paper);
-  background: var(--color-sand);
-}
-
-// Sized and clipped to the pill, ready to grow.
-.pill[data-trailer] .card {
-  visibility: visible;
-}
-
-// Fully open: the clip is the card's own rounded rectangle, the underline has
-// travelled to its bottom edge.
-.pill[data-trailer="open"] .card {
-  clip-path: inset(0 round var(--radius-album-card));
-  box-shadow: var(--shadow-album-cover);
-
-  &::after {
-    transform: translateY(calc(var(--card-h, 0px) - 3px));
+  &[data-open] {
+    box-shadow: var(--shadow-album-cover);
   }
 }
 
+// The album still, under the label. Absolutely placed so it never adds to the
+// closed pill's size; AlbumButton sets --label-h when the card opens. The 8px
+// inset matches INSET in the component.
+.preview {
+  position: absolute;
+  top: var(--label-h, 100%);
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  overflow: hidden;
+  border-radius: var(--radius-paper);
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-standard);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Fades in once the card has room for it, and out first on the way back.
+.pill[data-open] .preview {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
 @include reduced-motion {
-  .pill,
-  .card,
-  .card::after {
+  .pill {
     transition: none;
   }
 }
