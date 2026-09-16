@@ -19,6 +19,19 @@ mkdirSync(join(OUT, "concerts"), { recursive: true });
 mkdirSync(join(OUT, "album"), { recursive: true });
 mkdirSync(join(OUT, "timeline", "thumb"), { recursive: true });
 
+// Emits one file per width, so the browser can fetch the size that matches the
+// space the image will fill instead of the largest one there is. The widest
+// width keeps the plain name that src/content/assets.ts points at; narrower
+// ones get a `-<width>` suffix, which is the shape srcSetFor() expects.
+const widths = (list, out, pipeline) => {
+  const max = Math.max(...list);
+  return list.map((w) =>
+    pipeline(w).toFile(
+      join(OUT, w === max ? out : out.replace(/\.webp$/, `-${w}.webp`)),
+    ),
+  );
+};
+
 const jobs = [
   // Hero forest photo — big display area, keep quality reasonable.
   sharp(join(SRC, "forest.jpg"))
@@ -32,17 +45,39 @@ const jobs = [
     .webp({ quality: 82, alphaQuality: 90 })
     .toFile(join(OUT, "wheat.webp")),
 
-  // About-section band photo.
-  sharp(join(SRC, "band.jpg"))
-    .resize({ width: 1200, withoutEnlargement: true })
-    .jpeg({ quality: 80, mozjpeg: true })
-    .toFile(join(OUT, "band.jpg")),
+  // The two enhanced hero photos. Unlike everything else here they arrived
+  // already retouched and have no raw original — assets-src holds the version
+  // the owner supplied, and this only re-compresses it. q70 rather than the q80
+  // they came at: 220KB lighter across the two, with nothing to show for it
+  // even side by side at full size (PSNR 33.4 dB). They are the heaviest files
+  // the homepage loads, so this is the single biggest saving here.
+  sharp(join(SRC, "forest-enhanced.webp"))
+    .webp({ quality: 70 })
+    .toFile(join(OUT, "forest-enhanced.webp")),
+  sharp(join(SRC, "wheat-enhanced.webp"))
+    .webp({ quality: 70, alphaQuality: 90 })
+    .toFile(join(OUT, "wheat-enhanced.webp")),
+
+  // About-section band photo — a grainy, detailed picture, so it encodes
+  // expensively and the usual defaults go the wrong way: at q80 WebP came out
+  // *larger* (359KB) than the 333KB mozjpeg it was meant to replace. q74 is
+  // where WebP starts winning (259KB against 278KB at 1200px).
+  //
+  // Nothing wider than 1000 is generated: the arch this fills is never wider
+  // than 437 CSS px, so 1000 already covers a 2x screen, and the phones with a
+  // denser screen than that show the photo full-width, where they take the 800.
+  ...widths([480, 800, 1000], "band.webp", (w) =>
+    sharp(join(SRC, "band.jpg"))
+      .resize({ width: w, withoutEnlargement: true })
+      .webp({ quality: 74 }),
+  ),
 
   // Hero cutout of the three sisters (needs alpha).
-  sharp(join(SRC, "girls-cutout.png"))
-    .resize({ width: 1200, withoutEnlargement: true })
-    .webp({ quality: 85, alphaQuality: 92 })
-    .toFile(join(OUT, "girls-cutout.webp")),
+  ...widths([600, 900, 1200], "girls-cutout.webp", (w) =>
+    sharp(join(SRC, "girls-cutout.png"))
+      .resize({ width: w, withoutEnlargement: true })
+      .webp({ quality: 85, alphaQuality: 92 }),
+  ),
 
   // Poster for the Hooandja campaign video (AlbumVideo): a full 960x540 frame
   // of the video, shown until a visitor presses play. Kept at full size: the
@@ -92,11 +127,12 @@ const memberCrops = {
 const CROP_SIDE = 1600;
 for (const [name, c] of Object.entries(memberCrops)) {
   jobs.push(
-    sharp(join(SRC, c.file))
-      .extract({ left: c.left, top: c.top, width: CROP_SIDE, height: CROP_SIDE })
-      .resize({ width: 600, height: 600, fit: "cover" })
-      .webp({ quality: 85 })
-      .toFile(join(OUT, "members", `${name}.webp`)),
+    ...widths([240, 400, 600], `members/${name}.webp`, (w) =>
+      sharp(join(SRC, c.file))
+        .extract({ left: c.left, top: c.top, width: CROP_SIDE, height: CROP_SIDE })
+        .resize({ width: w, height: w, fit: "cover" })
+        .webp({ quality: 85 }),
+    ),
   );
 }
 
@@ -105,10 +141,11 @@ for (const [name, c] of Object.entries(memberCrops)) {
 // ratio, which is why no per-image cropping happens here.
 for (const n of [1, 2, 3, 4]) {
   jobs.push(
-    sharp(join(SRC, `live-${n}.jpg`))
-      .resize({ width: 900, withoutEnlargement: true })
-      .webp({ quality: 82 })
-      .toFile(join(OUT, "concerts", `live-${n}.webp`)),
+    ...widths([450, 640, 900], `concerts/live-${n}.webp`, (w) =>
+      sharp(join(SRC, `live-${n}.jpg`))
+        .resize({ width: w, withoutEnlargement: true })
+        .webp({ quality: 82 }),
+    ),
   );
 }
 
@@ -124,10 +161,11 @@ for (const file of readdirSync(join(SRC, "timeline"))) {
   const { name } = parse(file);
   const original = () => sharp(join(SRC, "timeline", file)).rotate();
   jobs.push(
-    original()
-      .resize({ width: 560, height: 560, fit: "inside", withoutEnlargement: true })
-      .webp({ quality: 74 })
-      .toFile(join(OUT, "timeline", "thumb", `${name}.webp`)),
+    ...widths([280, 560], `timeline/thumb/${name}.webp`, (w) =>
+      original()
+        .resize({ width: w, height: w, fit: "inside", withoutEnlargement: true })
+        .webp({ quality: 74 }),
+    ),
     original()
       .resize({ width: 1400, height: 1400, fit: "inside", withoutEnlargement: true })
       .webp({ quality: 78 })

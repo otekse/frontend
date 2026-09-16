@@ -3,7 +3,7 @@
 import { useRef, type CSSProperties } from "react";
 import { preload } from "react-dom";
 import { useTranslations } from "next-intl";
-import { IMAGES } from "@/content/assets";
+import { IMAGES, srcSetFor } from "@/content/assets";
 import { HERO_PLAYER_SLOT } from "@/components/MusicPlayer";
 import { useParallax } from "@/lib/use-parallax";
 import styles from "./Hero.module.scss";
@@ -146,7 +146,13 @@ export function Hero() {
         // the design's tilt. Same split the wheat bands use (.layerFill).
         <div {...drift(NEAR_GRAIN_DRIFT)} className={styles.cutoutLayer}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={IMAGES.girlsCutout} alt={t("heroAlt")} className={styles.cutout} />
+          <img
+            src={IMAGES.girlsCutout}
+            srcSet={srcSetFor(IMAGES.girlsCutout)}
+            sizes="(min-width: 909px) 545px, 60vw"
+            alt={t("heroAlt")}
+            className={styles.cutout}
+          />
         </div>
       )}
 

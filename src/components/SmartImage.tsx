@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { srcSetFor } from "@/content/assets";
 import { WheatMark } from "./WheatMark";
 import styles from "./SmartImage.module.scss";
 
@@ -13,18 +14,25 @@ import styles from "./SmartImage.module.scss";
 // `loading="lazy"` is for long image lists (the About timeline): the browser
 // then fetches nothing until the image nears the viewport, and nothing at all
 // inside a closed <details>.
+//
+// `sizes` describes how wide the image renders, in the same shape as the CSS
+// that lays it out. Pass it for any of our own images: it is what lets the
+// browser choose a narrow file out of the srcset, and without it the browser
+// assumes the whole viewport and takes the widest one there is.
 export function SmartImage({
   src,
   alt,
   className,
   objectPosition,
   loading,
+  sizes,
 }: {
   src: string | null | undefined;
   alt: string;
   className?: string;
   objectPosition?: string;
   loading?: "lazy" | "eager";
+  sizes?: string;
 }) {
   const [state, setState] = useState<"loading" | "loaded" | "error">(
     src ? "loading" : "error",
@@ -49,6 +57,8 @@ export function SmartImage({
         <img
           ref={imgRef}
           src={src}
+          srcSet={srcSetFor(src)}
+          sizes={sizes}
           alt={alt}
           loading={loading}
           className={`${styles.img} ${state === "loaded" ? styles.imgLoaded : ""}`}

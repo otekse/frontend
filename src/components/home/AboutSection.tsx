@@ -42,6 +42,8 @@ export function AboutSection({
             alt={t("photoAlt")}
             className={styles.photo}
             objectPosition="center 20%"
+            sizes="(min-width: 1156px) 437px, (min-width: 900px) calc((100vw - 128px) * 0.425), calc(100vw - 56px)"
+            loading="lazy"
           />
           <div className={styles.tag}>{t("photoTag")}</div>
         </div>

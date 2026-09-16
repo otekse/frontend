@@ -11,7 +11,7 @@ export const IMAGES = {
   /** Repeating wheat texture strip (alpha top edge). */
   wheat: "/images/wheat-enhanced.webp",
   /** Band photo for the About section. */
-  band: "/images/band.jpg",
+  band: "/images/band.webp",
   /** Share image for social media and chat apps, 1200x630 (lib/metadata.ts). */
   share: "/images/share.jpg",
   /** Cutout of the three sisters running (hero foreground). */
@@ -55,6 +55,38 @@ export function timelinePhoto(id: string) {
     thumb: `/images/timeline/thumb/${id}.webp`,
     full: `/images/timeline/${id}.webp`,
   };
+}
+
+/**
+ * The extra widths `npm run images:build` writes next to an image, by the path
+ * IMAGES gives it. They live here rather than in the script because this is the
+ * file the app reads; the two have to agree.
+ */
+const VARIANT_WIDTHS: Array<[RegExp, number[]]> = [
+  [/^\/images\/band\.webp$/, [480, 800, 1000]],
+  [/^\/images\/girls-cutout\.webp$/, [600, 900, 1200]],
+  [/^\/images\/members\/[a-z]+\.webp$/, [240, 400, 600]],
+  [/^\/images\/concerts\/live-\d\.webp$/, [450, 640, 900]],
+  [/^\/images\/timeline\/thumb\/.+\.webp$/, [280, 560]],
+];
+
+/**
+ * The `srcset` for one of our own images: every width that exists of it, so a
+ * phone fetches a phone-sized file. Undefined for anything with no variants (a
+ * product photo from the API, say), which leaves the plain `src` alone.
+ *
+ * Always pair it with a `sizes` describing the space the image fills — without
+ * one the browser assumes the full viewport width and picks the largest file,
+ * which is worse than having no srcset at all.
+ */
+export function srcSetFor(src: string | null | undefined): string | undefined {
+  if (!src) return undefined;
+  const widths = VARIANT_WIDTHS.find(([pattern]) => pattern.test(src))?.[1];
+  if (!widths) return undefined;
+  const max = widths[widths.length - 1];
+  return widths
+    .map((w) => `${w === max ? src : src.replace(/\.webp$/, `-${w}.webp`)} ${w}w`)
+    .join(", ");
 }
 
 /**

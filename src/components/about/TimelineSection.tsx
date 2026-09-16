@@ -95,6 +95,7 @@ export function TimelineSection() {
                                       count: e.photos.length,
                                     })}
                                     className={styles.photo}
+                                    sizes="(min-width: 640px) 236px, 45vw"
                                     loading="lazy"
                                   />
                                 </a>

@@ -68,6 +68,7 @@ export function ConcertsHero() {
                 objectPosition={
                   "objectPosition" in card ? card.objectPosition : undefined
                 }
+                sizes="(min-width: 1186px) 320px, 27vw"
               />
               {"live" in card && (
                 <span className={styles.liveTag}>{t("liveTag")}</span>
