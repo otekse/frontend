@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { AboutSection } from "@/components/home/AboutSection";
+import { TimelineSection } from "@/components/about/TimelineSection";
 import { ABOUT_ENABLED } from "@/lib/about";
-import { routing } from "@/i18n/routing";
-import { SITE_URL } from "../layout";
+import { localizedPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -14,24 +13,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "About" });
 
-  return {
+  return localizedPageMetadata({
+    locale,
+    path: "/about",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: `/${locale}/about`,
-      languages: Object.fromEntries(
-        routing.locales.map((l) => [l, `/${l}/about`]),
-      ),
-    },
-    openGraph: {
-      type: "website",
-      siteName: "Õtekse",
-      locale: locale === "et" ? "et_EE" : "en_GB",
-      title: t("metaTitle"),
-      description: t("metaDescription"),
-      url: `${SITE_URL}/${locale}/about`,
-    },
-  };
+  });
 }
 
 export default async function AboutPage({
@@ -44,5 +31,5 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <AboutSection asPage />;
+  return <TimelineSection />;
 }

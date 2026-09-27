@@ -15,10 +15,11 @@ Work top to bottom, one item at a time. Check items off as they're completed
 - [ ] "Hunt Aja Taga" music-player pill in the nav (deliberately skipped — needs the audio file from the owner)
 - [~] Marketing pages: Meist/Kontserdid now live on the homepage per the design; separate about/contact pages only if the owner wants them
 - [x] Product listing and product detail pages (restyled per the E-pood design)
-- [ ] Display prices VAT-inclusive once Stripe Tax / VAT handling is wired (`PROJECT_BRIEF.md` §4)
+- [ ] Display prices VAT-inclusive — to confirm with the owner now that orders go by email rather than Stripe (`PROJECT_BRIEF.md` §4)
 - [x] Client-side cart (localStorage)
-- [~] Checkout + order confirmation page: confirmation page done; checkout is a stub until `POST /checkout` + Stripe exist (`PROJECT_BRIEF.md` §5)
+- [x] Ordering: the cart sends the order to the band by email; no payment, checkout or confirmation page (owner decision 2026-09-13 — replaces the planned Stripe checkout, so `PROJECT_BRIEF.md` §5 is out of date)
 - [x] Starting-point privacy policy page — ET/EN text shipped and footer-linked; owner still arranges legal review, and it names `info@õtekse.ee`, which must actually exist (`PROJECT_BRIEF.md` §11)
 - [x] Add the Umami tracking script to the root layout, pointed at the self-hosted instance (renders only when `NEXT_PUBLIC_UMAMI_URL` + `NEXT_PUBLIC_UMAMI_WEBSITE_ID` are set)
+- [x] SEO audit fixes: per-page canonical/hreflang (privacy was canonicalised to the homepage), share image, JSON-LD (band, site, concerts), page language, favicon.ico, honest sitemap (see AGENTS.md "SEO")
 - [ ] CI pipeline per AGENTS.md "CI" (typecheck/lint/build/tests, MSW smoke check, Orval no-diff check)
 - [x] Fill in AGENTS.md "Setup & commands" and "Conventions"

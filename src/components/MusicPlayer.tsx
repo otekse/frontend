@@ -41,6 +41,13 @@ export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [heroSlot, setHeroSlot] = useState<HTMLElement | null>(null);
+  // Nothing of a track is fetched until a visitor looks like they may play it.
+  // The player sits in the header of every page, so "metadata" up front meant a
+  // request on every page load for audio most visitors never start. The first
+  // hover, focus or touch upgrades it (`warm` below), which still warms the
+  // connection and reads the duration well before the press lands.
+  const [preload, setPreload] = useState<"none" | "metadata">("none");
+  const warm = () => setPreload("metadata");
 
   // Re-evaluate on resize so rotating a phone moves the player to the right
   // place instead of stranding it.
@@ -140,6 +147,9 @@ export function MusicPlayer() {
     <div
       ref={rootRef}
       className={`${styles.root} ${heroSlot ? styles.inHero : styles.inNav}`}
+      onPointerEnter={warm}
+      onFocusCapture={warm}
+      onTouchStart={warm}
     >
       <div className={styles.pill}>
         <span
@@ -234,10 +244,7 @@ export function MusicPlayer() {
       <audio
         ref={audioRef}
         src={track.src ?? undefined}
-        // "metadata" not "none": it fetches enough to know the duration and
-        // warms the connection, so the first press starts far sooner. The
-        // audio body itself still is not downloaded until play.
-        preload="metadata"
+        preload={preload}
         onLoadedMetadata={(e) => seekToStart(e.currentTarget)}
         onEnded={(e) => {
           setPlaying(false);

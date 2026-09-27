@@ -1,0 +1,134 @@
+@use "../../styles/mixins" as *;
+
+// 80:99: the card's width, and twice the height of a 16:9 frame plus a tenth
+// (owner's sizing).
+.frame {
+  position: relative;
+  aspect-ratio: 80 / 99;
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+// The whole 16:9 file, at the size where an upright clip's footage (the middle
+// 303.75 of its 960 px, 31.64%) spans the frame's width: 316.05% of the frame's
+// width, and 16:9 of that, which is 143.66% of this 80:99 frame's height.
+// Centred sideways and set 30% of the frame's height below its bottom edge
+// (the owner's framing), so of the 43.66% that does not fit, about 14% is cut
+// off at the top and 30% at the bottom (see AlbumVideo). Keep the offset under
+// that 43.66%, or a gap opens at the top. `max-width: none` undoes the reset's
+// 100% cap.
+.video {
+  position: absolute;
+  left: 50%;
+  bottom: -30%;
+  display: block;
+  width: 316.05%;
+  height: 143.66%;
+  max-width: none;
+  transform: translateX(-50%);
+  object-fit: cover;
+}
+
+// Covers the poster until the first press.
+.start {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  @include focus-ring;
+}
+
+// After the first press: the picture itself plays and pauses.
+.toggle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  @include focus-ring;
+}
+
+// An ink disc with a cream triangle, in the style of the site's play controls.
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  box-shadow: var(--shadow-pill);
+  transition: transform var(--duration-press-out) var(--ease-standard);
+
+  // Nudged right of centre: a triangle's visual centre sits left of its box's.
+  &::after {
+    content: "";
+    position: absolute;
+    left: 26px;
+    top: 20px;
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent var(--color-cream-bright);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.start:hover .play,
+.start:focus-visible .play {
+  transform: scale(1.08);
+
+  @include reduced-motion {
+    transform: none;
+  }
+}
+
+// The frame's own control bar, over a scrim at the bottom of the picture.
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 8px 6px;
+  background: linear-gradient(transparent, var(--color-forest-a60));
+  color: var(--color-cream-bright);
+}
+
+.ctrl {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  @include focus-ring;
+
+  &:hover {
+    background: var(--color-cream-a16);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.seek {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+}
+
+.time {
+  flex: none;
+  font-size: var(--text-badge);
+  font-variant-numeric: tabular-nums;
+}

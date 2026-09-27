@@ -3,11 +3,17 @@
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { formatPrice } from "@/lib/format";
+import { orderEmailBody, orderMailto } from "@/lib/order-email";
 import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
 
+// The shop takes orders by email, not payment. "Saada tellimus e-kirjaga"
+// opens the visitor's mail app with the cart written out as an order to the
+// band (lib/order-email.ts); they add their details and send it, and the band
+// replies to arrange payment and delivery. Nothing is charged or stored here.
 export default function CartPage() {
   assertShopEnabled();
   const t = useTranslations("Cart");
@@ -27,6 +33,23 @@ export default function CartPage() {
       </div>
     );
   }
+
+  const orderHref = orderMailto(
+    CONTACT_EMAIL,
+    t("emailSubject"),
+    orderEmailBody(
+      items,
+      {
+        intro: t("emailIntro"),
+        total: t("emailTotal"),
+        name: t("emailName"),
+        phone: t("emailPhone"),
+        delivery: t("emailDelivery"),
+        notes: t("emailNotes"),
+      },
+      (cents) => formatPrice(cents, locale),
+    ),
+  );
 
   return (
     <div className={ui.page}>
@@ -74,9 +97,19 @@ export default function CartPage() {
         </div>
 
         <div className={ui.actions}>
-          <Link href="/checkout" className={ui.pillDark}>
-            {t("checkout")} →
-          </Link>
+          <a href={orderHref} className={ui.pillDark}>
+            {t("sendOrder")} →
+          </a>
+        </div>
+
+        <div className={`${ui.notePanel} ${styles.orderNote}`}>
+          <div className={ui.noteTitle}>{t("howTitle")}</div>
+          <div className={ui.noteSub}>{t("howBody")}</div>
+          {/* For visitors with no mail app set up, where mailto: does nothing. */}
+          <div className={`${ui.noteSub} ${styles.orderFallback}`}>
+            {t("noMailApp")}{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </div>
         </div>
       </div>
     </div>

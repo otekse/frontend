@@ -1,0 +1,54 @@
+@use "../styles/mixins" as *;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// The timeline's gold hairline link-pill, taken round: a 44px circle is both
+// the comfortable touch target and enough room for the mark to breathe.
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-gold-a42);
+  border-radius: 50%;
+  color: var(--color-gold);
+  transition:
+    color 0.2s var(--ease-standard),
+    border-color 0.2s var(--ease-standard),
+    background 0.2s var(--ease-standard),
+    transform var(--duration-press-out) var(--ease-standard);
+  @include focus-ring;
+
+  &:hover {
+    background: var(--color-ink);
+    border-color: var(--color-gold);
+    color: var(--color-gold-soft);
+  }
+
+  &:active {
+    transform: scale(var(--scale-pressed));
+    transition-duration: var(--duration-press-in);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+.icon {
+  width: 21px;
+  height: 21px;
+}

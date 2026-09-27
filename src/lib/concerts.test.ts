@@ -109,6 +109,19 @@ describe("parseConcerts", () => {
     );
   });
 
+  it("accepts an albumRelease flag", () => {
+    const out = parseConcerts({ concerts: [concert({ albumRelease: true })] });
+    assert.equal(out[0].albumRelease, true);
+    assert.equal(parseConcerts({ concerts: [concert()] })[0].albumRelease, undefined);
+  });
+
+  it("rejects a quoted albumRelease flag", () => {
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), albumRelease: "true" }] }),
+      /albumRelease must be true or false without quotes/,
+    );
+  });
+
   it("rejects a non-https url", () => {
     assert.throws(
       () =>
@@ -116,6 +129,41 @@ describe("parseConcerts", () => {
           concerts: [concert({ url: "http://example.com" })],
         }),
       /url must start with https/,
+    );
+  });
+
+  it("accepts a venue, with or without a country", () => {
+    const [local] = parseConcerts({
+      concerts: [concert({ venue: { name: "Philly Joe’s", locality: "Tallinn" } })],
+    });
+    assert.deepEqual(local.venue, { name: "Philly Joe’s", locality: "Tallinn" });
+
+    const [abroad] = parseConcerts({
+      concerts: [concert({ venue: { name: "Esplanāde", locality: "Riga", country: "LV" } })],
+    });
+    assert.equal(abroad.venue?.country, "LV");
+  });
+
+  it("rejects a venue without its town", () => {
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), venue: { name: "Klubi" } }] }),
+      /venue\.locality must be a non-empty string/,
+    );
+    assert.throws(
+      () => parseConcerts({ concerts: [{ ...concert(), venue: "Tallinn" }] }),
+      /venue must be an object/,
+    );
+  });
+
+  it("rejects a country that is not a two-letter code", () => {
+    assert.throws(
+      () =>
+        parseConcerts({
+          concerts: [
+            { ...concert(), venue: { name: "Klubi", locality: "Riga", country: "Latvia" } },
+          ],
+        }),
+      /venue\.country must be a two-letter country code/,
     );
   });
 

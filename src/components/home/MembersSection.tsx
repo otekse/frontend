@@ -74,6 +74,8 @@ export function MembersSection() {
                       <SmartImage
                         src={m.photo}
                         alt={t("photoPlaceholder", { name: m.name })}
+                        sizes="(min-width: 1188px) 190px, (min-width: 600px) 16vw, 96px"
+                        loading="lazy"
                       />
                     </span>
                     <span

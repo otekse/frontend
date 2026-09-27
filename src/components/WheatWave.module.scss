@@ -9,6 +9,7 @@
   height: 100%;
   background-color: var(--color-gold);
   background-repeat: repeat-x;
+  @include photo-background(wheat);
 }
 
 // Shop-hero variant: wavy clipped edge with a shadow lifting it off the dark bg.

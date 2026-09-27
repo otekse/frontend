@@ -6,9 +6,9 @@ for full system context; this file covers what's specific to this repo.
 
 ## What this repo is
 
-Homepage, marketing pages, product listing/detail pages, cart, checkout
-redirect, order confirmation page. Talks to `backend` only over HTTP
-(`GET /products`, `POST /checkout`, etc.) via a typed client generated with
+Homepage, marketing pages, product listing/detail pages, and a cart that
+sends the order by email — the shop takes no payment (see "Conventions"). Talks
+to `backend` only over HTTP (`GET /products`, etc.) via a typed client generated with
 **Orval** from the backend's OpenAPI spec, using **React Query**.
 
 ## Design source
@@ -73,7 +73,7 @@ and fails on any diff.
 ## CI
 
 - Typecheck, lint, build, tests.
-- Smoke check: homepage renders, checkout redirect is exercised **against the
+- Smoke check: homepage and storefront render **against the
   MSW mocks, never the real backend**.
 - Orval no-diff check: regenerate the client from the committed spec snapshot
   and fail if anything changes (catches hand-edited generated code).
@@ -98,14 +98,14 @@ API client workflow (see "API client" above):
 
 - **Routes live under `src/app/[locale]/`.** Use the locale-aware `Link`/`useRouter` from `@/i18n/navigation`, never bare `next/link` / `next/navigation`, so the active locale is preserved. All user-facing strings come from `messages/{et,en}.json` via `next-intl` — never hardcoded.
 - **Data fetching is client-side** through the generated React Query hooks (`useProductsController…`). This is deliberate: it lets MSW intercept in `client-preview`, so the preview renders mock data and never hits the real backend (`PROJECT_BRIEF.md` §10). Don't fetch store data in server components.
-- **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. Never trust these client-side prices for payment — the backend re-validates at checkout.
+- **Money is integer cents**; format with `formatPrice()` from `@/lib/format`. The shop takes orders by email, not payment (owner decision, 2026-09-13): the cart writes the items into an email to the band (`@/lib/order-email`, sent to `CONTACT_EMAIL` in `@/lib/contact`), and the band confirms the amount and arranges payment and delivery in their reply. There is no checkout page.
 - **Cart is client-only** (`@/lib/cart`, localStorage). No server cart.
 - `src/api/generated/**` is generated and git-ignored by ESLint — never hand-edit it.
 - **Editable content collections** (concerts, members, teaser items, asset paths) live in `src/content/` as typed modules with `{et, en}` fields — the allowlist-friendly directory the runtime orchestrator is scoped to (`PROJECT_BRIEF.md` §10). UI strings stay in `messages/`.
 - **Concerts are data, not code.** They live in `src/content/concerts.json` — inert, so an orchestrator edit can never introduce executable code into the build. The rules that check that file live in `src/lib/concerts.ts`, deliberately *outside* the AI-editable directory: the data is editable, the validation is not. `parseConcerts()` runs at import time, so bad data fails `next build` rather than shipping; its messages name the exact field because the orchestrator reads build output to fix its own edit.
   - There is no "past concerts" list. Every entry carries an ISO `start` and `splitConcerts()` files it by today's date (in `Europe/Tallinn` — the server runs UTC and Estonia is UTC+2/+3, so a UTC comparison retires concerts early). **Never sort or move entries by hand.**
   - `hidden: true` takes an entry off the site without deleting it; `displayDate` overrides the rendered date for historical entries whose exact day is unknown.
-  - Because the split depends on today, `/[locale]/concerts` must stay server-rendered per request (`ƒ` in the build output). If it is ever prerendered, "today" freezes at build time.
+  - Because the split depends on today, no render may live long. The pages are prerendered, and the root layout's `export const revalidate = 3600` (`src/app/layout.tsx`) re-renders them at most an hour after they go stale — that is what retires concerts, and ends the album promotion (`src/lib/album.ts`), without a deploy. The lowest `revalidate` in a route wins, so it covers every page. Remove it and "today" freezes at build time.
 
 ## Styling (design system)
 
@@ -146,6 +146,15 @@ crawls from.
   limiting, or audit. It also means you cannot test other countries against
   production by forging the header — verify locally, where it does pass through.
 
+## SEO
+
+- **Every page under `[locale]` sets its own metadata** with `localizedPageMetadata()` from `@/lib/metadata` — title, description, canonical, hreflang (with `x-default` → the unprefixed path), Open Graph and the X card. Never put a canonical, hreflang or `og:url` in a layout: children inherit it, and a page without its own then claims to be the page the layout named (that is how /privacy once canonicalised to the homepage). Client-component pages, which cannot export metadata, get a small server `layout.tsx` beside them (see `cart/layout.tsx`, noindex).
+- **Origin and name live in `@/lib/site`** (`SITE_URL` in punycode, `SITE_NAME`). `metadataBase` is set once, in the root layout.
+- **Share image:** `public/images/share.jpg` (1200x630, generated by `npm run images:build` from `assets-src/live-3.jpg`), set explicitly as `SHARE_IMAGE` by `localizedPageMetadata`. Not Next's `opengraph-image` file convention — a page's own `openGraph` object replaces the inherited one, image included, so the file never reached a page (measured). `src/app/favicon.ico` comes from `npm run icons:build`.
+- **Structured data** is built by the pure, tested `@/lib/structured-data` and rendered with `components/JsonLd` (which escapes `<`): `WebSite` + `MusicGroup` on the homepage, one `MusicEvent` per upcoming concert on /concerts. A concert is marked up only if it has a `venue` in `concerts.json` and no `displayDate` — never invent a location to get one listed.
+- **`<html lang>` is a known compromise.** The document shell sits above `[locale]`, so the server always sends `lang="et"`; an inline script in `src/app/layout.tsx` corrects it before first paint, and `next.config.ts` sends `Content-Language` per language tree for crawlers that do not run scripts. Moving `<html>` into `[locale]/layout.tsx` would fix it at the root but turns every language switch into a full page load.
+- **Sitemap:** feature-flagged pages are listed exactly when their flag is on (and disallowed in `robots.ts` when off). It has no `lastModified` on purpose — the build date would mark every page changed on every deploy.
+
 ## Analytics and privacy
 
 Analytics is self-hosted Umami, which is **cookieless** — it sets nothing on the
@@ -164,6 +173,7 @@ required, so do not add them without telling the owner first:**
 - Google Analytics or any third-party analytics script
 - advertising or retargeting pixels (Meta, Google Ads, …)
 - YouTube, Vimeo, or Spotify embeds
+  - The album section's Hooandja video (`AlbumVideo`) is self-hosted (`public/videos/`, a native `<video>` with `preload="none"`), not a Vimeo embed, so it trips nothing — keep it that way. Hooandja campaign figures are read by our server (`@/lib/hooandja-server`), never by the visitor's browser.
 - session replay (Hotjar and similar)
 - any external script or iframe that sets a cookie
 

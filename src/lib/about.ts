@@ -9,7 +9,7 @@
 // That guard hides the content but does NOT produce a 404 status: measured on
 // Next 16.2.10, notFound() from this server component returns the not-found UI
 // with HTTP 200. The shop's middleware rewrite, written specifically to avoid
-// that soft 404, no longer avoids it either — /shop, /cart and /checkout also
+// that soft 404, no longer avoids it either — /shop and /cart also
 // answer 200 with the 404 body. So middleware would buy nothing here, and the
 // status is a pre-existing problem shared by both flags rather than a reason to
 // prefer one. robots.ts disallows /about while this is off, which is what keeps

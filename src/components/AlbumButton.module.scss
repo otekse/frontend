@@ -1,0 +1,81 @@
+@use "../styles/mixins" as *;
+
+// "Uus album!" sits dead centre of the bar where there is room for it between
+// the links and the player. Below that it takes a centred row of its own under
+// them, rather than squeezing either side or overlapping them.
+//
+// `align-items: flex-start`: while the trailer plays, AlbumButton pins this
+// slot at the pill's height and the card overflows it downwards.
+.slot {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 0 0 100%;
+  order: 3;
+
+  @include from($bp-lg) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.pill {
+  @include pill(var(--color-gold), var(--color-ink));
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+  border-bottom: 3px solid var(--color-ink);
+  overflow: hidden;
+  white-space: nowrap;
+  // The press feedback's transform keeps its own timing; the card's size,
+  // shape and shadow share one duration with the script (OPEN_MS).
+  transition:
+    width var(--duration-album-card) var(--ease-standard),
+    height var(--duration-album-card) var(--ease-standard),
+    border-radius var(--duration-album-card) var(--ease-standard),
+    box-shadow var(--duration-album-card) var(--ease-standard),
+    transform var(--duration-press-out) var(--ease-standard);
+
+  &:hover {
+    background: var(--color-gold-soft);
+  }
+
+  &[data-open] {
+    box-shadow: var(--shadow-album-cover);
+  }
+}
+
+// The album still, under the label. Absolutely placed so it never adds to the
+// closed pill's size; AlbumButton sets --label-h when the card opens. The 8px
+// inset matches INSET in the component.
+.preview {
+  position: absolute;
+  top: var(--label-h, 100%);
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  overflow: hidden;
+  border-radius: var(--radius-paper);
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-standard);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Fades in once the card has room for it, and out first on the way back.
+.pill[data-open] .preview {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+@include reduced-motion {
+  .pill {
+    transition: none;
+  }
+}

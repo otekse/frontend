@@ -8,22 +8,19 @@ import styles from "./AboutSection.module.scss";
 
 type AboutSectionProps = {
   showMoreLink?: boolean;
-  asPage?: boolean;
 };
 
 export function AboutSection({
   showMoreLink = false,
-  asPage = false,
 }: AboutSectionProps) {
   const t = useTranslations("About");
-  const Title = asPage ? "h1" : "h2";
 
   return (
     <section id="meist" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.copy}>
           <div className={styles.overline}>— {t("overline")}</div>
-          <Title className={styles.title}>{t("title")}</Title>
+          <h2 className={styles.title}>{t("title")}</h2>
 
           {/* The first is open so the section never reads as empty. */}
           <DisclosureGroup>
@@ -45,6 +42,8 @@ export function AboutSection({
             alt={t("photoAlt")}
             className={styles.photo}
             objectPosition="center 20%"
+            sizes="(min-width: 1156px) 437px, (min-width: 900px) calc((100vw - 128px) * 0.425), calc(100vw - 56px)"
+            loading="lazy"
           />
           <div className={styles.tag}>{t("photoTag")}</div>
         </div>

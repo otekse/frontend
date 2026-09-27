@@ -1,0 +1,186 @@
+@use "../../styles/mixins" as *;
+
+// Geometry from the Claude Design export (`Otekse - Meist`); colours, type
+// and shadows are the tokens in globals.css ("Timeline").
+
+.section {
+  background: var(--color-forest);
+  color: var(--color-cream-bright);
+}
+
+.head,
+.years {
+  max-width: var(--container-content);
+  margin: 0 auto;
+}
+
+.head {
+  padding: 110px var(--spacing-section-x) 10px;
+}
+
+.overline {
+  @include overline(var(--color-gold));
+  margin-bottom: 0;
+}
+
+.title {
+  @include display-heading(var(--text-timeline-title), var(--color-cream-bright));
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-top: 16px;
+}
+
+.years {
+  padding: 56px var(--spacing-section-x) 80px;
+}
+
+// ---- One year: sticky label | entries -------------------------------------
+
+.year {
+  display: grid;
+  grid-template-columns: clamp(76px, 16%, 190px) minmax(0, 1fr);
+  gap: clamp(18px, 4vw, 52px);
+  align-items: start;
+  padding-bottom: 40px;
+}
+
+// Stays beside its entries while they scroll past, clear of the fixed nav.
+.yearLabel {
+  position: sticky;
+  top: calc(var(--nav-offset) + 50px);
+  padding-top: 2px;
+}
+
+.yearNumber {
+  @include display-heading(var(--text-timeline-year), var(--color-cream-bright));
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.yearCount {
+  margin-top: 10px;
+  font-size: var(--text-badge);
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+}
+
+// The hairline the dots sit on, stopping short of the first and last entry.
+.entries {
+  position: relative;
+  margin: 0;
+  padding: 14px 0 0;
+  list-style: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 22px;
+    bottom: 26px;
+    width: 1px;
+    background: var(--color-cream-a16);
+  }
+}
+
+// ---- One entry --------------------------------------------------------------
+
+// Positioned so the dot can hang on the hairline; this is also the element
+// TimelineRise moves, so the dot rises with its text.
+.rise {
+  position: relative;
+  padding: 0 0 40px 26px;
+}
+
+.dot {
+  position: absolute;
+  left: -3.5px;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}
+
+.date {
+  margin-bottom: 9px;
+  font-size: var(--text-badge);
+  letter-spacing: 0.18em;
+  color: var(--color-gold);
+}
+
+.text {
+  max-width: 62ch;
+  font-size: var(--text-body);
+  line-height: 1.8;
+  color: var(--color-cream-bright);
+  text-wrap: pretty;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-block;
+  padding: 5px 11px;
+  border: 1px solid var(--color-gold-a42);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-badge);
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-gold-soft);
+    border-color: var(--color-gold);
+  }
+}
+
+// ---- Photos as paper prints -------------------------------------------------
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.figure {
+  width: clamp(150px, 40%, 236px);
+
+  // Two prints a row on a phone. The export's 150px floor would leave one per
+  // row in the narrow entry column, stacking ten photos into a long strip.
+  @include until($bp-sm) {
+    width: calc(50% - 7px);
+  }
+}
+
+.print {
+  display: block;
+  padding: 7px;
+  background: var(--color-cream);
+  border-radius: var(--radius-paper);
+  box-shadow: var(--shadow-photo-print);
+  @include focus-ring;
+}
+
+.tiltLeft {
+  transform: rotate(-1.5deg);
+}
+
+.tiltRight {
+  transform: rotate(1.3deg);
+}
+
+// Nested for specificity: SmartImage's own frame rule sets `height: 100%`.
+.print .photo {
+  aspect-ratio: 4 / 3;
+  height: auto;
+}

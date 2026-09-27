@@ -9,6 +9,9 @@
 // ---- Breakpoints (design is desktop-first; we define the collapses) ----
 $bp-sm: 640px;
 $bp-md: 900px;
+// Wide enough for the header to hold its links, player and language switcher
+// with a centred button between them (see AlbumButton).
+$bp-lg: 1100px;
 
 @mixin from($bp) {
   @media (min-width: $bp) {
@@ -159,4 +162,25 @@ $bp-md: 900px;
   padding: 6px 12px;
   border-radius: var(--radius-pill);
   transform: rotate($deg);
+}
+
+// ---- Photo background: AVIF where the browser can choose by type ----
+// For a component that sets `--<name>` (WebP) and `--<name>-avif` as inline
+// custom properties — src/content/assets.ts owns the paths, via photoVars().
+//
+// The WebP is a declaration of its own, and the AVIF upgrade sits behind
+// @supports, because of how var() fails: a browser that cannot parse `type()`
+// does not fall back to the declaration above an image-set built from var() —
+// the value is only checked after substitution, so the property just resets
+// to no image at all. @supports tests a literal, so it gates correctly (iOS 16
+// being the browser that matters here).
+@mixin photo-background($name) {
+  background-image: var(--#{$name});
+
+  @supports (background-image: image-set(url("x.avif") type("image/avif"))) {
+    background-image: image-set(
+      var(--#{$name}-avif) type("image/avif"),
+      var(--#{$name}) type("image/webp")
+    );
+  }
 }

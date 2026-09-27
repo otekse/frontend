@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useProductsControllerFindAll } from "@/api/generated/products/products";
 import { ProductCard } from "@/components/ProductCard";
 import { WheatWave } from "@/components/WheatWave";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { assertShopEnabled } from "@/lib/shop";
 import ui from "@/styles/ui.module.scss";
 import styles from "./page.module.scss";
@@ -49,7 +50,7 @@ export default function ShopPage() {
             <div className={ui.noteTitle}>{t("noteTitle")}</div>
             <div className={ui.noteSub}>
               {t("noteSub")}{" "}
-              <a href="mailto:otekse@gmail.com">otekse@gmail.com</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </div>
           </div>
         </div>

@@ -22,9 +22,11 @@ function getLocale(pathname: string): AppLocale {
 export function AppShell({
   children,
   shopOn,
+  albumPromo,
 }: {
   children: React.ReactNode;
   shopOn: boolean;
+  albumPromo: boolean;
 }) {
   const locale = getLocale(usePathname());
   const messages = locale === "et" ? etMessages : enMessages;
@@ -34,7 +36,7 @@ export function AppShell({
       <LocaleDocumentAttributes locale={locale} />
       <Providers>
         <ShopStateProvider enabled={shopOn}>
-          <SiteHeader />
+          <SiteHeader albumPromo={albumPromo} />
           <main>{children}</main>
           <SiteFooter />
         </ShopStateProvider>

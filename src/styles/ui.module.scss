@@ -1,7 +1,7 @@
 @use "mixins" as *;
 
 // Shared cross-page UI classes for the commerce surfaces (shop, product,
-// cart, checkout, confirmation). Section-specific styling stays in each
+// shop, cart). Section-specific styling stays in each
 // page/component module; these are the recurring design patterns.
 
 // Page shell below the fixed pill nav, on the cream surface.
@@ -106,7 +106,7 @@
   color: var(--color-sage);
 }
 
-// Hairline-divided list of line items (cart, checkout summary).
+// Hairline-divided list of line items (the cart).
 .lineItems {
   list-style: none;
   margin: 0;

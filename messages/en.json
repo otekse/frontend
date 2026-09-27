@@ -4,7 +4,7 @@
     "about": "About",
     "shop": "Shop",
     "cart": "Cart",
-    "home": "Home"
+    "home": "Õtekse"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -35,7 +35,42 @@
     "metaTitle": "About — Õtekse",
     "metaDescription": "Meet Õtekse, a folk-music-inspired ensemble of three sisters.",
     "photoTag": "THREE SISTERS",
-    "photoAlt": "Õtekse — three sisters"
+    "photoAlt": "Õtekse — three sisters",
+    "timelineTitle": "TIMELINE",
+    "timelineCount": "{count, plural, one {# entry} other {# entries}}",
+    "timelinePhotoAlt": "{title} — photo {n} of {count}"
+  },
+  "Album": {
+    "overline": "NEW ALBUM",
+    "title": "“RANNA­PIIGAD”",
+    "credit1": "Kert-Johan Sommer — cajon",
+    "credit2": "Loore Lumisalu — double bass",
+    "credit3": "Reine Niin — jaw harp",
+    "credit4": "Master & mix — Janek Kivi",
+    "kicker": "Õtekse’s first album and EP arrive this autumn.",
+    "para1": "With our first record we go back to our roots — to where we come from, and to who we are. Our roots reach to Rannametsa in Pärnu County, and that is where the album’s sea themes began.",
+    "para2": "The three of us, sisters from Rannametsa, are like rannapiigad — shore girls, young women still learning about life, wanting to have fun, to try things, to discover and simply enjoy living. These songs are about all of that.",
+    "coverName": "RANNAPIIGAD",
+    "coverMeta": "EP · 30.10",
+    "showsLabel": "RELEASE CONCERTS",
+    "footnote": "Keep an eye out — we will share the details soon.",
+    "navButton": "New album!",
+    "videoPlay": "Play the Hooandja campaign video",
+    "videoPause": "Pause the video",
+    "videoSeek": "Video position",
+    "videoMute": "Mute",
+    "videoUnmute": "Unmute",
+    "videoFullscreen": "Full screen",
+    "videoTitle": "Õtekse’s first album “Rannapiigad” — Hooandja campaign video",
+    "supportLabel": "HOOANDJA",
+    "supportLead": "We’re raising money on Hooandja, an Estonian crowdfunding site, to record the album and print the CDs. Every pledge helps!",
+    "supportCollected": "{amount} raised",
+    "supportProgress": "Raised towards the Hooandja campaign goal",
+    "supportGoal": "goal {amount}",
+    "supportMainGoal": "main goal {amount}",
+    "supportBackers": "{count, plural, one {# backer} other {# backers}}",
+    "supportDaysLeft": "{count, plural, one {# day} other {# days}} left",
+    "supportCta": "Support us on Hooandja"
   },
   "Members": {
     "overline": "THE BAND",
@@ -83,17 +118,21 @@
     "tag": "SOON"
   },
   "Footer": {
+    "home": "Õtekse",
     "about": "About",
     "concerts": "Concerts",
     "privacy": "Privacy",
+    "socialLabel": "Õtekse on social media",
     "rights": "© {year} Õtekse"
   },
   "Meta": {
-    "title": "Õtekse — Estonian folk music",
+    "title": "Õtekse — Estonian folk music group",
     "description": "We are Õtekse, an Estonian folk music group. Listen to us, come to a concert, and see where we are playing next."
   },
   "Privacy": {
     "title": "Privacy policy",
+    "metaTitle": "Privacy policy — Õtekse",
+    "metaDescription": "How the Õtekse website collects visitor statistics, which cookies it uses, and what your rights are.",
     "controllerTitle": "Data controller",
     "controllerBody": "This website is run by us, Õtekse. For any questions, write to {email}.",
     "analyticsTitle": "Visitor statistics",
@@ -101,7 +140,7 @@
     "cookiesTitle": "Cookies",
     "cookiesBody": "We use exactly one cookie — NEXT_LOCALE — which remembers the language you chose. It is strictly necessary for the site to work and so needs no separate consent. We use no advertising or tracking cookies.",
     "thirdPartiesTitle": "Third parties",
-    "thirdPartiesBody": "This site loads no content from third-party servers. Fonts and images are served from our own server.",
+    "thirdPartiesBody": "This site loads no content from third-party servers: fonts, images and video are served from our own server. Our server reads the Hooandja campaign figures itself; your browser does not contact Hooandja.",
     "rightsTitle": "Your rights",
     "rightsBody": "The statistics we collect are not linked to an identifiable person, so we cannot look up, correct or delete your data — we have no way to identify you from it (GDPR Art. 11). Because we process it on the basis of our legitimate interest, you have the right to object at any time — write to {email}. You also have the right to lodge a complaint with the Estonian Data Protection Inspectorate (aki.ee).",
     "contactTitle": "Contact",
@@ -117,8 +156,8 @@
     "error": "Failed to load products.",
     "outOfStock": "SOLD OUT",
     "addToCart": "Add to cart",
-    "noteTitle": "Ordering opens soon!",
-    "noteSub": "Want to pre-order? Write to us:"
+    "noteTitle": "How to order",
+    "noteSub": "Add what you’d like to your cart and send us the order by email. Questions? Write to us:"
   },
   "Product": {
     "backToShop": "Back to shop",
@@ -133,20 +172,17 @@
     "quantity": "Quantity",
     "remove": "Remove",
     "total": "Total",
-    "checkout": "Check out",
+    "sendOrder": "Send order by email",
+    "howTitle": "Orders are placed by email",
+    "howBody": "The button opens your email app with the order filled in. Add your name, phone and how you’d like to receive it, then send. We’ll reply to arrange payment and delivery.",
+    "noMailApp": "If the button doesn’t open your email, write to us and list what you’d like:",
+    "emailSubject": "Order — Õtekse shop",
+    "emailIntro": "Hello! I would like to order:",
+    "emailTotal": "Total",
+    "emailName": "Name",
+    "emailPhone": "Phone",
+    "emailDelivery": "Delivery (address or parcel locker)",
+    "emailNotes": "Notes",
     "continueShopping": "Continue shopping"
-  },
-  "Checkout": {
-    "title": "Checkout",
-    "redirecting": "Redirecting you to secure checkout…",
-    "failed": "Could not start the checkout session. Please try again.",
-    "pending": "The payment endpoint (Stripe) is not connected yet — this step is still being built.",
-    "backToCart": "Back to cart"
-  },
-  "OrderConfirmation": {
-    "title": "Thank you for your order!",
-    "body": "We've sent a confirmation to your email. Your order is being processed.",
-    "note": "Payment success is always confirmed by our server, never by this page.",
-    "backHome": "Back home"
   }
 }

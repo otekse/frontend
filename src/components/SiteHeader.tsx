@@ -9,13 +9,17 @@ import { LOCALE_NAV_WIDTH_KEY } from "@/lib/locale-nav-transition";
 import { useShopEnabled } from "./ShopState";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MusicPlayer } from "./MusicPlayer";
+import { AlbumButton } from "./AlbumButton";
 import styles from "./SiteHeader.module.scss";
 
 // The cart pill only belongs on the storefront surfaces — shop, product,
-// cart, checkout, order — not the band homepage.
-const STOREFRONT = /^\/(shop|cart|checkout|order)(\/|$)/;
+// cart — not the band homepage.
+const STOREFRONT = /^\/(shop|cart)(\/|$)/;
 
-export function SiteHeader() {
+// `albumPromo` shows the "Uus album!" button, which links to the album section
+// on the homepage. It is decided on the server (lib/album.ts) and passed down
+// rather than checked here, so the prerendered page and the hydrated one agree.
+export function SiteHeader({ albumPromo }: { albumPromo: boolean }) {
   const t = useTranslations("Nav");
   const locale = useLocale();
   const { count } = useCart();
@@ -143,6 +147,7 @@ export function SiteHeader() {
           </Link>
         ))}
       </div>
+      {albumPromo && <AlbumButton />}
       <div className={styles.group}>
         {inStorefront && (
           <Link href="/cart" className={styles.cartPill} aria-label={t("cart")}>

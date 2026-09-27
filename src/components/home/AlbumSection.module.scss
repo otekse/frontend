@@ -1,0 +1,600 @@
+@use "../../styles/mixins" as *;
+
+// The album scene's colours are the "Album scene" tokens in globals.css.
+
+// The section's own ground is the sky: the strip holding the overline and the
+// sky below it read as one continuous cream, down to the sea. The gold panel
+// starts under the scene.
+.section {
+  background: var(--color-album-sky);
+  // The "Uus album!" button lands with this section's cream top edge exactly
+  // at the top of the viewport, rather than a nav's height above it like other
+  // anchors (globals.css); the fixed nav then floats over the cream strip.
+  scroll-margin-top: 0;
+  // The swell strips are twice the viewport wide; `clip` hides the overhang
+  // without turning the section into a scroll container.
+  overflow-x: clip;
+}
+
+.head {
+  max-width: var(--container-content);
+  margin: 0 auto;
+  padding: 74px var(--spacing-section-x) 22px;
+
+  // The "Uus album!" button scrolls this section's top edge to the top of the
+  // viewport, under the fixed nav. Below $bp-lg the nav gains a row for that
+  // button, so the overline needs more room to clear it.
+  @include until($bp-lg) {
+    padding-top: calc(var(--nav-offset) + 44px);
+  }
+}
+
+// Rust rather than the export's gold: gold on this cream is too faint to
+// read, and rust is the site's overline colour on every light section.
+.overline {
+  @include overline(var(--color-rust));
+  margin-bottom: 0;
+}
+
+// ---- The gold panel and its scene ---------------------------------------
+
+.panel {
+  position: relative;
+  background: var(--color-gold);
+  padding-bottom: clamp(120px, 16vw, 210px);
+}
+
+// On a phone the title spans the full width and its four credit pills stack
+// one per row, so the scene needs far more sky than the desktop layout's
+// 36%: it grows, and the sea sinks to the lower 44%.
+.scape {
+  position: relative;
+  height: clamp(340px, 47vw, 600px);
+  overflow: hidden;
+
+  @include until($bp-sm) {
+    height: 540px;
+  }
+}
+
+.sky {
+  position: absolute;
+  inset: 0 0 36% 0;
+  background: var(--color-album-sky);
+
+  // Runs well down behind the sea, as it does on desktop (sky to 64%, sea
+  // from 36%): the troughs between swell crests show sky, not the gold panel.
+  @include until($bp-sm) {
+    bottom: 20%;
+  }
+}
+
+.sun {
+  position: absolute;
+  left: 9%;
+  top: 14%;
+  width: clamp(120px, 17vw, 230px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-cream-a70);
+  will-change: transform;
+
+  // Out from under the full-width title: resting on the horizon instead,
+  // half sunk behind the far swell.
+  @include until($bp-sm) {
+    top: auto;
+    left: auto;
+    right: 8%;
+    bottom: 40%;
+  }
+}
+
+.skyTitle {
+  position: absolute;
+  left: 30%;
+  right: 3%;
+  top: 5%;
+  will-change: transform;
+
+  @include until($bp-sm) {
+    left: var(--spacing-section-x);
+    right: var(--spacing-section-x);
+    top: 4%;
+  }
+}
+
+.title {
+  @include display-heading(var(--text-album-title), var(--color-ink));
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.credit {
+  font-size: var(--text-badge);
+  color: var(--color-ink);
+  border: 1px solid var(--color-ink-a28);
+  border-radius: var(--radius-pill);
+  padding: 6px 11px;
+}
+
+// Birds and boats sit in front of the sky title but behind nothing else.
+.birds,
+.ships {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.birds {
+  bottom: 55%;
+}
+
+.bird,
+.ship {
+  position: absolute;
+  height: auto;
+  animation: album-sail var(--sail-duration) ease-in-out infinite alternate;
+}
+
+.bird1 {
+  width: clamp(30px, 3.6vw, 50px);
+  left: 7%;
+  bottom: 52%;
+  color: var(--color-sea-far);
+  stroke-width: 1.8;
+  --sail-duration: 46s;
+}
+
+.bird2 {
+  width: clamp(20px, 2.4vw, 34px);
+  left: 17%;
+  bottom: 38%;
+  color: var(--color-sea-far-a68);
+  stroke-width: 2;
+  animation-direction: alternate-reverse;
+  --sail-duration: 62s;
+}
+
+.bird3 {
+  width: clamp(14px, 1.7vw, 24px);
+  left: 24%;
+  bottom: 62%;
+  color: var(--color-sea-far-a68);
+  stroke-width: 2.4;
+  --sail-duration: 74s;
+}
+
+.bird4 {
+  width: clamp(11px, 1.3vw, 18px);
+  left: 13%;
+  bottom: 28%;
+  color: var(--color-sea-far-a42);
+  stroke-width: 2.6;
+  animation-direction: alternate-reverse;
+  --sail-duration: 88s;
+}
+
+.ship1 {
+  width: clamp(62px, 7.4vw, 100px);
+  left: 16%;
+  bottom: 26%;
+  color: var(--color-sea-far);
+  --sail-duration: 34s;
+}
+
+.ship2 {
+  width: clamp(34px, 4.2vw, 56px);
+  left: 64%;
+  bottom: 19%;
+  color: var(--color-sea-far);
+  animation-direction: alternate-reverse;
+  --sail-duration: 52s;
+}
+
+.ship3 {
+  width: clamp(20px, 2.5vw, 32px);
+  left: 40%;
+  bottom: 33%;
+  color: var(--color-foam-a72);
+  --sail-duration: 68s;
+}
+
+.surf {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64%;
+  will-change: transform;
+
+  @include until($bp-sm) {
+    height: 44%;
+  }
+}
+
+.swell {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  animation: album-swell var(--swell-duration) linear infinite;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Farther swells are taller and slower; the foam at the front is quickest.
+.swell1 {
+  height: 100%;
+  color: var(--color-sea-far);
+  --swell-duration: 38s;
+}
+
+.swell2 {
+  height: 76%;
+  color: var(--color-sea-mid);
+  --swell-duration: 25s;
+}
+
+.swell3 {
+  height: 46%;
+  color: var(--color-sea-near);
+  --swell-duration: 15s;
+}
+
+.swell4 {
+  height: 20%;
+  color: var(--color-foam);
+  --swell-duration: 9s;
+}
+
+// Dotted texture over the lower panel, where the copy sits.
+.grain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64%;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(var(--color-ink-a15) 1px, transparent 1.4px);
+  background-size: 11px 11px;
+}
+
+@keyframes album-swell {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes album-sail {
+  from {
+    transform: translateX(-3vw);
+  }
+
+  to {
+    transform: translateX(4vw);
+  }
+}
+
+@include reduced-motion {
+  .bird,
+  .ship,
+  .swell {
+    animation: none;
+  }
+}
+
+// Sailing and swelling off screen still costs a frame's work. ScrollDrift marks
+// the panel while it is near the viewport; away from it, everything holds.
+// Before hydration the mark is absent, which is correct: the section starts far
+// below the fold.
+.panel:not([data-on-screen]) {
+  .bird,
+  .ship,
+  .swell {
+    animation-play-state: paused;
+  }
+}
+
+// ---- Cover and copy -------------------------------------------------------
+
+// Two columns: the upright video card with the concerts under it on the left,
+// the story and the Hooandja block on the right. The copy spans both rows and
+// the second row takes any spare height, so the concerts sit right under the
+// card however long the copy runs. Narrower, it stacks: video, story, concerts.
+.body {
+  position: relative;
+  max-width: var(--container-content);
+  margin: clamp(10px, 1.6vw, 24px) auto 0;
+  padding: 0 var(--spacing-section-x);
+  display: grid;
+  grid-template-columns: clamp(260px, 32%, 340px) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "media copy"
+    "shows copy";
+  column-gap: clamp(30px, 4.5vw, 60px);
+  align-items: start;
+
+  @include until($bp-md) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: 32px; // side by side the column gap separates them; stacked, this does
+    grid-template-areas:
+      "media"
+      "copy"
+      "shows";
+  }
+}
+
+// Pulled up into the sea, and above the boats sailing there.
+.coverWrap {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(-230px, -16vw, -110px);
+  grid-area: media;
+  will-change: transform;
+
+  // Stacked, the upright card keeps a phone-like width rather than the full
+  // column, which would make it taller than the screen.
+  @include until($bp-md) {
+    justify-self: center;
+    width: min(320px, 100%);
+  }
+}
+
+.coverCard {
+  margin: 0;
+  padding: 12px;
+  background: var(--color-cream);
+  border-radius: var(--radius-paper);
+  box-shadow: var(--shadow-album-cover);
+  transform: rotate(-1.8deg);
+  transition: transform 0.3s var(--ease-standard);
+
+  // Straightens once the video has been started: a tilted player reads as a
+  // mistake.
+  &:has([data-started]) {
+    transform: none;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.coverCaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 4px 4px;
+}
+
+.coverName {
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  color: var(--color-ink);
+}
+
+.coverMeta {
+  font-size: var(--text-badge);
+  letter-spacing: 0.16em;
+  color: var(--color-album-caption);
+  white-space: nowrap; // "EP · 30.10" is one label; never break at the dot
+}
+
+.copy {
+  grid-area: copy;
+  min-width: 0;
+  margin-top: clamp(6px, 1vw, 16px);
+}
+
+.kicker {
+  font-family: var(--font-display);
+  font-size: var(--text-album-kicker);
+  line-height: 1.3;
+  color: var(--color-ink);
+  opacity: 0.72;
+  max-width: 46ch;
+}
+
+.paras {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+  max-width: 78ch;
+}
+
+.para {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+  opacity: 0.88;
+  text-wrap: pretty;
+}
+
+.shows {
+  grid-area: shows;
+  margin-top: 38px;
+  border-top: 1px solid var(--color-ink-a28);
+  padding-top: 16px;
+}
+
+.showsLabel {
+  font-size: var(--text-badge);
+  font-weight: 700;
+  letter-spacing: var(--tracking-badge);
+  color: var(--color-ink);
+  opacity: 0.7;
+}
+
+.showList {
+  list-style: none;
+  padding: 0;
+  margin-top: 6px;
+}
+
+// A grid rather than the export's wrapping flex row: with flex, a long venue
+// on a phone pushed the tag onto its own line in some rows and not others.
+// The venue column takes the squeeze and wraps instead.
+.show {
+  display: grid;
+  grid-template-columns: 5.5ch 1fr auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--color-ink-a15);
+}
+
+.showDate {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--color-ink);
+}
+
+.showPlace {
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  opacity: 0.86;
+}
+
+// Outlined like the concert-row badges; a free show is filled, as in the design.
+.showTag {
+  font-size: var(--text-badge);
+  font-weight: 700;
+  letter-spacing: var(--tracking-badge);
+  color: var(--color-ink);
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-pill);
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+
+.showTagFree {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-cream-bright);
+}
+
+.footnote {
+  margin-top: 16px;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-ink);
+  opacity: 0.66;
+}
+
+// ---- Hooandja: the crowdfunding campaign -----------------------------------
+
+.support {
+  margin-top: 38px;
+  border-top: 1px solid var(--color-ink-a28);
+  padding-top: 16px;
+}
+
+.supportLead {
+  margin-top: 8px;
+  max-width: 62ch;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-ink);
+  opacity: 0.86;
+}
+
+.progress {
+  margin-top: 18px;
+}
+
+.progressFigures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.progressCollected {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--color-ink);
+}
+
+.progressGoal {
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  opacity: 0.7;
+}
+
+.progressTrack {
+  position: relative;
+  height: 10px;
+  margin-top: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink-a15);
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+}
+
+// Gold-ringed, so it stays visible over both the empty track and the fill.
+.progressMarker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--color-ink);
+  box-shadow: 0 0 0 2px var(--color-gold);
+}
+
+.progressMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 10px;
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  opacity: 0.86;
+}
+
+.progressLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  @include focus-ring;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.supportCta {
+  @include pill(var(--color-ink), var(--color-cream-bright));
+  margin-top: 20px;
+
+  &:hover {
+    background: var(--color-moss);
+  }
+}

@@ -108,16 +108,42 @@ a {
   --color-rust: #ad3f24; /* secondary accent, prices, overlines */
   --color-rust-light: #e07a5f; /* "ticketed" badge */
   --color-live: #7fb069; /* live/playing indicator dot */
-  --color-bronze: #7a4a12; /* overline on gold */
-  --color-bronze-deep: #5a3c10; /* sub text on gold */
+  --color-bronze: #5a3408; /* overline on gold: 4.7:1, was #7a4a12 at 3.2 */
+  --color-bronze-deep: #4f3510; /* sub text on gold: 4.9:1, was #5a3c10 at 4.4 */
   --color-bronze-label: #8a4413; /* label on gold */
   --color-olive-ink: #4a3a14; /* quote on gold */
+  --color-wheat: #b17719; /* the wheat photo's average: its bands before it arrives */
 
   --color-ink-a08: rgba(22, 33, 26, 0.08); /* inset track on light surfaces */
   --color-ink-a15: rgba(22, 33, 26, 0.15); /* hairline dividers on light */
   --color-forest-a60: rgba(13, 31, 21, 0.6); /* scrim over colour fills */
 
   --color-gold-a75: rgba(217, 161, 59, 0.75); /* archive dates, receded */
+
+  /* -- Album scene ("Rannapiigad") --
+     The sky, sea and paper of the EP announcement, from the design's
+     standalone export. Grouped rather than filed by category because every
+     value here belongs to that one scene. */
+  --color-album-sky: #f2e3bd; /* pale sky above the sea */
+  --color-album-caption: #6d6553; /* cover caption on paper */
+  --color-sea-far: #0d2c22; /* farthest swell, boats and birds */
+  --color-sea-far-a68: rgba(13, 44, 34, 0.68); /* nearer birds, softened */
+  --color-sea-far-a42: rgba(13, 44, 34, 0.42); /* faintest bird */
+  --color-sea-mid: #164735;
+  --color-sea-near: #23654e;
+  --color-foam: #e9e0cb; /* nearest swell */
+  --color-foam-a72: rgba(233, 224, 203, 0.72); /* distant sail */
+  --color-ink-a28: rgba(22, 33, 26, 0.28); /* pill outlines and rules on gold */
+  --text-album-title: clamp(32px, 5.8vw, 84px);
+  --text-album-kicker: clamp(15px, 1.8vw, 20px);
+  --radius-paper: 6px; /* photo-print cards: the album cover, timeline photos */
+  --shadow-album-cover: 0 30px 60px rgba(14, 32, 23, 0.34);
+
+  /* -- Timeline (About page) -- from the design's `Otekse - Meist` export. */
+  --text-timeline-title: clamp(52px, 11vw, 132px);
+  --text-timeline-year: clamp(28px, 5.4vw, 66px);
+  --color-gold-a42: rgba(217, 161, 59, 0.42); /* link-pill outline */
+  --shadow-photo-print: 0 16px 34px rgba(0, 0, 0, 0.42); /* prints on forest */
 
   /* Cream alpha steps (on dark surfaces) */
   --color-cream-a10: rgba(246, 242, 231, 0.1); /* archive dividers, fainter */
@@ -180,6 +206,9 @@ a {
      as mushy, and a slow press-in reads as lag. */
   --duration-press-in: 60ms;
   --duration-press-out: 180ms;
+  --duration-hero-reveal: 520ms;
+  /* The "Uus album!" card opening and closing; AlbumButton's OPEN_MS matches. */
+  --duration-album-card: 450ms;
   --scale-pressed: 0.96;
 
   /* Radial hole punched through the concert-hero photo scatter so the title

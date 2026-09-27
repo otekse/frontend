@@ -1,5 +1,5 @@
 {
-  "_help": "Kontsertide nimekiri. Kuupäev on alati kujul AAAA-KK-PP. Ära tõsta esinemisi käsitsi ümber — sait sorteerib ise ja viib möödunud kuupäevad automaatselt arhiivi. Kontserdi ajutiseks peitmiseks lisa \"hidden\": true — kustutada pole vaja. / Concert list. Dates are always YYYY-MM-DD. Never move entries by hand: the site sorts them and moves past dates into the archive on its own. To take a concert off the site without losing it, add \"hidden\": true.",
+  "_help": "Kontsertide nimekiri. Kuupäev on alati kujul AAAA-KK-PP. Ära tõsta esinemisi käsitsi ümber — sait sorteerib ise ja viib möödunud kuupäevad automaatselt arhiivi. Kontserdi ajutiseks peitmiseks lisa \"hidden\": true — kustutada pole vaja. Toimumiskoht \"venue\" ({ \"name\": \"Koha nimi\", \"locality\": \"Linn\" }, välismaal lisaks \"country\": \"LV\" vms) on valikuline ja lehel ei paista, aga ainult sellega saab Google kontserti oma sündmuste otsingus näidata. / Concert list. Dates are always YYYY-MM-DD. Never move entries by hand: the site sorts them and moves past dates into the archive on its own. To take a concert off the site without losing it, add \"hidden\": true. The \"venue\" ({ \"name\": \"Place name\", \"locality\": \"Town\" }, plus \"country\": \"LV\" etc. abroad) is optional and not shown on the page, but only a concert with one can appear in Google's event search.",
   "concerts": [
     {
       "start": "2026-06-23",
@@ -63,6 +63,48 @@
       "info": {
         "et": "Roheline lava: 23.07 kell 22.00 ja 24.07 kell 15.00.",
         "en": "Green Stage: 23 July at 10 p.m. and 24 July at 3 p.m."
+      }
+    },
+    {
+      "start": "2026-11-06",
+      "badge": "free",
+      "albumRelease": true,
+      "venue": { "name": "Pärnu Keskraamatukogu", "locality": "Pärnu" },
+      "title": {
+        "et": "Pärnu Keskraamatukogu",
+        "en": "Pärnu Central Library"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Details coming soon."
+      }
+    },
+    {
+      "start": "2026-11-07",
+      "badge": "ticketed",
+      "albumRelease": true,
+      "venue": { "name": "Philly Joe’s", "locality": "Tallinn" },
+      "title": {
+        "et": "Tallinn, Philly Joe’s",
+        "en": "Tallinn, Philly Joe’s"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Piletid ja täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Tickets and details coming soon."
+      }
+    },
+    {
+      "start": "2026-11-08",
+      "badge": "free",
+      "albumRelease": true,
+      "venue": { "name": "Eesti Kirjandusmuuseum", "locality": "Tartu" },
+      "title": {
+        "et": "Tartu, Eesti Kirjandusmuuseum",
+        "en": "Tartu, Estonian Literary Museum"
+      },
+      "info": {
+        "et": "Albumi „Rannapiigad“ esitluskontsert. Täpsem info peagi.",
+        "en": "Release concert for our EP “Rannapiigad”. Details coming soon."
       }
     },
     {

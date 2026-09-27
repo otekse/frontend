@@ -13,9 +13,10 @@
 
 .links {
   display: flex;
-  gap: 26px;
+  flex-wrap: wrap; // four links can outgrow a narrow phone
+  gap: 0 26px;
   justify-content: center;
-  margin: 26px 0 34px;
+  margin: 26px 0 30px;
 
   a {
     display: inline-flex;
@@ -34,7 +35,32 @@
   }
 }
 
+// Socials and the address, stacked under the nav links: the row of marks
+// first, then the address spelled out beneath it.
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.email {
+  padding: 10px 6px; // reach a comfortable touch target, as the links above do
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-gold);
+  text-decoration: none;
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-cream);
+    text-decoration: underline;
+  }
+}
+
 .rights {
   font-size: var(--text-overline);
-  color: var(--color-cream-a45);
+  // a60, not a45: small text at 45% only reaches 4.1:1 on the footer's ink.
+  color: var(--color-cream-a60);
 }

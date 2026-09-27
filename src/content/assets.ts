@@ -7,13 +7,38 @@
 // script, and commit the optimized output.
 export const IMAGES = {
   /** Hero forest photo. */
-  forest: "/images/forest.jpg",
+  forest: "/images/forest-enhanced.webp",
   /** Repeating wheat texture strip (alpha top edge). */
-  wheat: "/images/wheat.webp",
+  wheat: "/images/wheat-enhanced.webp",
+  /**
+   * The same two photos as AVIF — together about 280KB lighter than the WebPs,
+   * which on a phone is most of what the hero waits for. Browsers that can
+   * choose by type get these (the photo-background mixin); the rest keep the
+   * WebPs above.
+   */
+  forestAvif: "/images/forest-enhanced.avif",
+  wheatAvif: "/images/wheat-enhanced.avif",
   /** Band photo for the About section. */
-  band: "/images/band.jpg",
+  band: "/images/band.webp",
+  /** Share image for social media and chat apps, 1200x630 (lib/metadata.ts). */
+  share: "/images/share.jpg",
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
+  /**
+   * Poster for the Hooandja campaign video in the album section, shown until a
+   * visitor presses play (AlbumVideo): a 16:9 frame of the video itself.
+   */
+  albumVideoPoster: "/images/album/video-poster-v2.webp",
+  /**
+   * Stills of the album section that the header's "Uus album!" button opens
+   * into on page load (AlbumButton), one per language. They are screenshots:
+   * retake assets-src/album-preview-{et,en}.png (the scene cropped to 1307x687, header and video card hidden)
+   * whenever the section changes, then rerun images:build.
+   */
+  albumPreview: {
+    et: "/images/album/preview-et.webp",
+    en: "/images/album/preview-en.webp",
+  },
   /** Live photos scattered across the concerts-page hero. */
   live: {
     one: "/images/concerts/live-1.webp",
@@ -27,4 +52,83 @@ export const IMAGES = {
     mirjam: "/images/members/mirjam.webp",
     katlin: "/images/members/katlin.webp",
   },
+} as const;
+
+/**
+ * A timeline photo by the id timeline.json gives it: the `thumb` the grid
+ * shows, and the `full` photo it opens to.
+ */
+export function timelinePhoto(id: string) {
+  return {
+    thumb: `/images/timeline/thumb/${id}.webp`,
+    full: `/images/timeline/${id}.webp`,
+  };
+}
+
+/**
+ * The extra widths `npm run images:build` writes next to an image, by the path
+ * IMAGES gives it. They live here rather than in the script because this is the
+ * file the app reads; the two have to agree.
+ */
+const VARIANT_WIDTHS: Array<[RegExp, number[]]> = [
+  [/^\/images\/band\.webp$/, [480, 800, 1000]],
+  [/^\/images\/girls-cutout\.webp$/, [600, 900, 1200]],
+  [/^\/images\/members\/[a-z]+\.webp$/, [240, 400, 600]],
+  [/^\/images\/concerts\/live-\d\.webp$/, [450, 640, 900]],
+  [/^\/images\/timeline\/thumb\/.+\.webp$/, [280, 560]],
+];
+
+/**
+ * The `srcset` for one of our own images: every width that exists of it, so a
+ * phone fetches a phone-sized file. Undefined for anything with no variants (a
+ * product photo from the API, say), which leaves the plain `src` alone.
+ *
+ * Always pair it with a `sizes` describing the space the image fills — without
+ * one the browser assumes the full viewport width and picks the largest file,
+ * which is worse than having no srcset at all.
+ */
+export function srcSetFor(src: string | null | undefined): string | undefined {
+  if (!src) return undefined;
+  const widths = VARIANT_WIDTHS.find(([pattern]) => pattern.test(src))?.[1];
+  if (!widths) return undefined;
+  const max = widths[widths.length - 1];
+  return widths
+    .map((w) => `${w === max ? src : src.replace(/\.webp$/, `-${w}.webp`)} ${w}w`)
+    .join(", ");
+}
+
+/**
+ * The inline custom properties the `photo-background` SCSS mixin reads: one
+ * photo's WebP as `--<name>` and its AVIF as `--<name>-avif`.
+ */
+export function photoVars(name: string, webp: string, avif: string) {
+  return {
+    [`--${name}`]: `url('${webp}')`,
+    [`--${name}-avif`]: `url('${avif}')`,
+  };
+}
+
+/**
+ * Self-hosted video, served straight from public/videos/. There is no build
+ * step: the file is encoded by hand from the owner's master (1920x1080 at
+ * 59.94fps, ~150 MB; kept outside the repo) and committed as the result —
+ * H.264 High at the same size and frame rate, ~26 MB:
+ *
+ *   ffmpeg -i master.mp4 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset slow
+ *     -crf 24 -maxrate 3500k -bufsize 7000k -pix_fmt yuv420p -profile:v high
+ *     -level 4.1 -g 60 -keyint_min 30 -c:a aac -b:a 128k -ar 48000
+ *     -movflags +faststart -map_metadata -1 hooandja-campaign-v2.mp4
+ *
+ * CRF 24 because it could not be told from the master at 1:1, where CRF 22
+ * cost 36 MB. Full HD rather than smaller because AlbumVideo magnifies the
+ * picture about 3x to fill its upright frame. `+faststart` puts the index
+ * first, so playback starts before the whole file has arrived.
+ *
+ * Replacing it means a new filename (bump the -vN), and the same for its
+ * poster: both are cached for a week by name, so a file swapped in place keeps
+ * playing the old copy for anyone who has already seen it.
+ */
+export const VIDEOS = {
+  /** The Hooandja campaign video for "Rannapiigad", in the album section. */
+  hooandja: "/videos/hooandja-campaign-v2.mp4",
 } as const;

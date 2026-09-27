@@ -21,18 +21,58 @@
   min-height: 720px;
   overflow: hidden;
   background: var(--color-forest);
+  animation: hero-enter var(--duration-hero-reveal) var(--ease-standard) both;
+
+  // The two dials for the girls' placement in the field (see .cutout).
+  // `--cutout-sink` is the share of their own height standing in the grain:
+  // raise it to wade them deeper, lower it to lift them out.
+  --cutout-width: min(545px, 60vw);
+  --cutout-sink: 0.3;
+
+  // Tree scale per forest layer. Every band tiles the SAME photo, just at its
+  // own size, so the distant bands read as smaller, denser trees — the depth
+  // cue the stack was missing, because `cover` on all three rendered trees at
+  // essentially one size (measured 0.88x, 0.88x and 0.94x: flat).
+  //
+  // Kept gentle on purpose. The ramp only has to hint at depth; the nearest
+  // band's trees end up about 1.4x the farthest band's, where a steeper ramp
+  // (the first attempt ran 3x) stops reading as distance and starts reading as
+  // a different, busier photo.
+  //
+  // In `vw` rather than `%` on purpose: a percentage resolves against each
+  // band's own box, and the bands are different heights, so percentages made
+  // the tile counts cross over — the near band ended up tiling MORE than the
+  // far one. Viewport units keep the ordering fixed at every screen width.
+  //
+  // The `max()` floors matter on narrow screens. Tile height follows tile
+  // width (the photo is 1.713:1), and on a phone a pure `vw` tile becomes
+  // short enough that its vertical repeat seam rises into the strip of base
+  // forest visible above .layerA. The floors keep every tile taller than that
+  // strip, so no seam is ever on screen.
+  --forest-tile-far: max(620px, 68vw);
+  --forest-tile-mid: max(720px, 82vw);
+  --forest-tile-near: max(860px, 98vw);
 
   @include until($bp-sm) {
     min-height: 560px;
   }
 }
 
+// The farthest forest, and so the smallest trees. It is a background rather
+// than an `<img>` because only a background can repeat — the image is preloaded
+// from the component to keep it discoverable, which converting it away from an
+// `<img>` would otherwise have cost.
+//
+// Repeating on both axes is deliberate. The vertical seam is never in view:
+// this band is only seen on its own in the strip above .layerA's wave, and the
+// tile-size floors above keep one tile row taller than that strip.
 .base {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  @include photo-background(forest);
+  background-size: var(--forest-tile-far) auto;
+  background-repeat: repeat;
+  background-position: center top;
   filter: brightness(0.75) saturate(0.95);
   will-change: transform;
 }
@@ -52,7 +92,8 @@
   .layerFill {
     width: 100%;
     height: 100%;
-    background-size: cover;
+    background-repeat: repeat;
+    @include photo-background(forest);
   }
 }
 
@@ -61,6 +102,8 @@
   height: 62%;
 
   .layerFill {
+    // Middle distance: trees larger than the base's, about 1.8 tiles across.
+    background-size: var(--forest-tile-mid) auto;
     background-position: center 40%;
     filter: brightness(0.6);
   }
@@ -69,9 +112,11 @@
 .layerB {
   top: 38%;
   height: 56%;
-  z-index: 2;
+  z-index: 3; // above the title (2), which sits between the forest bands
 
   .layerFill {
+    // Nearest forest, so the largest trees — barely more than one tile across.
+    background-size: var(--forest-tile-near) auto;
     background-position: center 55%;
     filter: brightness(0.44);
   }
@@ -94,7 +139,11 @@
   left: 0;
   right: 0;
   text-align: center;
-  z-index: 5;
+  // Between the two forest bands: in front of .layerA (1), behind the nearest
+  // band, .layerB (3), so that band's wave cuts into the letters and the title
+  // sinks into the trees as it drifts. This also puts it under the vignette
+  // (4), which darkens the word's outer letters slightly.
+  z-index: 2;
   will-change: transform, opacity; // the title also scales and fades on scroll
   @include display-heading(var(--text-hero), var(--color-cream-bright));
   letter-spacing: 0.01em;
@@ -117,7 +166,70 @@
     background-size: auto 130%;
     background-position: 0 30%;
     background-repeat: repeat-x;
+    // The photo is opaque and covers the band, so this colour only ever shows
+    // while it downloads: a gold field in the right shape rather than a hole
+    // through to the forest.
+    background-color: var(--color-wheat);
+    @include photo-background(wheat);
   }
+
+}
+
+// The group rides the near wheat band — the grain their feet are actually in.
+// This wrapper is the part that drifts: it carries `NEAR_GRAIN_DRIFT`, matching
+// .wheatNear exactly, so the two move as one and the girls stay planted in
+// that grain instead of sinking through it as the page scrolls.
+//
+// It exists only so the drift has somewhere to write `transform` that is not
+// the image: the parallax paths (CSS keyframe and rAF alike) replace the whole
+// property, which would wipe the centring and tilt below.
+.cutoutLayer {
+  position: absolute;
+  // Deliberately the same box as .wheatNear, not `inset: 0`, so the group is
+  // positioned against that band rather than against the hero. Everything
+  // inside therefore measures from the grain the girls stand in.
+  bottom: -2%;
+  left: 0;
+  right: 0;
+  height: 32%;
+  // Above BOTH wheat bands (6 and 8), so the group is never cut into by the
+  // near grain — it reads as standing in front of the field rather than being
+  // swallowed by it. The music player sits above this again (10).
+  z-index: 9;
+  will-change: transform;
+}
+
+// Where the near band's wave crosses the group's own x (56.5%), as a share of
+// that band's height. Measured off the rendered clip path, not estimated.
+$wheat-wave-at-cutout: 20.5%;
+// The photo's framing inside its own file: the girls occupy 39.1%–89.2% of the
+// image's height, so the rest is transparent padding that must not be mistaken
+// for the figure. Feet are at the lower number, hence the offsets below.
+$cutout-feet: 0.5949;
+$cutout-body: 0.3346;
+
+.cutout {
+  position: absolute;
+  left: 56.5%;
+  width: var(--cutout-width);
+  transform: translateX(-50%) rotate(2deg) scaleX(1.02);
+  filter: drop-shadow(var(--shadow-cutout));
+
+  // Plants the feet a constant share of the figure's own height into the
+  // grain, at every viewport size.
+  //
+  // This has to be a calc rather than a percentage because the two things
+  // involved scale along different axes: the wheat band's height follows the
+  // hero's HEIGHT, while the group's height follows the viewport's WIDTH
+  // (`min(545px, 60vw)`). A flat percentage that looks right on a desktop
+  // buries them to the shoulders on a phone — measured at 88% submerged
+  // against 29% — because there the band is nearly as tall as on desktop while
+  // the figure is less than half the size.
+  top: calc(
+    #{$wheat-wave-at-cutout} -
+      (#{$cutout-feet} - #{$cutout-body} * var(--cutout-sink)) *
+      var(--cutout-width)
+  );
 }
 
 .wheatNear {
@@ -136,28 +248,8 @@
     background-size: auto 160%;
     background-position: 55% 65%;
     background-repeat: repeat-x;
-  }
-}
-
-// Placement mirrors the design canvas: cutout anchored ~57% across, riding
-// just above the near wheat band, slight tilt.
-.cutout {
-  position: absolute;
-  left: 56.5%;
-  top: -72%;
-  width: min(545px, 60vw);
-  transform: translateX(-50%) rotate(2deg) scaleX(1.02);
-  z-index: 7;
-  filter: drop-shadow(var(--shadow-cutout));
-
-  // Phones only: drop the group into the field. The hero is far taller than it
-  // is wide here, so at the design's height the cutout crowds the wordmark and
-  // leaves dead field below it. Desktop keeps the design canvas untouched.
-  //
-  // Note `top` is a share of .wheatNear's own height — 32% of the hero — so
-  // halving it moves them down about a tenth of the hero, not a third.
-  @include until($bp-sm) {
-    top: -36%;
+    background-color: var(--color-wheat); // see .wheatFar
+    @include photo-background(wheat);
   }
 }
 
@@ -217,10 +309,25 @@
     animation-name: hero-title-drift;
   }
 
+  // The cutout needs no rule of its own: its wrapper is a `[data-parallax]`
+  // layer like any other, so the drift above already carries it.
+
   // The JS path never starts under reduced motion; this one must match.
   @include reduced-motion {
     .hero [data-parallax] {
       animation: none;
     }
+  }
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@include reduced-motion {
+  .hero {
+    animation: none;
   }
 }
