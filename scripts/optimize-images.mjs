@@ -7,7 +7,7 @@
 // Rerun whenever an original changes, and commit the outputs. Paths the app
 // uses are defined once in src/content/assets.ts.
 import sharp from "sharp";
-import { mkdirSync, readdirSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { join, dirname, parse } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -170,8 +170,21 @@ for (const n of [1, 2, 3, 4]) {
 //
 // `rotate()` with no angle applies the EXIF orientation first, so phone
 // photos taken upright do not come out sideways once the metadata is stripped.
+// Generate only photos that the timeline still references. This prevents a
+// deliberately removed duplicate from returning just because its gitignored
+// source original is still present in the owner's local asset archive.
+const timelineData = JSON.parse(
+  readFileSync(join(here, "..", "src", "content", "timeline.json"), "utf8"),
+);
+const usedTimelinePhotos = new Set(
+  timelineData.years.flatMap((year) =>
+    year.entries.flatMap((entry) => entry.photos ?? []),
+  ),
+);
+
 for (const file of readdirSync(join(SRC, "timeline"))) {
   const { name } = parse(file);
+  if (!usedTimelinePhotos.has(name)) continue;
   const original = () => sharp(join(SRC, "timeline", file)).rotate();
   jobs.push(
     ...widths([280, 560], `timeline/thumb/${name}.webp`, (w) =>

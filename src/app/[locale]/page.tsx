@@ -7,7 +7,6 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { MembersSection } from "@/components/home/MembersSection";
 import { ConcertsSection } from "@/components/home/ConcertsSection";
 import { ShopTeaser } from "@/components/home/ShopTeaser";
-import { ShopClosed } from "@/components/home/ShopClosed";
 import { members } from "@/content/members";
 import { albumPromoActive } from "@/lib/album";
 import { todayInTallinn } from "@/lib/concerts";
@@ -42,8 +41,8 @@ export async function generateMetadata({
 // Hooandja campaign's figures are fetched here, on our server, and passed in
 // (lib/hooandja-server.ts); they refresh with the page's hourly revalidate.
 //
-// The shop band has two designs, not one design with the links removed:
-// ShopTeaser when the storefront is open, ShopClosed when it isn't.
+// The shop band exists only while the storefront is open. When it is closed,
+// the homepage carries no shop promotion or placeholder section at all.
 export default async function HomePage({
   params,
 }: {
@@ -69,7 +68,7 @@ export default async function HomePage({
       <AboutSection showMoreLink />
       <MembersSection />
       <ConcertsSection />
-      {shopOn ? <ShopTeaser /> : <ShopClosed />}
+      {shopOn && <ShopTeaser />}
       {albumOn && <AlbumSection progress={campaign} />}
     </>
   );
