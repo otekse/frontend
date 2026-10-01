@@ -1,5 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { SOCIAL_LINKS } from "./contact.ts";
 import type { Concert } from "./concerts.ts";
 import {
   concertsJsonLd,
@@ -93,6 +94,39 @@ describe("homeJsonLd", () => {
         { "@type": "Person", name: "Kätlin" },
       ],
     );
+  });
+
+  it("names the genre in every way people search for it", () => {
+    const genres = (locale: "et" | "en") =>
+      homeJsonLd({ locale, description: "", memberNames: [] })["@graph"][1]
+        .genre;
+    assert.deepEqual(genres("et"), [
+      "Folk",
+      "Eesti folk",
+      "Pärimusmuusika",
+      "Rahvamuusika",
+    ]);
+    assert.deepEqual(genres("en"), [
+      "Folk",
+      "Estonian folk music",
+      "Traditional music",
+    ]);
+  });
+
+  it("ties the band to its profiles elsewhere, and to Estonia", () => {
+    const [, band] = homeJsonLd({
+      locale: "en",
+      description: "",
+      memberNames: [],
+    })["@graph"];
+    assert.deepEqual(
+      band.sameAs,
+      SOCIAL_LINKS.map((l) => l.url),
+    );
+    assert.deepEqual(band.foundingLocation, {
+      "@type": "Country",
+      name: "Estonia",
+    });
   });
 });
 

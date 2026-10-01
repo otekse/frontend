@@ -33,7 +33,7 @@
     "s3Body": "Oma erilise kõla ja siira lavalise kohaloluga kanname edasi eesti rahvamuusika traditsioone, andes neile samal ajal värske ja tänapäevase kõla.",
     "more": "Loe meist lähemalt",
     "metaTitle": "Meist — Õtekse",
-    "metaDescription": "Tutvu Õteksega — kolme õe folkmuusikast inspireeritud ansambliga.",
+    "metaDescription": "Tutvu Õteksega — kolme õe folkmuusikast inspireeritud pärimusmuusika ansambliga. Meie lugu, auhinnad ja esinemised aastate kaupa.",
     "photoTag": "KOLM ÕDE",
     "photoAlt": "Õtekse — kolm õde",
     "timelineTitle": "AJATELG",
@@ -102,7 +102,7 @@
     "photo4Alt": "Õtekse rannal",
     "liveTag": "LIVE",
     "metaTitle": "Kontserdid — Õtekse",
-    "metaDescription": "Õtekse tulevased kontserdid ja esinemised. Vaata, kus ja millal meid kuulata saab.",
+    "metaDescription": "Õtekse folk- ja pärimusmuusika kontserdid üle Eesti. Vaata, kus ja millal meid kuulata saab.",
     "noUpcoming": "Hetkel pole ühtegi kuupäeva välja kuulutatud. Uued esinemised lisanduvad jooksvalt — vaata varsti tagasi!"
   },
   "ShopTeaser": {
@@ -126,8 +126,8 @@
     "rights": "© {year} Õtekse"
   },
   "Meta": {
-    "title": "Õtekse — eesti pärimusmuusika ansambel",
-    "description": "Oleme Õtekse — eesti pärimusmuusika ansambel. Kuula meid, tule kontserdile ja vaata, kus me esineme."
+    "title": "Õtekse — eesti folk- ja pärimusmuusika ansambel",
+    "description": "Õtekse on kolme õe eesti folk- ja pärimusmuusika ansambel: rahvamuusika värsketes seadetes. Kuula meid ja tule kontserdile!"
   },
   "Privacy": {
     "title": "Privaatsuspoliitika",
