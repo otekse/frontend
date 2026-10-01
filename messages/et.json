@@ -36,6 +36,7 @@
     "metaDescription": "Tutvu Õteksega — kolme õe folkmuusikast inspireeritud pärimusmuusika ansambliga. Meie lugu, auhinnad ja esinemised aastate kaupa.",
     "photoTag": "KOLM ÕDE",
     "photoAlt": "Õtekse — kolm õde",
+    "timelineOverline": "ÕTEKSE · EESTI FOLK- JA PÄRIMUSMUUSIKA",
     "timelineTitle": "AJATELG",
     "timelineCount": "{count, plural, one {# sündmus} other {# sündmust}}",
     "timelinePhotoAlt": "{title} — foto {n}/{count}"

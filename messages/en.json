@@ -36,6 +36,7 @@
     "metaDescription": "Meet Õtekse, a folk-inspired Estonian ensemble of three sisters: our story, awards and performances year by year.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters",
+    "timelineOverline": "ÕTEKSE · ESTONIAN FOLK MUSIC",
     "timelineTitle": "TIMELINE",
     "timelineCount": "{count, plural, one {# entry} other {# entries}}",
     "timelinePhotoAlt": "{title} — photo {n} of {count}"

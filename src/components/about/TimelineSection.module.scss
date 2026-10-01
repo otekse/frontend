@@ -20,13 +20,20 @@
 
 .overline {
   @include overline(var(--color-gold));
+  display: block;
   margin-bottom: 0;
+
+  // The dash is decoration, kept out of the h1's text.
+  &::before {
+    content: "— ";
+  }
 }
 
 .title {
   @include display-heading(var(--text-timeline-title), var(--color-cream-bright));
   line-height: 0.92;
   letter-spacing: -0.02em;
+  display: block;
   margin-top: 16px;
 }
 
