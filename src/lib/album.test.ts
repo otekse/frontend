@@ -4,17 +4,17 @@ import assert from "node:assert/strict";
 import { ALBUM_PROMO_ENDS, albumPromoActive } from "./album.ts";
 
 describe("albumPromoActive", () => {
-  it("ended on 4 November 2026", () => {
-    assert.equal(ALBUM_PROMO_ENDS, "2026-11-04");
+  it("ends in January 2027", () => {
+    assert.equal(ALBUM_PROMO_ENDS, "2027-01-01");
   });
 
-  it("shows the promotion up to the day before", () => {
+  it("shows the promotion through New Year's Eve", () => {
     assert.equal(albumPromoActive("2026-09-13"), true);
-    assert.equal(albumPromoActive("2026-11-03"), true);
+    assert.equal(albumPromoActive("2026-12-31"), true);
   });
 
-  it("hides it from the end date on", () => {
-    assert.equal(albumPromoActive("2026-11-04"), false);
+  it("hides it from New Year's Day on", () => {
+    assert.equal(albumPromoActive("2027-01-01"), false);
     assert.equal(albumPromoActive("2027-06-15"), false);
   });
 });
