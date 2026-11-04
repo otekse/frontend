@@ -11,7 +11,7 @@
 // date, from `todayInTallinn()` in lib/concerts.
 
 /** The first day the promotion is hidden, as YYYY-MM-DD. */
-export const ALBUM_PROMO_ENDS = "2027-01-01";
+export const ALBUM_PROMO_ENDS = "2026-11-04";
 
 export function albumPromoActive(today: string): boolean {
   // ISO dates compare correctly as strings.
