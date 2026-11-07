@@ -4,7 +4,9 @@ import { formatConcertDate, splitConcerts } from "@/lib/concerts";
 import { swellPath } from "@/lib/swell";
 import { ScrollDrift } from "@/components/ui/ScrollDrift";
 import { SmartImage } from "@/components/SmartImage";
+import { CopyEmailButton } from "@/components/ui/CopyEmailButton";
 import { IMAGES } from "@/content/assets";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { badgeKey } from "@/components/concerts/ConcertRow";
 import styles from "./AlbumSection.module.scss";
 
@@ -157,7 +159,6 @@ export function AlbumSection() {
                 </p>
               ))}
             </div>
-
           </div>
 
           <div className={styles.shows}>
@@ -197,6 +198,22 @@ export function AlbumSection() {
             <a href="#kontserdid" className={styles.concertsCta}>
               {t("concertsCta")} ↑
             </a>
+          </div>
+
+          {/* No shop yet: the album is sold by email. A full-width band closing
+              the section, so it reads as the thing to do next. */}
+          <div className={styles.buy}>
+            <div className={styles.buyText}>
+              <p className={styles.buyOverline}>{t("buyOverline")}</p>
+              <h3 className={styles.buyTitle}>{t("buyTitle")}</h3>
+              <p className={styles.buyLead}>{t("buyLead")}</p>
+            </div>
+            <CopyEmailButton
+              email={CONTACT_EMAIL}
+              copyLabel={t("buyCopy")}
+              copiedLabel={t("buyCopied")}
+              className={styles.buyCta}
+            />
           </div>
         </div>
       </ScrollDrift>

@@ -318,7 +318,8 @@
 // Two columns: the album cover card with the concerts under it on the left,
 // the story on the right. The copy spans both rows and
 // the second row takes any spare height, so the concerts sit right under the
-// card however long the copy runs. Narrower, it stacks: cover, story, concerts.
+// card however long the copy runs. The buy band spans both columns below.
+// Narrower, it stacks: cover, story, concerts, buy band.
 .body {
   position: relative;
   max-width: var(--container-content);
@@ -326,10 +327,11 @@
   padding: 0 var(--spacing-section-x);
   display: grid;
   grid-template-columns: clamp(260px, 32%, 340px) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "media copy"
-    "shows copy";
+    "shows copy"
+    "buy buy";
   column-gap: clamp(30px, 4.5vw, 60px);
   align-items: start;
 
@@ -340,7 +342,8 @@
     grid-template-areas:
       "media"
       "copy"
-      "shows";
+      "shows"
+      "buy";
   }
 }
 
@@ -513,5 +516,71 @@
 
   &:hover {
     background: var(--color-moss);
+  }
+}
+
+// ---- Buying the album: a dark band across the whole content width ---------
+
+.buy {
+  grid-area: buy;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(26px, 4vw, 44px) clamp(22px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 40px;
+  background: var(--color-ink);
+  color: var(--color-cream-bright);
+  border-radius: var(--radius-paper);
+  box-shadow: var(--shadow-album-cover);
+
+  @include until($bp-md) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.buyText {
+  max-width: 56ch;
+}
+
+.buyOverline {
+  font-size: var(--text-badge);
+  font-weight: 700;
+  letter-spacing: var(--tracking-badge);
+  color: var(--color-gold);
+}
+
+.buyTitle {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1.05;
+  color: var(--color-cream-bright);
+}
+
+.buyLead {
+  margin-top: 14px;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  opacity: 0.86;
+  text-wrap: pretty;
+}
+
+.buyCta {
+  @include pill(var(--color-gold), var(--color-ink));
+  flex-shrink: 0;
+  padding: 14px 24px;
+  font-size: var(--text-body);
+  overflow-wrap: anywhere;
+  transition: background-color 0.2s var(--ease-standard);
+
+  &:hover,
+  &[data-copied] {
+    background: var(--color-cream-bright);
+  }
+
+  @include reduced-motion {
+    transition: none;
   }
 }
