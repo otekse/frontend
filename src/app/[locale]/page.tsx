@@ -10,7 +10,6 @@ import { ShopTeaser } from "@/components/home/ShopTeaser";
 import { members } from "@/content/members";
 import { albumPromoActive } from "@/lib/album";
 import { todayInTallinn } from "@/lib/concerts";
-import { getCampaignProgress } from "@/lib/hooandja-server";
 import { localizedPageMetadata } from "@/lib/metadata";
 import { shopEnabled } from "@/lib/shop-server";
 import { homeJsonLd } from "@/lib/structured-data";
@@ -37,9 +36,7 @@ export async function generateMetadata({
 //
 // When the promotion ends (lib/album.ts) the album section and the header
 // button that links to it are hidden from visitors — not deleted: both stay in
-// the code, and moving the end date shows them again. While it runs, the
-// Hooandja campaign's figures are fetched here, on our server, and passed in
-// (lib/hooandja-server.ts); they refresh with the page's hourly revalidate.
+// the code, and moving the end date shows them again.
 //
 // The shop band exists only while the storefront is open. When it is closed,
 // the homepage carries no shop promotion or placeholder section at all.
@@ -53,7 +50,6 @@ export default async function HomePage({
   const t = await getTranslations("Meta");
   const shopOn = await shopEnabled();
   const albumOn = albumPromoActive(todayInTallinn());
-  const campaign = albumOn ? await getCampaignProgress() : null;
 
   return (
     <>
@@ -69,7 +65,7 @@ export default async function HomePage({
       <MembersSection />
       <ConcertsSection />
       {shopOn && <ShopTeaser />}
-      {albumOn && <AlbumSection progress={campaign} />}
+      {albumOn && <AlbumSection />}
     </>
   );
 }

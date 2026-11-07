@@ -91,15 +91,13 @@ const jobs = [
       .webp({ quality: 85, alphaQuality: 92 }),
   ),
 
-  // Poster for the Hooandja campaign video (AlbumVideo): the frame at 2s of
-  // the Full HD master, shown until a visitor presses play. 1440px because
-  // the frame shows only the middle third of the picture, about 3x magnified,
-  // so the 960px poster looked soft next to the HD video it stands in for.
-  // AlbumVideo only sets it once the video is near the viewport.
-  sharp(join(SRC, "album-video-poster.png"))
-    .resize({ width: 1440, withoutEnlargement: true })
-    .webp({ quality: 82 })
-    .toFile(join(OUT, "album", "video-poster-v2.webp")),
+  // The "Rannapiigad" album cover (1644x1485) in the album section's card,
+  // which is at most 316px wide: 640px covers 2x displays.
+  ...widths([320, 640], "album/rannapiigad-cover.webp", (w) =>
+    sharp(join(SRC, "rannapiigad-cover.jpg"))
+      .resize({ width: w })
+      .webp({ quality: 80 }),
+  ),
 
   // Share image for links posted to social media and chat apps (Open Graph /
   // X), set on every page by lib/metadata.ts. The beach photo — all three

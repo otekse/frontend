@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
         // visit; NOT `immutable`, because the filenames carry no content hash.
         // The cost: an image rebuilt under the same name can show its old
         // version to a returning visitor for up to a week. One that must change
-        // at once gets a new name instead (as the video poster did).
+        // at once gets a new name instead.
         source: "/images/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=604800" },
@@ -60,11 +60,9 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // The Hooandja campaign video (~26 MB): same reasoning, and the same
-        // rule as the tracks — a replaced video needs a new filename, or anyone
-        // who has already played the old one keeps getting it for a week. That
-        // happened once: the Full HD encode first went in under the old name,
-        // and the browser that had played the old file kept playing it.
+        // Self-hosted video: same reasoning, and the same rule as the tracks —
+        // a replaced video needs a new filename, or anyone who has already
+        // played the old one keeps getting it for a week.
         source: "/videos/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=604800" },
