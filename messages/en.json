@@ -33,9 +33,10 @@
     "s3Body": "With our distinctive sound and sincere stage presence, we carry Estonian folk music traditions forward while giving them a fresh, contemporary voice.",
     "more": "Read more about us",
     "metaTitle": "About — Õtekse",
-    "metaDescription": "Meet Õtekse, a folk-music-inspired ensemble of three sisters.",
+    "metaDescription": "Meet Õtekse, a folk-inspired Estonian ensemble of three sisters: our story, awards and performances year by year.",
     "photoTag": "THREE SISTERS",
     "photoAlt": "Õtekse — three sisters",
+    "timelineOverline": "ÕTEKSE · ESTONIAN FOLK MUSIC",
     "timelineTitle": "TIMELINE",
     "timelineCount": "{count, plural, one {# entry} other {# entries}}",
     "timelinePhotoAlt": "{title} — photo {n} of {count}"
@@ -47,30 +48,15 @@
     "credit2": "Loore Lumisalu — double bass",
     "credit3": "Reine Niin — jaw harp",
     "credit4": "Master & mix — Janek Kivi",
-    "kicker": "Õtekse’s first album and EP arrive this autumn.",
+    "kicker": "Õtekse’s first album and EP is out now!",
     "para1": "With our first record we go back to our roots — to where we come from, and to who we are. Our roots reach to Rannametsa in Pärnu County, and that is where the album’s sea themes began.",
     "para2": "The three of us, sisters from Rannametsa, are like rannapiigad — shore girls, young women still learning about life, wanting to have fun, to try things, to discover and simply enjoy living. These songs are about all of that.",
     "coverName": "RANNAPIIGAD",
     "coverMeta": "EP · 30.10",
+    "coverAlt": "Cover of the album “Rannapiigad”",
     "showsLabel": "RELEASE CONCERTS",
-    "footnote": "Keep an eye out — we will share the details soon.",
-    "navButton": "New album!",
-    "videoPlay": "Play the Hooandja campaign video",
-    "videoPause": "Pause the video",
-    "videoSeek": "Video position",
-    "videoMute": "Mute",
-    "videoUnmute": "Unmute",
-    "videoFullscreen": "Full screen",
-    "videoTitle": "Õtekse’s first album “Rannapiigad” — Hooandja campaign video",
-    "supportLabel": "HOOANDJA",
-    "supportLead": "We’re raising money on Hooandja, an Estonian crowdfunding site, to record the album and print the CDs. Every pledge helps!",
-    "supportCollected": "{amount} raised",
-    "supportProgress": "Raised towards the Hooandja campaign goal",
-    "supportGoal": "goal {amount}",
-    "supportMainGoal": "main goal {amount}",
-    "supportBackers": "{count, plural, one {# backer} other {# backers}}",
-    "supportDaysLeft": "{count, plural, one {# day} other {# days}} left",
-    "supportCta": "Support us on Hooandja"
+    "concertsCta": "All concerts",
+    "navButton": "New album!"
   },
   "Members": {
     "overline": "THE BAND",
@@ -102,7 +88,7 @@
     "photo4Alt": "Õtekse on the beach",
     "liveTag": "LIVE",
     "metaTitle": "Concerts — Õtekse",
-    "metaDescription": "Upcoming Õtekse concerts and performances. See where and when you can hear us live.",
+    "metaDescription": "Upcoming Õtekse folk concerts across Estonia. See where and when you can hear us live.",
     "noUpcoming": "No dates are announced right now. New performances are added regularly — check back soon!"
   },
   "ShopTeaser": {
@@ -126,8 +112,8 @@
     "rights": "© {year} Õtekse"
   },
   "Meta": {
-    "title": "Õtekse — Estonian folk music group",
-    "description": "We are Õtekse, an Estonian folk music group. Listen to us, come to a concert, and see where we are playing next."
+    "title": "Õtekse — Estonian folk music band",
+    "description": "Õtekse is an Estonian folk band of three sisters, playing traditional folk songs in fresh arrangements. Listen, and come to a concert."
   },
   "Privacy": {
     "title": "Privacy policy",

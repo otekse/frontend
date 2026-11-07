@@ -24,11 +24,8 @@ export const IMAGES = {
   share: "/images/share.jpg",
   /** Cutout of the three sisters running (hero foreground). */
   girlsCutout: "/images/girls-cutout.webp" as string | null,
-  /**
-   * Poster for the Hooandja campaign video in the album section, shown until a
-   * visitor presses play (AlbumVideo): a 16:9 frame of the video itself.
-   */
-  albumVideoPoster: "/images/album/video-poster-v2.webp",
+  /** The "Rannapiigad" album cover, in the album section's card. */
+  albumCover: "/images/album/rannapiigad-cover.webp",
   /**
    * Stills of the album section that the header's "Uus album!" button opens
    * into on page load (AlbumButton), one per language. They are screenshots:
@@ -76,6 +73,7 @@ const VARIANT_WIDTHS: Array<[RegExp, number[]]> = [
   [/^\/images\/members\/[a-z]+\.webp$/, [240, 400, 600]],
   [/^\/images\/concerts\/live-\d\.webp$/, [450, 640, 900]],
   [/^\/images\/timeline\/thumb\/.+\.webp$/, [280, 560]],
+  [/^\/images\/album\/rannapiigad-cover\.webp$/, [320, 640]],
 ];
 
 /**
@@ -107,28 +105,3 @@ export function photoVars(name: string, webp: string, avif: string) {
     [`--${name}-avif`]: `url('${avif}')`,
   };
 }
-
-/**
- * Self-hosted video, served straight from public/videos/. There is no build
- * step: the file is encoded by hand from the owner's master (1920x1080 at
- * 59.94fps, ~150 MB; kept outside the repo) and committed as the result —
- * H.264 High at the same size and frame rate, ~26 MB:
- *
- *   ffmpeg -i master.mp4 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset slow
- *     -crf 24 -maxrate 3500k -bufsize 7000k -pix_fmt yuv420p -profile:v high
- *     -level 4.1 -g 60 -keyint_min 30 -c:a aac -b:a 128k -ar 48000
- *     -movflags +faststart -map_metadata -1 hooandja-campaign-v2.mp4
- *
- * CRF 24 because it could not be told from the master at 1:1, where CRF 22
- * cost 36 MB. Full HD rather than smaller because AlbumVideo magnifies the
- * picture about 3x to fill its upright frame. `+faststart` puts the index
- * first, so playback starts before the whole file has arrived.
- *
- * Replacing it means a new filename (bump the -vN), and the same for its
- * poster: both are cached for a week by name, so a file swapped in place keeps
- * playing the old copy for anyone who has already seen it.
- */
-export const VIDEOS = {
-  /** The Hooandja campaign video for "Rannapiigad", in the album section. */
-  hooandja: "/videos/hooandja-campaign-v2.mp4",
-} as const;

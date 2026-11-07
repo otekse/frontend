@@ -4,6 +4,7 @@
 // directly. Pages render the output through `components/JsonLd`.
 
 import type { Concert, Venue } from "./concerts.ts";
+import { SOCIAL_LINKS } from "./contact.ts";
 import {
   SHARE_IMAGE,
   SITE_ALTERNATE_NAME,
@@ -15,17 +16,24 @@ type Locale = "et" | "en";
 
 const BAND_ID = `${SITE_URL}/#band`;
 
-const GENRE: Record<Locale, string> = {
-  et: "Pärimusmuusika",
-  en: "Folk music",
+// Every name people search the genre by, not one canonical label: someone
+// typing "eesti folk" and someone typing "pärimusmuusika" are after the same
+// band. Each has to stay true of Õtekse — this is a description, not a tag
+// cloud.
+const GENRE: Record<Locale, string[]> = {
+  et: ["Folk", "Eesti folk", "Pärimusmuusika", "Rahvamuusika"],
+  en: ["Folk", "Estonian folk music", "Traditional music"],
 };
+
+const COUNTRY: Record<Locale, string> = { et: "Eesti", en: "Estonia" };
 
 /**
  * The homepage graph: the site, and the band behind it.
  *
  * `WebSite` is where Google takes the site name shown in results from; its
  * `alternateName` tells it that "Otekse", typed without the õ, is the same
- * site.
+ * site. The band's `sameAs` links its profiles elsewhere (Spotify, Instagram…)
+ * to this site, so search engines treat them as one entity.
  */
 export function homeJsonLd({
   locale,
@@ -55,6 +63,8 @@ export function homeJsonLd({
         url: `${SITE_URL}/${locale}`,
         description,
         genre: GENRE[locale],
+        foundingLocation: { "@type": "Country", name: COUNTRY[locale] },
+        sameAs: SOCIAL_LINKS.map((l) => l.url),
         image: SHARE_IMAGE.url,
         logo: `${SITE_URL}/icon.png`,
         member: memberNames.map((name) => ({ "@type": "Person", name })),

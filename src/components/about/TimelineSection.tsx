@@ -12,7 +12,7 @@ import styles from "./TimelineSection.module.scss";
 // collapses.
 //
 // It is the whole About page (the owner dropped the introduction that used to
-// sit above it), so its title is the page's h1 and each year an h2.
+// sit above it), so its title (with the overline) is the page's h1 and each year an h2.
 //
 // Where it departs from the export:
 //  - The export's header also carries an introduction and the line-up; the
@@ -32,8 +32,13 @@ export function TimelineSection() {
   return (
     <section id="ajatelg" className={styles.section}>
       <div className={styles.head}>
-        <div className={styles.overline}>— {t("overline")}</div>
-        <h1 className={styles.title}>{t("timelineTitle")}</h1>
+        {/* The overline is part of the h1 so the page's main heading names
+            the band and its genre — "AJATELG" alone tells a search engine
+            nothing about who this is. */}
+        <h1>
+          <span className={styles.overline}>{t("timelineOverline")}</span>
+          <span className={styles.title}>{t("timelineTitle")}</span>
+        </h1>
       </div>
 
       <TimelineRise className={styles.years}>

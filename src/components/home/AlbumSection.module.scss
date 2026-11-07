@@ -315,10 +315,10 @@
 
 // ---- Cover and copy -------------------------------------------------------
 
-// Two columns: the upright video card with the concerts under it on the left,
-// the story and the Hooandja block on the right. The copy spans both rows and
+// Two columns: the album cover card with the concerts under it on the left,
+// the story on the right. The copy spans both rows and
 // the second row takes any spare height, so the concerts sit right under the
-// card however long the copy runs. Narrower, it stacks: video, story, concerts.
+// card however long the copy runs. Narrower, it stacks: cover, story, concerts.
 .body {
   position: relative;
   max-width: var(--container-content);
@@ -369,15 +369,16 @@
   transform: rotate(-1.8deg);
   transition: transform 0.3s var(--ease-standard);
 
-  // Straightens once the video has been started: a tilted player reads as a
-  // mistake.
-  &:has([data-started]) {
-    transform: none;
-  }
-
   @include reduced-motion {
     transition: none;
   }
+}
+
+// The cover's own proportions (1644x1485), so nothing is cropped.
+.coverImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1644 / 1485;
 }
 
 .coverCaption {
@@ -477,6 +478,16 @@
   opacity: 0.86;
 }
 
+// A release show with a ticket page links its place name there.
+.showLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 // Outlined like the concert-row badges; a free show is filled, as in the design.
 .showTag {
   font-size: var(--text-badge);
@@ -495,102 +506,8 @@
   color: var(--color-cream-bright);
 }
 
-.footnote {
-  margin-top: 16px;
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
-  color: var(--color-ink);
-  opacity: 0.66;
-}
-
-// ---- Hooandja: the crowdfunding campaign -----------------------------------
-
-.support {
-  margin-top: 38px;
-  border-top: 1px solid var(--color-ink-a28);
-  padding-top: 16px;
-}
-
-.supportLead {
-  margin-top: 8px;
-  max-width: 62ch;
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
-  color: var(--color-ink);
-  opacity: 0.86;
-}
-
-.progress {
-  margin-top: 18px;
-}
-
-.progressFigures {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 4px 12px;
-}
-
-.progressCollected {
-  font-family: var(--font-display);
-  font-size: var(--text-h3);
-  color: var(--color-ink);
-}
-
-.progressGoal {
-  font-size: var(--text-small);
-  color: var(--color-ink);
-  opacity: 0.7;
-}
-
-.progressTrack {
-  position: relative;
-  height: 10px;
-  margin-top: 10px;
-  border-radius: var(--radius-pill);
-  background: var(--color-ink-a15);
-}
-
-.progressFill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  border-radius: var(--radius-pill);
-  background: var(--color-ink);
-}
-
-// Gold-ringed, so it stays visible over both the empty track and the fill.
-.progressMarker {
-  position: absolute;
-  top: -4px;
-  bottom: -4px;
-  width: 2px;
-  margin-left: -1px;
-  background: var(--color-ink);
-  box-shadow: 0 0 0 2px var(--color-gold);
-}
-
-.progressMeta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 14px;
-  margin-top: 10px;
-  font-size: var(--text-small);
-  color: var(--color-ink);
-  opacity: 0.86;
-}
-
-.progressLink {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  @include focus-ring;
-
-  &:hover {
-    opacity: 0.7;
-  }
-}
-
-.supportCta {
+// The button to the full concerts list, where the Hooandja button used to be.
+.concertsCta {
   @include pill(var(--color-ink), var(--color-cream-bright));
   margin-top: 20px;
 
